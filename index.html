@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Demystified - By Ambuj Kumar Tripathi</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+background: #0a0a0a;
+color: #ffffff;
+line-height: 1.6;
+min-height: 100vh;
+}
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 20px;
+}
+/* Header Styles */
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 60px;
+padding: 20px 0;
+border-bottom: 1px solid #333;
+}
+.logo {
+font-size: 1.6rem;
+font-weight: 800;
+background: linear-gradient(135deg, #e50914, #ff6b6b, #ffa500);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+}
+.language-selector {
+display: flex;
+gap: 15px;
+background: #1a1a1a;
+padding: 8px 16px;
+border-radius: 25px;
+border: 1px solid #333;
+}
+.lang-btn {
+background: none;
+border: none;
+color: #888;
+font-size: 0.9rem;
+cursor: pointer;
+padding: 5px 10px;
+border-radius: 15px;
+transition: all 0.3s ease;
+}
+.lang-btn.active {
+color: #e50914;
+background: rgba(229, 9, 20, 0.1);
+}
+.lang-btn:hover {
+color: #fff;
+}
+/* Hero Section */
+.hero {
+text-align: center;
+margin-bottom: 80px;
+}
+.hero h1 {
+font-size: clamp(2rem, 5vw, 3.5rem);
+font-weight: 800;
+margin-bottom: 20px;
+background: linear-gradient(135deg, #ffffff, #e50914, #ffa500, #ffffff);
+background-size: 200% 200%;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+animation: gradientShift 3s ease-in-out infinite;
+}
+@keyframes gradientShift {
+0%, 100% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+}
+.hero p {
+font-size: clamp(1rem, 3vw, 1.2rem);
+color: #cccccc;
+max-width: 800px;
+margin: 0 auto;
+line-height: 1.8;
+}
+/* Creator Section */
+.creator-section {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 40px;
+margin-bottom: 80px;
+padding: 40px;
+background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+border-radius: 20px;
+border: 1px solid #333;
+}
+.creator-info {
+text-align: center;
+}
+.creator-photo {
+width: 150px;
+height: 150px;
+border-radius: 15px;
+border: 3px solid #e50914;
+margin-bottom: 15px;
+transition: all 0.3s ease;
+box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+}
+.creator-photo:hover {
+transform: scale(1.05) rotate(2deg);
+box-shadow: 0 10px 25px rgba(229, 9, 20, 0.5);
+}
+.creator-name {
+font-size: 1.5rem;
+font-weight: 700;
+color: #e50914;
+margin-bottom: 5px;
+}
+.creator-designation {
+font-size: 1rem;
+color: #ffa500;
+margin-bottom: 15px;
+font-style: italic;
+font-family: 'Courier New', monospace;
+font-weight: 900;
+text-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
+min-height: 24px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-right: 3px solid #ffa500;
+animation: blink-caret 0.8s step-end infinite;
+}
+@keyframes blink-caret {
+from, to { border-color: transparent }
+50% { border-color: #ffa500 }
+}
+.creator-links {
+display: flex;
+gap: 15px;
+justify-content: center;
+}
+.creator-link {
+background: linear-gradient(135deg, #e50914, #ff4757);
+color: white;
+text-decoration: none;
+padding: 8px 16px;
+border-radius: 20px;
+font-weight: 600;
+transition: all 0.3s ease;
+}
+.creator-link:hover {
+transform: translateY(-2px);
+box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+}
+.qr-section {
+text-align: center;
+}
+.qr-code {
+width: 120px;
+height: 120px;
+border-radius: 10px;
+border: 2px solid #e50914;
+margin-bottom: 10px;
+}
+.qr-text {
+color: #ffa500;
+font-size: 0.9rem;
+font-weight: 600;
+}
+/* Mission Statement */
+.mission {
+background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+border-radius: 20px;
+padding: 40px;
+margin-bottom: 60px;
+border: 1px solid #333;
+text-align: center;
+}
+.mission h2 {
+font-size: 1.8rem;
+color: #e50914;
+margin-bottom: 20px;
+font-weight: 700;
+}
+.mission p {
+font-size: 1.1rem;
+color: #cccccc;
+line-height: 1.8;
+max-width: 800px;
+margin: 0 auto;
+}
+/* Prompt Builder Section */
+.prompt-builder {
+background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+border-radius: 20px;
+padding: 40px;
+margin-bottom: 60px;
+border: 1px solid #333;
+box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.section-title {
+font-size: 1.8rem;
+font-weight: 700;
+margin-bottom: 30px;
+text-align: center;
+color: #e50914;
+}
+.form-group {
+margin-bottom: 25px;
+}
+.form-label {
+display: block;
+font-weight: 600;
+margin-bottom: 8px;
+color: #ffffff;
+font-size: 1rem;
+}
+.form-input {
+width: 100%;
+padding: 15px 20px;
+background: #0a0a0a;
+border: 2px solid #333;
+border-radius: 12px;
+color: #ffffff;
+font-size: 1rem;
+transition: all 0.3s ease;
+min-height: 100px;
+resize: vertical;
+}
+.form-input:focus {
+outline: none;
+border-color: #e50914;
+box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
+transform: translateY(-2px);
+}
+.form-select {
+width: 100%;
+padding: 15px 20px;
+background: #0a0a0a;
+border: 2px solid #333;
+border-radius: 12px;
+color: #ffffff;
+font-size: 1rem;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+.form-select:focus {
+outline: none;
+border-color: #e50914;
+}
+.generate-btn {
+width: 100%;
+padding: 18px;
+background: linear-gradient(135deg, #e50914, #ff4757);
+border: none;
+border-radius: 12px;
+color: white;
+font-size: 1.1rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+margin-bottom: 30px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+position: relative;
+overflow: hidden;
+}
+.generate-btn:hover {
+transform: translateY(-3px);
+box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4);
+}
+/* Output Section */
+.output-section {
+margin-top: 30px;
+}
+.output-container {
+background: #0a0a0a;
+border: 2px solid #333;
+border-radius: 12px;
+padding: 20px;
+margin-bottom: 15px;
+position: relative;
+}
+.output-text {
+color: #cccccc;
+font-size: 1rem;
+line-height: 1.6;
+min-height: 60px;
+white-space: pre-wrap;
+}
+.copy-btn {
+position: absolute;
+top: 15px;
+right: 15px;
+background: #333;
+border: none;
+color: #fff;
+padding: 8px 12px;
+border-radius: 8px;
+cursor: pointer;
+font-size: 0.8rem;
+transition: all 0.3s ease;
+}
+.copy-btn:hover {
+background: #555;
+}
+.recommendation {
+background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+border-radius: 12px;
+padding: 20px;
+text-align: center;
+border: 1px solid #444;
+}
+.recommendation h3 {
+color: #e50914;
+margin-bottom: 10px;
+font-size: 1.2rem;
+}
+.ai-tool {
+display: inline-block;
+background: #e50914;
+color: white;
+padding: 8px 16px;
+border-radius: 20px;
+font-weight: 600;
+margin: 5px;
+}
+.tool-description {
+margin-top: 10px;
+color: #cccccc;
+font-size: 0.9rem;
+}
+/* Language Preference */
+.language-preference {
+margin-bottom: 25px;
+}
+.lang-toggle {
+display: flex;
+gap: 10px;
+justify-content: center;
+margin-bottom: 15px;
+}
+.lang-option {
+background: #333;
+border: none;
+color: #fff;
+padding: 8px 16px;
+border-radius: 20px;
+cursor: pointer;
+transition: all 0.3s ease;
+font-size: 0.9rem;
+}
+.lang-option.active {
+background: #e50914;
+transform: scale(1.05);
+}
+/* Footer */
+.footer {
+text-align: center;
+padding: 40px 0;
+color: #666;
+border-top: 1px solid #333;
+}
+.creator-credit {
+font-size: 0.9rem;
+margin-bottom: 10px;
+}
+.creator-name-footer {
+color: #e50914;
+font-weight: 600;
+}
+/* Responsive */
+@media (max-width: 768px) {
+.header {
+flex-direction: column;
+gap: 20px;
+}
+.creator-section {
+flex-direction: column;
+gap: 30px;
+padding: 25px;
+}
+.creator-links {
+flex-direction: column;
+align-items: center;
+}
+.prompt-builder {
+padding: 25px;
+}
+.container {
+padding: 15px;
+}
+.creator-photo {
+width: 120px;
+height: 120px;
+}
+}
+.fade-in {
+animation: fadeIn 0.6s ease-out;
+}
+@keyframes fadeIn {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<!-- Header -->
+<header class="header">
+<div class="logo">Daily Problems, Smart AI Solutions</div>
+<div class="language-selector">
+<button class="lang-btn active" onclick="switchLanguage('hi')" id="hi-btn">हिंदी</button>
+<button class="lang-btn" onclick="switchLanguage('en')" id="en-btn">English</button>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="hero">
+<h1 id="hero-title">हर रोज़ की मुश्किलें, अब आसान।</h1>
+<p id="hero-description">Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें। हम आपको perfect prompts देते हैं और सही AI tool भी suggest करते हैं।</p>
+</section>
+<!-- Creator Section -->
+<section class="creator-section">
+<div class="creator-info">
+<img src="https://i.postimg.cc/GmctbT9t/IMG-20250901-215704.jpg" alt="Ambuj Kumar Tripathi" class="creator-photo">
+<div class="creator-name">Ambuj Kumar Tripathi</div>
+<div class="creator-designation" id="creator-designation">AI & Full Stack Developer | Innovation Enthusiast</div>
+<div class="creator-links">
+<a href="https://ambuj123-lab.github.io/Ambuj_AI_Portfolio/" class="creator-link" target="_blank" id="portfolio-link">Portfolio देखें</a>
+</div>
+</div>
+<div class="qr-section">
+<img src="https://i.postimg.cc/YCpZrYgv/qr-code-3.png" alt="QR Code" class="qr-code">
+<div class="qr-text" id="qr-text">मेरा ChatBot देखने के लिए स्कैन करें</div>
+</div>
+</section>
+<!-- Mission Statement -->
+<section class="mission">
+<h2 id="mission-title">हमारा मिशन</h2>
+<p id="mission-description">यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं। हमारा उद्देश्य simple है: गैर-तकनीकी users को अपनी daily life में AI का confidently उपयोग करने में मदद करना। हम effective prompts बनाने के लिए एक simple framework प्रदान करते हैं और सही AI tool भी suggest करते हैं।</p>
+</section>
+<!-- Prompt Builder -->
+<section class="prompt-builder">
+<h2 class="section-title" id="builder-title">Smart Prompt Builder</h2>
+<div class="form-group">
+<label class="form-label" id="topic-label" for="topic-input">आप किस problem के लिए AI की help चाहते हैं?</label>
+<textarea id="topic-input" class="form-input" placeholder="जैसे: Maa ke liye birthday wish likhna hai jo dil se nikle, ya job interview के लिए tips चाहिए..."></textarea>
+</div>
+<div class="form-group language-preference">
+<label class="form-label" id="output-lang-label">आपको prompt किस भाषा में चाहिए?</label>
+<div class="lang-toggle">
+<button class="lang-option active" onclick="setOutputLanguage('hi')" id="output-hi">हिंदी</button>
+<button class="lang-option" onclick="setOutputLanguage('en')" id="output-en">English</button>
+</div>
+</div>
+<div class="form-group">
+<label class="form-label" id="tone-label" for="tone-select">कैसी भाषा चाहिए?</label>
+<select id="tone-select" class="form-select">
+<option value="Professional">Professional (व्यावसायिक)</option>
+<option value="Casual">Casual (आम बोलचाल की)</option>
+<option value="Friendly">Friendly (दोस्ताना)</option>
+<option value="Informative">Informative (जानकारीपूर्ण)</option>
+<option value="Creative">Creative (रचनात्मक)</option>
+<option value="Technical">Technical (तकनीकी)</option>
+</select>
+</div>
+<button class="generate-btn" onclick="generatePrompt()" id="generate-btn">Perfect Prompt बनाएं</button>
+<div class="output-section" id="output-section" style="display: none;">
+<div class="output-container">
+<div class="output-text" id="generated-prompt"></div>
+<button class="copy-btn" id="copy-btn">Copy</button>
+</div>
+<div class="recommendation">
+<h3 id="rec-title">सबसे अच्छा AI Tool</h3>
+<div class="ai-tool" id="recommended-tool"></div>
+<div class="tool-description" id="tool-description"></div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="footer">
+<div class="creator-credit">Created with 💡 by <span class="creator-name-footer">Ambuj Kumar Tripathi</span> | Bringing AI closer to people</div>
+<div id="footer-text">Built with vanilla HTML, CSS & JavaScript | Client-side processing | Zero data collection</div>
+</footer>
+</div>
+
+<script>
+let currentLanguage = 'hi';
+let outputLanguage = 'hi';
+let currentTextIndex = 0;
+
+const typewriterTexts = {
+    hi: ["AI & Full Stack Developer | Innovation Enthusiast", "Creative Problem Solver | Tech Explorer", "Building Future with Code | AI Enthusiast"],
+    en: ["AI & Full Stack Developer | Innovation Enthusiast", "Creative Problem Solver | Tech Explorer", "Building Future with Code | AI Enthusiast"]
+};
+
+function startTypewriter() {
+    const element = document.getElementById('creator-designation');
+    if (!element) return;
+    
+    const texts = typewriterTexts[currentLanguage];
+    let currentText = texts[currentTextIndex];
+    let currentChar = 0;
+    let isDeleting = false;
+    let isWaitingToDelete = false;
+    let wordDeleteIndex = 0;
+    let words = [];
+
+    element.textContent = '';
+
+    function type() {
+        if (!isDeleting && !isWaitingToDelete) {
+            element.textContent = currentText.slice(0, currentChar++);
+            
+            if (currentChar > currentText.length) {
+                isWaitingToDelete = true;
+                setTimeout(() => {
+                    words = currentText.split(' ');
+                    wordDeleteIndex = words.length;
+                    isWaitingToDelete = false;
+                    isDeleting = true;
+                }, 2000);
+                return;
+            }
+        } else if (isDeleting) {
+            if (wordDeleteIndex > 0) {
+                wordDeleteIndex--;
+                element.textContent = words.slice(0, wordDeleteIndex).join(' ');
+                
+                if (wordDeleteIndex === 0) {
+                    currentTextIndex = (currentTextIndex + 1) % texts.length;
+                    currentText = texts[currentTextIndex];
+                    currentChar = 0;
+                    isDeleting = false;
+                    
+                    setTimeout(() => {
+                        type();
+                    }, 500);
+                    return;
+                }
+            }
+        }
+        
+        let speed = isDeleting ? 200 : 50;
+        setTimeout(type, speed);
+    }
+
+    setTimeout(type, 500);
+}
+
+const content = {
+    en: {
+        heroTitle: "Daily Problems, Smart AI Solutions",
+        heroDescription: "Just type your message, get instant AI-powered solutions. This tool is created to help you solve your daily problems easily with AI assistance. We provide you with perfect prompts and suggest the right AI tool as well.",
+        missionTitle: "Our Mission",
+        missionDescription: "This tool is built to make AI accessible for everyone. Our purpose is simple: to help people solve their everyday problems using AI technology. We provide smart prompts and recommend the best AI tools based on your specific needs.",
+        builderTitle: "Smart Problem Solver",
+        topicLabel: "What problem do you need AI help with?",
+        topicPlaceholder: "e.g., Write a heartfelt birthday wish for Mom, or I need job interview tips, or help with presentation ideas...",
+        outputLangLabel: "Which language do you want the prompt in?",
+        toneLabel: "What kind of response do you want?",
+        generateBtn: "Generate Smart Solution",
+        copyBtn: "Copy",
+        recTitle: "Best AI Tool for You",
+        qrText: "Scan to explore my ChatBot",
+        portfolioLink: "View Portfolio",
+        footerText: "Built with vanilla HTML, CSS & JavaScript | Client-side processing | Zero data collection"
+    },
+    hi: {
+        heroTitle: "हर रोज़ की मुश्किलें, अब आसान।",
+        heroDescription: "Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें। हम आपको perfect prompts देते हैं और सही AI tool भी suggest करते हैं।",
+        missionTitle: "हमारा मिशन",
+        missionDescription: "यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं। हमारा उद्देश्य simple है: गैर-तकनीकी users को अपनी daily life में AI का confidently उपयोग करने में मदद करना। हम effective prompts बनाने के लिए एक simple framework प्रदान करते हैं और सही AI tool भी suggest करते हैं।",
+        builderTitle: "Smart Prompt Builder",
+        topicLabel: "आप किस problem के लिए AI की help चाहते हैं?",
+        topicPlaceholder: "जैसे: Maa ke liye birthday wish likhna hai jo dil se nikle, ya job interview के लिए tips चाहिए...",
+        outputLangLabel: "आपको prompt किस भाषा में चाहिए?",
+        toneLabel: "कैसी भाषा चाहिए?",
+        generateBtn: "Perfect Prompt बनाएं",
+        copyBtn: "Copy",
+        recTitle: "सबसे अच्छा AI Tool",
+        qrText: "मेरा ChatBot देखने के लिए स्कैन करें",
+        portfolioLink: "Portfolio देखें",
+        footerText: "Built with vanilla HTML, CSS & JavaScript | Client-side processing | Zero data collection"
+    }
+};
+
+function switchLanguage(lang) {
+    currentLanguage = lang;
+    
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(lang + '-btn').classList.add('active');
+    
+    const langContent = content[lang];
+    document.getElementById('hero-title').textContent = langContent.heroTitle;
+    document.getElementById('hero-description').textContent = langContent.heroDescription;
+    document.getElementById('mission-title').textContent = langContent.missionTitle;
+    document.getElementById('mission-description').textContent = langContent.missionDescription;
+    document.getElementById('builder-title').textContent = langContent.builderTitle;
+    document.getElementById('topic-label').textContent = langContent.topicLabel;
+    document.getElementById('topic-input').placeholder = langContent.topicPlaceholder;
+    document.getElementById('output-lang-label').textContent = langContent.outputLangLabel;
+    document.getElementById('tone-label').textContent = langContent.toneLabel;
+    document.getElementById('generate-btn').textContent = langContent.generateBtn;
+    document.getElementById('qr-text').textContent = langContent.qrText;
+    document.getElementById('portfolio-link').textContent = langContent.portfolioLink;
+    document.getElementById('footer-text').textContent = langContent.footerText;
+    
+    // Reset and restart typewriter
+    typewriterRunning = false;
+    currentTextIndex = 0;
+    startTypewriter();
+}
+
+function setOutputLanguage(lang) {
+    outputLanguage = lang;
+    document.querySelectorAll('.lang-option').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('output-' + lang).classList.add('active');
+}
+
+const aiTools = {
+    creative: {
+        hi: { name: "ChatGPT", description: "Creative writing और storytelling के लिए बेस्ट। Natural language में बेहतरीन results देता है।" },
+        en: { name: "ChatGPT", description: "Best for creative writing and storytelling. Provides excellent results in natural language." }
+    },
+    professional: {
+        hi: { name: "Claude", description: "Professional documents और business communication के लिए perfect। Formal tone में expert है।" },
+        en: { name: "Claude", description: "Perfect for professional documents and business communication. Expert in formal tone." }
+    },
+    technical: {
+        hi: { name: "GitHub Copilot", description: "Coding और technical problems के लिए ideal। Programming में सबसे अच्छा performance देता है।" },
+        en: { name: "GitHub Copilot", description: "Ideal for coding and technical problems. Best performance in programming tasks." }
+    },
+    analysis: {
+        hi: { name: "Perplexity", description: "Research और data analysis के लिए powerful। Updated information के साथ detailed insights देता है।" },
+        en: { name: "Perplexity", description: "Powerful for research and data analysis. Provides detailed insights with updated information." }
+    },
+    visual: {
+        hi: { name: "DALL-E", description: "Images और visual content create करने के लिए amazing। Creative visuals बनाने में master है।" },
+        en: { name: "DALL-E", description: "Amazing for creating images and visual content. Master in creating creative visuals." }
+    },
+    default: {
+        hi: { name: "ChatGPT", description: "General problems के लिए सबसे versatile। हर तरह के काम में helpful है।" },
+        en: { name: "ChatGPT", description: "Most versatile for general problems. Helpful in all kinds of tasks." }
+    }
+};
+
+function generatePrompt() {
+    const topic = document.getElementById('topic-input').value.trim();
+    const tone = document.getElementById('tone-select').value;
+
+    if (!topic) {
+        alert(currentLanguage === 'hi' ? 'कृपया अपनी problem बताएं।' : 'Please describe your problem.');
+        return;
+    }
+
+    let toolCategory = 'default';
+    const topicLower = topic.toLowerCase();
+
+    if (topicLower.includes('code') || topicLower.includes('program') || topicLower.includes('develop') || topicLower.includes('technical') || topicLower.includes('कोड') || topicLower.includes('प्रोग्राम')) {
+        toolCategory = 'technical';
+    } else if (topicLower.includes('write') || topicLower.includes('story') || topicLower.includes('creative') || topicLower.includes('poem') || topicLower.includes('लिख') || topicLower.includes('कहानी') || topicLower.includes('कविता')) {
+        toolCategory = 'creative';
+    } else if (topicLower.includes('business') || topicLower.includes('professional') || topicLower.includes('formal') || topicLower.includes('व्यावसायिक') || topicLower.includes('बिज़नेस')) {
+        toolCategory = 'professional';
+    } else if (topicLower.includes('research') || topicLower.includes('analysis') || topicLower.includes('data') || topicLower.includes('अनुसंधान') || topicLower.includes('विश्लेषण')) {
+        toolCategory = 'analysis';
+    } else if (topicLower.includes('image') || topicLower.includes('visual') || topicLower.includes('design') || topicLower.includes('चित्र') || topicLower.includes('डिजाइन')) {
+        toolCategory = 'visual';
+    }
+
+    let prompt = '';
+    if (outputLanguage === 'hi') {
+        prompt = `मुझे ${topic} के बारे में मदद चाहिए। कृपया ${tone.toLowerCase()} भाषा में विस्तार से बताएं। मुझे step-by-step guidance दें और practical examples भी शामिल करें।`;
+    } else {
+        prompt = `I need help with ${topic}. Please provide detailed assistance in a ${tone.toLowerCase()} manner. Give me step-by-step guidance and include practical examples.`;
+    }
+
+    document.getElementById('generated-prompt').textContent = prompt;
+    document.getElementById('output-section').style.display = 'block';
+
+    const recommendedTool = aiTools[toolCategory][currentLanguage];
+    document.getElementById('recommended-tool').textContent = recommendedTool.name;
+    document.getElementById('tool-description').textContent = recommendedTool.description;
+
+    document.getElementById('output-section').classList.add('fade-in');
+}
+
+function copyPrompt() {
+    const prompt = document.getElementById('generated-prompt').textContent;
+    navigator.clipboard.writeText(prompt).then(() => {
+        const copyBtn = document.getElementById('copy-btn');
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        copyBtn.style.background = '#4CAF50';
+        setTimeout(() => {
+            copyBtn.textContent = originalText;
+            copyBtn.style.background = '#333';
+        }, 2000);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    startTypewriter();
+    switchLanguage('hi');
+});
+</script>
+</body>
+</html>
