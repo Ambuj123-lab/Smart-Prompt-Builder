@@ -324,22 +324,67 @@ border: 1px solid #444;
 }
 .recommendation h3 {
 color: #e50914;
-margin-bottom: 10px;
+margin-bottom: 15px;
 font-size: 1.2rem;
 }
+.ai-tools-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 15px;
+margin-bottom: 15px;
+}
 .ai-tool {
-display: inline-block;
-background: #e50914;
+background: linear-gradient(135deg, #4a90e2, #357abd);
 color: white;
-padding: 8px 16px;
-border-radius: 20px;
+padding: 12px 16px;
+border-radius: 12px;
 font-weight: 600;
-margin: 5px;
+font-size: 0.9rem;
+transition: all 0.3s ease;
+cursor: pointer;
+border: 2px solid transparent;
+position: relative;
+overflow: hidden;
+}
+.ai-tool:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+}
+.ai-tool.primary {
+background: linear-gradient(135deg, #e50914, #ff4757);
+border-color: #ffa500;
+font-size: 1rem;
+padding: 15px 20px;
+}
+.ai-tool.primary:hover {
+box-shadow: 0 10px 25px rgba(229, 9, 20, 0.4);
+}
+.tool-category {
+font-size: 0.7rem;
+opacity: 0.8;
+display: block;
+margin-bottom: 5px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
 }
 .tool-description {
-margin-top: 10px;
+margin-top: 15px;
 color: #cccccc;
 font-size: 0.9rem;
+line-height: 1.5;
+text-align: left;
+background: rgba(0,0,0,0.3);
+padding: 15px;
+border-radius: 10px;
+border-left: 4px solid #e50914;
+}
+.alternative-tools {
+margin-top: 20px;
+}
+.alternative-tools h4 {
+color: #ffa500;
+margin-bottom: 10px;
+font-size: 1rem;
 }
 /* Language Preference */
 .language-preference {
@@ -405,6 +450,9 @@ padding: 15px;
 width: 120px;
 height: 120px;
 }
+.ai-tools-grid {
+grid-template-columns: 1fr;
+}
 }
 .fade-in {
 animation: fadeIn 0.6s ease-out;
@@ -425,7 +473,7 @@ transform: translateY(0);
 <div class="container">
 <!-- Header -->
 <header class="header">
-<div class="logo">Daily Problems, Smart AI Solutions</div>
+<div class="logo">Ambuj’s Prompt Playground</div>
 <div class="language-selector">
 <button class="lang-btn active" onclick="switchLanguage('hi')" id="hi-btn">हिंदी</button>
 <button class="lang-btn" onclick="switchLanguage('en')" id="en-btn">English</button>
@@ -485,12 +533,22 @@ transform: translateY(0);
 <div class="output-section" id="output-section" style="display: none;">
 <div class="output-container">
 <div class="output-text" id="generated-prompt"></div>
-<button class="copy-btn" id="copy-btn">Copy</button>
+<button class="copy-btn" onclick="copyPrompt()" id="copy-btn">Copy</button>
 </div>
 <div class="recommendation">
 <h3 id="rec-title">सबसे अच्छा AI Tool</h3>
-<div class="ai-tool" id="recommended-tool"></div>
+<div class="ai-tools-grid">
+<div class="ai-tool primary" id="primary-tool">
+<span class="tool-category" id="tool-category">RECOMMENDED</span>
+<span id="primary-tool-name">ChatGPT</span>
+</div>
+</div>
 <div class="tool-description" id="tool-description"></div>
+<div class="alternative-tools">
+<h4 id="alternatives-title">अन्य विकल्प:</h4>
+<div class="ai-tools-grid" id="alternative-tools-grid">
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -579,6 +637,7 @@ const content = {
         generateBtn: "Generate Smart Solution",
         copyBtn: "Copy",
         recTitle: "Best AI Tool for You",
+        alternativesTitle: "Other Options:",
         qrText: "Scan to explore my ChatBot",
         portfolioLink: "View Portfolio",
         footerText: "Built with vanilla HTML, CSS & JavaScript | Client-side processing | Zero data collection"
@@ -596,9 +655,158 @@ const content = {
         generateBtn: "Perfect Prompt बनाएं",
         copyBtn: "Copy",
         recTitle: "सबसे अच्छा AI Tool",
+        alternativesTitle: "अन्य विकल्प:",
         qrText: "मेरा ChatBot देखने के लिए स्कैन करें",
         portfolioLink: "Portfolio देखें",
         footerText: "Built with vanilla HTML, CSS & JavaScript | Client-side processing | Zero data collection"
+    }
+};
+
+// Enhanced AI Tools Database with multiple options for each category
+const aiToolsDatabase = {
+    creative: {
+        hi: {
+            primary: { name: "ChatGPT", description: "Creative writing, storytelling और content creation के लिए बेस्ट। Natural language में बेहतरीन results देता है और imagination के साथ काम करता है।" },
+            alternatives: [
+                { name: "Claude", description: "Long-form creative content और detailed stories के लिए excellent" },
+                { name: "Gemini", description: "Multilingual creative content और poetry के लिए अच्छा" },
+                { name: "DeepSeek", description: "Creative problem solving और innovative ideas के लिए" }
+            ]
+        },
+        en: {
+            primary: { name: "ChatGPT", description: "Best for creative writing, storytelling and content creation. Provides excellent results in natural language and works great with imagination." },
+            alternatives: [
+                { name: "Claude", description: "Excellent for long-form creative content and detailed stories" },
+                { name: "Gemini", description: "Good for multilingual creative content and poetry" },
+                { name: "DeepSeek", description: "Great for creative problem solving and innovative ideas" }
+            ]
+        }
+    },
+    professional: {
+        hi: {
+            primary: { name: "Claude", description: "Professional documents, business communication और formal writing के लिए perfect। Structure और clarity में expert है।" },
+            alternatives: [
+                { name: "ChatGPT", description: "Business emails और presentations के लिए versatile" },
+                { name: "Gemini", description: "Professional analysis और reports के लिए अच्छा" },
+                { name: "DeepSeek", description: "Complex business strategies के लिए deep insights" }
+            ]
+        },
+        en: {
+            primary: { name: "Claude", description: "Perfect for professional documents, business communication and formal writing. Expert in structure and clarity." },
+            alternatives: [
+                { name: "ChatGPT", description: "Versatile for business emails and presentations" },
+                { name: "Gemini", description: "Good for professional analysis and reports" },
+                { name: "DeepSeek", description: "Deep insights for complex business strategies" }
+            ]
+        }
+    },
+    technical: {
+        hi: {
+            primary: { name: "DeepSeek", description: "Coding, programming और technical problems के लिए बेहद powerful। Complex algorithms और debugging में master है।" },
+            alternatives: [
+                { name: "Claude", description: "Clean code और best practices के लिए excellent" },
+                { name: "ChatGPT", description: "Code explanation और learning के लिए अच्छा" },
+                { name: "Gemini", description: "Multiple programming languages में support" }
+            ]
+        },
+        en: {
+            primary: { name: "DeepSeek", description: "Extremely powerful for coding, programming and technical problems. Master in complex algorithms and debugging." },
+            alternatives: [
+                { name: "Claude", description: "Excellent for clean code and best practices" },
+                { name: "ChatGPT", description: "Good for code explanation and learning" },
+                { name: "Gemini", description: "Support for multiple programming languages" }
+            ]
+        }
+    },
+    research: {
+        hi: {
+            primary: { name: "Perplexity", description: "Research, data analysis और current information के लिए सबसे powerful। Real-time updates और accurate sources के साथ detailed insights देता है।" },
+            alternatives: [
+                { name: "Claude", description: "Deep research और analytical thinking के लिए" },
+                { name: "Gemini", description: "Academic research और fact-checking के लिए" },
+                { name: "ChatGPT", description: "General research और information gathering के लिए" }
+            ]
+        },
+        en: {
+            primary: { name: "Perplexity", description: "Most powerful for research, data analysis and current information. Provides detailed insights with real-time updates and accurate sources." },
+            alternatives: [
+                { name: "Claude", description: "For deep research and analytical thinking" },
+                { name: "Gemini", description: "For academic research and fact-checking" },
+                { name: "ChatGPT", description: "For general research and information gathering" }
+            ]
+        }
+    },
+    social: {
+        hi: {
+            primary: { name: "Grok", description: "Social media content, trending topics और witty responses के लिए perfect। Modern language और internet culture को समझता है।" },
+            alternatives: [
+                { name: "ChatGPT", description: "Engaging social content और captions के लिए" },
+                { name: "Claude", description: "Professional social media posts के लिए" },
+                { name: "Gemini", description: "Multi-platform social content के लिए" }
+            ]
+        },
+        en: {
+            primary: { name: "Grok", description: "Perfect for social media content, trending topics and witty responses. Understands modern language and internet culture." },
+            alternatives: [
+                { name: "ChatGPT", description: "For engaging social content and captions" },
+                { name: "Claude", description: "For professional social media posts" },
+                { name: "Gemini", description: "For multi-platform social content" }
+            ]
+        }
+    },
+    analysis: {
+        hi: {
+            primary: { name: "Claude", description: "Complex data analysis, detailed reports और strategic thinking के लिए excellent। Deep insights और structured analysis प्रदान करता है।" },
+            alternatives: [
+                { name: "Perplexity", description: "Current data और market analysis के लिए" },
+                { name: "DeepSeek", description: "Technical और scientific analysis के लिए" },
+                { name: "Gemini", description: "Visual data interpretation के लिए" }
+            ]
+        },
+        en: {
+            primary: { name: "Claude", description: "Excellent for complex data analysis, detailed reports and strategic thinking. Provides deep insights and structured analysis." },
+            alternatives: [
+                { name: "Perplexity", description: "For current data and market analysis" },
+                { name: "DeepSeek", description: "For technical and scientific analysis" },
+                { name: "Gemini", description: "For visual data interpretation" }
+            ]
+        }
+    },
+    learning: {
+        hi: {
+            primary: { name: "ChatGPT", description: "Learning, education और skill development के लिए बेस्ट। Step-by-step explanations और interactive learning में expert है।" },
+            alternatives: [
+                { name: "Claude", description: "Detailed tutorials और structured learning के लिए" },
+                { name: "Perplexity", description: "Latest learning resources के साथ updated knowledge के लिए" },
+                { name: "Gemini", description: "Visual learning और examples के साथ" }
+            ]
+        },
+        en: {
+            primary: { name: "ChatGPT", description: "Best for learning, education and skill development. Expert in step-by-step explanations and interactive learning." },
+            alternatives: [
+                { name: "Claude", description: "For detailed tutorials and structured learning" },
+                { name: "Perplexity", description: "For updated knowledge with latest learning resources" },
+                { name: "Gemini", description: "For visual learning with examples" }
+            ]
+        }
+    },
+    general: {
+        hi: {
+            primary: { name: "ChatGPT", description: "General problems और daily life के सवालों के लिए सबसे versatile। हर तरह के काम में helpful और user-friendly है।" },
+            alternatives: [
+                { name: "Claude", description: "Detailed और thoughtful responses के लिए" },
+                { name: "Gemini", description: "Quick answers और multi-modal tasks के लिए" },
+                { name: "Perplexity", description: "Current information के साथ general queries के लिए" }
+            ]
+        },
+        en: {
+            primary: { name: "ChatGPT", description: "Most versatile for general problems and daily life questions. Helpful and user-friendly in all kinds of tasks." },
+            alternatives: [
+                { name: "Claude", description: "For detailed and thoughtful responses" },
+                { name: "Gemini", description: "For quick answers and multi-modal tasks" },
+                { name: "Perplexity", description: "For general queries with current information" }
+            ]
+        }
     }
 };
 
@@ -619,6 +827,7 @@ function switchLanguage(lang) {
     document.getElementById('output-lang-label').textContent = langContent.outputLangLabel;
     document.getElementById('tone-label').textContent = langContent.toneLabel;
     document.getElementById('generate-btn').textContent = langContent.generateBtn;
+    document.getElementById('alternatives-title').textContent = langContent.alternativesTitle;
     document.getElementById('qr-text').textContent = langContent.qrText;
     document.getElementById('portfolio-link').textContent = langContent.portfolioLink;
     document.getElementById('footer-text').textContent = langContent.footerText;
@@ -635,32 +844,60 @@ function setOutputLanguage(lang) {
     document.getElementById('output-' + lang).classList.add('active');
 }
 
-const aiTools = {
-    creative: {
-        hi: { name: "ChatGPT", description: "Creative writing और storytelling के लिए बेस्ट। Natural language में बेहतरीन results देता है।" },
-        en: { name: "ChatGPT", description: "Best for creative writing and storytelling. Provides excellent results in natural language." }
-    },
-    professional: {
-        hi: { name: "Claude", description: "Professional documents और business communication के लिए perfect। Formal tone में expert है।" },
-        en: { name: "Claude", description: "Perfect for professional documents and business communication. Expert in formal tone." }
-    },
-    technical: {
-        hi: { name: "GitHub Copilot", description: "Coding और technical problems के लिए ideal। Programming में सबसे अच्छा performance देता है।" },
-        en: { name: "GitHub Copilot", description: "Ideal for coding and technical problems. Best performance in programming tasks." }
-    },
-    analysis: {
-        hi: { name: "Perplexity", description: "Research और data analysis के लिए powerful। Updated information के साथ detailed insights देता है।" },
-        en: { name: "Perplexity", description: "Powerful for research and data analysis. Provides detailed insights with updated information." }
-    },
-    visual: {
-        hi: { name: "DALL-E", description: "Images और visual content create करने के लिए amazing। Creative visuals बनाने में master है।" },
-        en: { name: "DALL-E", description: "Amazing for creating images and visual content. Master in creating creative visuals." }
-    },
-    default: {
-        hi: { name: "ChatGPT", description: "General problems के लिए सबसे versatile। हर तरह के काम में helpful है।" },
-        en: { name: "ChatGPT", description: "Most versatile for general problems. Helpful in all kinds of tasks." }
+function detectCategory(topic) {
+    const topicLower = topic.toLowerCase();
+    
+    // Technical/Coding keywords - DeepSeek best
+    const technicalKeywords = ['code', 'coding', 'program', 'programming', 'develop', 'developer', 'software', 'algorithm', 'debug', 'javascript', 'python', 'java', 'css', 'html', 'react', 'nodejs', 'database', 'api', 'framework', 'library', 'github', 'git', 'terminal', 'command', 'function', 'variable', 'array', 'object', 'class', 'method', 'syntax', 'error', 'bug', 'compiler', 'interpreter', 'कोड', 'प्रोग्राम', 'सॉफ्टवेयर', 'डेवलप', 'एल्गोरिदम', 'डिबग', 'फंक्शन', 'वेरिएबल', 'एरर', 'बग'];
+    
+    // Research keywords - Perplexity best
+    const researchKeywords = ['research', 'study', 'analysis', 'analyze', 'data', 'statistics', 'survey', 'information', 'facts', 'current', 'latest', 'news', 'trends', 'market', 'compare', 'comparison', 'investigate', 'explore', 'findings', 'report', 'scientific', 'academic', 'paper', 'journal', 'publication', 'evidence', 'proof', 'verify', 'confirm', 'अनुसंधान', 'विश्लेषण', 'जानकारी', 'तथ्य', 'समसामयिक', 'ताजा', 'समाचार', 'ट्रेंड', 'बाजार', 'तुलना', 'जांच', 'रिपोर्ट', 'वैज्ञानिक', 'शैक्षणिक', 'सबूत', 'पुष्टि'];
+    
+    // Professional keywords - Claude best
+    const professionalKeywords = ['business', 'professional', 'corporate', 'company', 'office', 'formal', 'presentation', 'meeting', 'proposal', 'strategy', 'management', 'leadership', 'project', 'planning', 'budget', 'finance', 'marketing', 'sales', 'client', 'customer', 'service', 'quality', 'process', 'workflow', 'policy', 'procedure', 'documentation', 'contract', 'agreement', 'negotiation', 'व्यावसायिक', 'कॉर्पोरेट', 'कंपनी', 'कार्यालय', 'औपचारिक', 'प्रस्तुति', 'बैठक', 'प्रस्ताव', 'रणनीति', 'प्रबंधन', 'नेतृत्व', 'परियोजना', 'योजना', 'बजट', 'वित्त', 'विपणन', 'बिक्री', 'ग्राहक', 'सेवा', 'गुणवत्ता', 'प्रक्रिया', 'नीति', 'प्रलेखन', 'अनुबंध', 'समझौता'];
+    
+    // Creative keywords - ChatGPT best
+    const creativeKeywords = ['write', 'writing', 'story', 'stories', 'creative', 'poem', 'poetry', 'content', 'blog', 'article', 'script', 'dialogue', 'character', 'plot', 'narrative', 'fiction', 'novel', 'short story', 'essay', 'letter', 'email', 'message', 'caption', 'slogan', 'tagline', 'headline', 'title', 'description', 'review', 'summary', 'outline', 'draft', 'edit', 'proofread', 'लिख', 'लेखन', 'कहानी', 'कविता', 'रचनात्मक', 'सामग्री', 'ब्लॉग', 'लेख', 'स्क्रिप्ट', 'संवाद', 'पात्र', 'कथानक', 'कथा', 'कल्पना', 'उपन्यास', 'छोटी कहानी', 'निबंध', 'पत्र', 'ईमेल', 'संदेश', 'कैप्शन', 'नारा', 'शीर्षक', 'विवरण', 'समीक्षा', 'सारांश', 'रूपरेखा', 'मसौदा'];
+    
+    // Social Media keywords - Grok best
+    const socialKeywords = ['social', 'instagram', 'facebook', 'twitter', 'linkedin', 'youtube', 'tiktok', 'snapchat', 'whatsapp', 'post', 'posts', 'caption', 'captions', 'hashtag', 'hashtags', 'viral', 'trending', 'influencer', 'followers', 'likes', 'shares', 'comments', 'engagement', 'content creator', 'vlog', 'reel', 'story', 'stories', 'live', 'stream', 'community', 'audience', 'brand', 'promotion', 'campaign', 'सोशल', 'इंस्टाग्राम', 'फेसबुक', 'ट्विटर', 'लिंक्डइन', 'यूट्यूब', 'टिकटॉक', 'पोस्ट', 'कैप्शन', 'हैशटैग', 'वायरल', 'ट्रेंडिंग', 'फॉलोअर्स', 'लाइक्स', 'शेयर', 'कमेंट्स', 'रील', 'स्टोरी', 'लाइव', 'स्ट्रीम', 'समुदाय', 'ऑडियंस', 'ब्रांड', 'प्रमोशन', 'अभियान'];
+    
+    // Learning/Education keywords - ChatGPT best for step-by-step
+    const learningKeywords = ['learn', 'learning', 'study', 'studying', 'education', 'educational', 'tutorial', 'course', 'lesson', 'teach', 'teaching', 'explain', 'explanation', 'understand', 'understanding', 'concept', 'theory', 'practice', 'exercise', 'homework', 'assignment', 'exam', 'test', 'quiz', 'skill', 'skills', 'knowledge', 'training', 'workshop', 'seminar', 'class', 'classroom', 'student', 'teacher', 'instructor', 'guide', 'guideline', 'सीख', 'सीखना', 'अध्ययन', 'शिक्षा', 'ट्यूटोरियल', 'पाठ्यक्रम', 'पाठ', 'सिखाना', 'समझाना', 'समझना', 'अवधारणा', 'सिद्धांत', 'अभ्यास', 'गृहकार्य', 'असाइनमेंट', 'परीक्षा', 'टेस्ट', 'क्विज', 'कौशल', 'ज्ञान', 'प्रशिक्षण', 'कार्यशाला', 'सेमिनार', 'कक्षा', 'छात्र', 'शिक्षक', 'प्रशिक्षक', 'गाइड', 'दिशानिर्देश'];
+    
+    // Analysis keywords - Claude best for detailed analysis
+    const analysisKeywords = ['analysis', 'analyze', 'analytical', 'evaluate', 'evaluation', 'assessment', 'review', 'examine', 'investigation', 'breakdown', 'detailed', 'thorough', 'comprehensive', 'deep dive', 'insights', 'interpretation', 'conclusion', 'findings', 'results', 'outcome', 'performance', 'metrics', 'measurement', 'comparison', 'contrast', 'pros and cons', 'advantages', 'disadvantages', 'benefits', 'drawbacks', 'विश्लेषण', 'मूल्यांकन', 'समीक्षा', 'जांच', 'जांच-परख', 'विस्तृत', 'गहन', 'व्यापक', 'अंतर्दृष्टि', 'निष्कर्ष', 'खोज', 'परिणाम', 'प्रदर्शन', 'मेट्रिक्स', 'माप', 'तुलना', 'विपरीत', 'फायदे', 'नुकसान', 'लाभ', 'हानि'];
+
+    // Check each category with multiple keyword matches for better accuracy
+    let technicalScore = technicalKeywords.filter(keyword => topicLower.includes(keyword)).length;
+    let researchScore = researchKeywords.filter(keyword => topicLower.includes(keyword)).length;
+    let professionalScore = professionalKeywords.filter(keyword => topicLower.includes(keyword)).length;
+    let creativeScore = creativeKeywords.filter(keyword => topicLower.includes(keyword)).length;
+    let socialScore = socialKeywords.filter(keyword => topicLower.includes(keyword)).length;
+    let learningScore = learningKeywords.filter(keyword => topicLower.includes(keyword)).length;
+    let analysisScore = analysisKeywords.filter(keyword => topicLower.includes(keyword)).length;
+
+    // Find the category with highest score
+    const scores = [
+        { category: 'technical', score: technicalScore },
+        { category: 'research', score: researchScore },
+        { category: 'professional', score: professionalScore },
+        { category: 'creative', score: creativeScore },
+        { category: 'social', score: socialScore },
+        { category: 'learning', score: learningScore },
+        { category: 'analysis', score: analysisScore }
+    ];
+
+    // Sort by score descending
+    scores.sort((a, b) => b.score - a.score);
+    
+    // If highest score is 0 or tie, return general
+    if (scores[0].score === 0 || scores[0].score === scores[1].score) {
+        return 'general';
     }
-};
+    
+    return scores[0].category;
+}
 
 function generatePrompt() {
     const topic = document.getElementById('topic-input').value.trim();
@@ -671,21 +908,8 @@ function generatePrompt() {
         return;
     }
 
-    let toolCategory = 'default';
-    const topicLower = topic.toLowerCase();
-
-    if (topicLower.includes('code') || topicLower.includes('program') || topicLower.includes('develop') || topicLower.includes('technical') || topicLower.includes('कोड') || topicLower.includes('प्रोग्राम')) {
-        toolCategory = 'technical';
-    } else if (topicLower.includes('write') || topicLower.includes('story') || topicLower.includes('creative') || topicLower.includes('poem') || topicLower.includes('लिख') || topicLower.includes('कहानी') || topicLower.includes('कविता')) {
-        toolCategory = 'creative';
-    } else if (topicLower.includes('business') || topicLower.includes('professional') || topicLower.includes('formal') || topicLower.includes('व्यावसायिक') || topicLower.includes('बिज़नेस')) {
-        toolCategory = 'professional';
-    } else if (topicLower.includes('research') || topicLower.includes('analysis') || topicLower.includes('data') || topicLower.includes('अनुसंधान') || topicLower.includes('विश्लेषण')) {
-        toolCategory = 'analysis';
-    } else if (topicLower.includes('image') || topicLower.includes('visual') || topicLower.includes('design') || topicLower.includes('चित्र') || topicLower.includes('डिजाइन')) {
-        toolCategory = 'visual';
-    }
-
+    const category = detectCategory(topic);
+    
     let prompt = '';
     if (outputLanguage === 'hi') {
         prompt = `मुझे ${topic} के बारे में मदद चाहिए। कृपया ${tone.toLowerCase()} भाषा में विस्तार से बताएं। मुझे step-by-step guidance दें और practical examples भी शामिल करें।`;
@@ -696,9 +920,27 @@ function generatePrompt() {
     document.getElementById('generated-prompt').textContent = prompt;
     document.getElementById('output-section').style.display = 'block';
 
-    const recommendedTool = aiTools[toolCategory][currentLanguage];
-    document.getElementById('recommended-tool').textContent = recommendedTool.name;
-    document.getElementById('tool-description').textContent = recommendedTool.description;
+    // Get AI tool recommendations
+    const tools = aiToolsDatabase[category][currentLanguage];
+    
+    // Set primary tool
+    document.getElementById('primary-tool-name').textContent = tools.primary.name;
+    document.getElementById('tool-description').textContent = tools.primary.description;
+    
+    // Set alternative tools
+    const alternativesGrid = document.getElementById('alternative-tools-grid');
+    alternativesGrid.innerHTML = '';
+    
+    tools.alternatives.forEach(tool => {
+        const toolElement = document.createElement('div');
+        toolElement.className = 'ai-tool';
+        toolElement.innerHTML = `
+            <span class="tool-category">ALTERNATIVE</span>
+            ${tool.name}
+        `;
+        toolElement.title = tool.description;
+        alternativesGrid.appendChild(toolElement);
+    });
 
     document.getElementById('output-section').classList.add('fade-in');
 }
