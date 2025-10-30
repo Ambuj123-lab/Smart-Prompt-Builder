@@ -22,7 +22,6 @@ max-width: 1200px;
 margin: 0 auto;
 padding: 20px;
 }
-/* Header Styles */
 .header {
 display: flex;
 justify-content: space-between;
@@ -38,7 +37,6 @@ background: linear-gradient(135deg, #e50914, #ff6b6b, #ffa500);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 background-clip: text;
-text-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
 }
 .language-selector {
 display: flex;
@@ -65,7 +63,6 @@ background: rgba(229, 9, 20, 0.1);
 .lang-btn:hover {
 color: #fff;
 }
-/* Hero Section */
 .hero {
 text-align: center;
 margin-bottom: 80px;
@@ -92,7 +89,6 @@ max-width: 800px;
 margin: 0 auto;
 line-height: 1.8;
 }
-/* Creator Section */
 .creator-section {
 display: flex;
 justify-content: center;
@@ -134,16 +130,11 @@ font-style: italic;
 font-family: 'Courier New', monospace;
 font-weight: 900;
 text-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
-min-height: 24px;
+min-height: 30px;
 display: flex;
 align-items: center;
 justify-content: center;
-border-right: 3px solid #ffa500;
-animation: blink-caret 0.8s step-end infinite;
-}
-@keyframes blink-caret {
-from, to { border-color: transparent }
-50% { border-color: #ffa500 }
+transition: opacity 0.5s ease;
 }
 .creator-links {
 display: flex;
@@ -178,7 +169,6 @@ color: #ffa500;
 font-size: 0.9rem;
 font-weight: 600;
 }
-/* Mission Statement */
 .mission {
 background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
 border-radius: 20px;
@@ -200,7 +190,39 @@ line-height: 1.8;
 max-width: 800px;
 margin: 0 auto;
 }
-/* Prompt Builder Section */
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 20px;
+margin-bottom: 60px;
+}
+.stat-card {
+background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+padding: 25px;
+border-radius: 15px;
+border: 1px solid #333;
+text-align: center;
+transition: all 0.3s ease;
+}
+.stat-card:hover {
+transform: translateY(-5px);
+border-color: #e50914;
+box-shadow: 0 10px 30px rgba(229, 9, 20, 0.2);
+}
+.stat-number {
+font-size: 2.5rem;
+font-weight: 800;
+background: linear-gradient(135deg, #e50914, #ffa500);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+margin-bottom: 10px;
+}
+.stat-label {
+color: #888;
+font-size: 0.9rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
 .prompt-builder {
 background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
 border-radius: 20px;
@@ -237,6 +259,7 @@ font-size: 1rem;
 transition: all 0.3s ease;
 min-height: 100px;
 resize: vertical;
+font-family: inherit;
 }
 .form-input:focus {
 outline: none;
@@ -273,14 +296,14 @@ transition: all 0.3s ease;
 margin-bottom: 30px;
 text-transform: uppercase;
 letter-spacing: 0.5px;
-position: relative;
-overflow: hidden;
 }
 .generate-btn:hover {
 transform: translateY(-3px);
 box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4);
 }
-/* Output Section */
+.generate-btn:active {
+transform: translateY(-1px);
+}
 .output-section {
 margin-top: 30px;
 }
@@ -298,6 +321,7 @@ font-size: 1rem;
 line-height: 1.6;
 min-height: 60px;
 white-space: pre-wrap;
+word-wrap: break-word;
 }
 .copy-btn {
 position: absolute;
@@ -313,7 +337,7 @@ font-size: 0.8rem;
 transition: all 0.3s ease;
 }
 .copy-btn:hover {
-background: #555;
+background: #22c55e;
 }
 .recommendation {
 background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
@@ -342,9 +366,6 @@ font-weight: 600;
 font-size: 0.9rem;
 transition: all 0.3s ease;
 cursor: pointer;
-border: 2px solid transparent;
-position: relative;
-overflow: hidden;
 }
 .ai-tool:hover {
 transform: translateY(-2px);
@@ -352,12 +373,8 @@ box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
 }
 .ai-tool.primary {
 background: linear-gradient(135deg, #e50914, #ff4757);
-border-color: #ffa500;
 font-size: 1rem;
 padding: 15px 20px;
-}
-.ai-tool.primary:hover {
-box-shadow: 0 10px 25px rgba(229, 9, 20, 0.4);
 }
 .tool-category {
 font-size: 0.7rem;
@@ -378,23 +395,12 @@ padding: 15px;
 border-radius: 10px;
 border-left: 4px solid #e50914;
 }
-.alternative-tools {
-margin-top: 20px;
-}
-.alternative-tools h4 {
-color: #ffa500;
-margin-bottom: 10px;
-font-size: 1rem;
-}
-/* Language Preference */
-.language-preference {
-margin-bottom: 25px;
-}
 .lang-toggle {
 display: flex;
 gap: 10px;
 justify-content: center;
 margin-bottom: 15px;
+flex-wrap: wrap;
 }
 .lang-option {
 background: #333;
@@ -410,7 +416,250 @@ font-size: 0.9rem;
 background: #e50914;
 transform: scale(1.05);
 }
-/* Footer */
+.lang-option:hover {
+background: #444;
+}
+.lang-option.active:hover {
+background: #e50914;
+}
+.strategy-card {
+background: #1a1a1a;
+padding: 12px;
+border-radius: 10px;
+border: 2px solid #333;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+.strategy-card:hover {
+border-color: #e50914;
+transform: translateY(-2px);
+}
+.strategy-card.active {
+border-color: #e50914;
+background: rgba(229, 9, 20, 0.1);
+}
+.token-opt-btn {
+flex: 1;
+background: #2a2a2a;
+border: 1px solid #333;
+color: #ccc;
+padding: 8px 12px;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s ease;
+font-size: 0.85rem;
+}
+.token-opt-btn:hover {
+border-color: #e50914;
+}
+.token-opt-btn.active {
+background: #e50914;
+color: #fff;
+border-color: #e50914;
+}
+input[type="range"] {
+-webkit-appearance: none;
+appearance: none;
+background: #2a2a2a;
+outline: none;
+border-radius: 5px;
+height: 6px;
+width: 100%;
+}
+input[type="range"]::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 18px;
+height: 18px;
+background: #e50914;
+cursor: pointer;
+border-radius: 50%;
+}
+input[type="range"]::-moz-range-thumb {
+width: 18px;
+height: 18px;
+background: #e50914;
+cursor: pointer;
+border-radius: 50%;
+border: none;
+}
+.saved-prompts-section {
+background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+border-radius: 20px;
+padding: 40px;
+margin-bottom: 60px;
+border: 1px solid #333;
+}
+.saved-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 25px;
+flex-wrap: wrap;
+gap: 15px;
+}
+.search-box {
+flex: 1;
+min-width: 250px;
+padding: 12px 20px;
+background: #0a0a0a;
+border: 2px solid #333;
+border-radius: 25px;
+color: #fff;
+font-size: 0.9rem;
+transition: all 0.3s ease;
+}
+.search-box:focus {
+outline: none;
+border-color: #e50914;
+}
+.prompt-analysis {
+background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+border-radius: 20px;
+padding: 40px;
+margin-bottom: 60px;
+border: 1px solid #333;
+}
+.analysis-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 20px;
+margin-bottom: 30px;
+}
+.analysis-card {
+background: rgba(0, 0, 0, 0.2);
+border-radius: 15px;
+padding: 20px;
+border: 1px solid #333;
+}
+.analysis-card h3 {
+color: #e50914;
+margin-bottom: 15px;
+font-size: 1.2rem;
+}
+.score-meter {
+height: 30px;
+background: rgba(0, 0, 0, 0.3);
+border-radius: 15px;
+overflow: hidden;
+position: relative;
+}
+.score-bar {
+height: 100%;
+background: linear-gradient(90deg, #e50914, #ffa500);
+width: 0%;
+transition: width 1s ease-in-out;
+}
+.score-labels {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 15px;
+color: white;
+font-size: 0.8rem;
+}
+.cognitive-chart {
+height: 200px;
+display: flex;
+justify-content: center;
+align-items: center;
+color: #ccc;
+font-size: 0.9rem;
+}
+.evolution-steps {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+.evolution-step {
+background: rgba(229, 9, 20, 0.1);
+padding: 10px;
+border-radius: 8px;
+border-left: 3px solid #e50914;
+font-size: 0.9rem;
+color: #ccc;
+}
+.heatmap {
+height: 200px;
+background: rgba(0, 0, 0, 0.2);
+border-radius: 10px;
+overflow: hidden;
+padding: 15px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #888;
+font-size: 0.85rem;
+}
+.prompt-metrics {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 15px;
+margin-top: 20px;
+}
+.metric-card {
+background: rgba(0, 0, 0, 0.2);
+border-radius: 10px;
+padding: 15px;
+text-align: center;
+}
+.metric-card h4 {
+color: #ffa500;
+font-size: 0.9rem;
+margin-bottom: 10px;
+}
+.metric-value {
+font-size: 1.5rem;
+font-weight: 700;
+background: linear-gradient(135deg, #e50914, #ffa500);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+.future-scope {
+background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+border-radius: 20px;
+padding: 40px;
+margin-bottom: 60px;
+border: 2px solid #ffa500;
+}
+.future-scope h2 {
+color: #ffa500;
+margin-bottom: 25px;
+font-size: 1.8rem;
+text-align: center;
+}
+.future-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 20px;
+}
+.future-card {
+background: rgba(255, 165, 0, 0.1);
+padding: 20px;
+border-radius: 12px;
+border: 1px solid rgba(255, 165, 0, 0.3);
+transition: all 0.3s ease;
+}
+.future-card:hover {
+transform: translateY(-5px);
+border-color: #ffa500;
+box-shadow: 0 10px 30px rgba(255, 165, 0, 0.2);
+}
+.future-card h3 {
+color: #ffa500;
+font-size: 1.1rem;
+margin-bottom: 10px;
+}
+.future-card p {
+color: #ccc;
+font-size: 0.9rem;
+line-height: 1.5;
+}
 .footer {
 text-align: center;
 padding: 40px 0;
@@ -425,7 +674,6 @@ margin-bottom: 10px;
 color: #e50914;
 font-weight: 600;
 }
-/* Responsive */
 @media (max-width: 768px) {
 .header {
 flex-direction: column;
@@ -436,60 +684,54 @@ flex-direction: column;
 gap: 30px;
 padding: 25px;
 }
-.creator-links {
-flex-direction: column;
-align-items: center;
-}
-.prompt-builder {
-padding: 25px;
-}
-.container {
-padding: 15px;
-}
-.creator-photo {
-width: 120px;
-height: 120px;
-}
-.ai-tools-grid {
+.analysis-grid {
 grid-template-columns: 1fr;
 }
-}
-.fade-in {
-animation: fadeIn 0.6s ease-out;
-}
-@keyframes fadeIn {
-from {
-opacity: 0;
-transform: translateY(20px);
-}
-to {
-opacity: 1;
-transform: translateY(0);
+.prompt-metrics {
+grid-template-columns: repeat(2, 1fr);
 }
 }
 </style>
 </head>
 <body>
 <div class="container">
-<!-- Header -->
 <header class="header">
-<div class="logo">Ambuj’s Prompt Playground</div>
+<div class="logo">Ambuj's Prompt Playground</div>
 <div class="language-selector">
-<button class="lang-btn active" onclick="switchLanguage('hi')" id="hi-btn">हिंदी</button>
-<button class="lang-btn" onclick="switchLanguage('en')" id="en-btn">English</button>
+<button class="lang-btn active" data-lang="hi">हिंदी</button>
+<button class="lang-btn" data-lang="en">English</button>
 </div>
 </header>
-<!-- Hero Section -->
+
 <section class="hero">
 <h1 id="hero-title">हर रोज़ की मुश्किलें, अब आसान।</h1>
-<p id="hero-description">Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें। हम आपको perfect prompts देते हैं और सही AI tool भी suggest करते हैं।</p>
+<p id="hero-description">Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें।</p>
 </section>
-<!-- Creator Section -->
+
+<div class="stats-grid">
+<div class="stat-card">
+<div class="stat-number">25+</div>
+<div class="stat-label">AI Categories</div>
+</div>
+<div class="stat-card">
+<div class="stat-number" id="stat-prompts">0</div>
+<div class="stat-label">Prompts Generated</div>
+</div>
+<div class="stat-card">
+<div class="stat-number" id="stat-saved">0</div>
+<div class="stat-label">Saved Prompts</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">50+</div>
+<div class="stat-label">AI Tools Database</div>
+</div>
+</div>
+
 <section class="creator-section">
 <div class="creator-info">
 <img src="https://i.postimg.cc/GmctbT9t/IMG-20250901-215704.jpg" alt="Ambuj Kumar Tripathi" class="creator-photo">
 <div class="creator-name">Ambuj Kumar Tripathi</div>
-<div class="creator-designation" id="creator-designation">AI & Full Stack Developer | Innovation Enthusiast</div>
+<div class="creator-designation" id="creator-designation">AI Prompt Engineer</div>
 <div class="creator-links">
 <a href="https://ambuj123-lab.github.io/Ambuj_AI_Portfolio/" class="creator-link" target="_blank" id="portfolio-link">Portfolio देखें</a>
 </div>
@@ -499,469 +741,574 @@ transform: translateY(0);
 <div class="qr-text" id="qr-text">मेरा ChatBot देखने के लिए स्कैन करें</div>
 </div>
 </section>
-<!-- Mission Statement -->
+
 <section class="mission">
 <h2 id="mission-title">हमारा मिशन</h2>
-<p id="mission-description">यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं। हमारा उद्देश्य simple है: गैर-तकनीकी users को अपनी daily life में AI का confidently उपयोग करने में मदद करना। हम effective prompts बनाने के लिए एक simple framework प्रदान करते हैं और सही AI tool भी suggest करते हैं।</p>
+<p id="mission-description">यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं। हमारा उद्देश्य simple है: गैर-तकनीकी users को अपनी daily life में AI का confidently उपयोग करने में मदद करना।</p>
 </section>
-<!-- Prompt Builder -->
+
 <section class="prompt-builder">
 <h2 class="section-title" id="builder-title">Smart Prompt Builder</h2>
+
 <div class="form-group">
-<label class="form-label" id="topic-label" for="topic-input">आप किस problem के लिए AI की help चाहते हैं?</label>
-<textarea id="topic-input" class="form-input" placeholder="जैसे: Maa ke liye birthday wish likhna hai jo dil se nikle, ya job interview के लिए tips चाहिए..."></textarea>
+<label class="form-label" id="topic-label">आप किस problem के लिए AI की help चाहते हैं?</label>
+<textarea id="topic-input" class="form-input" placeholder="जैसे: make a calculator app, design modern logo, write blog on AI..."></textarea>
 </div>
-<div class="form-group language-preference">
-<label class="form-label" id="output-lang-label">आपको prompt किस भाषा में चाहिए?</label>
+
+<div class="form-group">
+<label class="form-label">🧠 Prompting Strategy</label>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+<div class="strategy-card" data-strategy="zero-shot">
+<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">⚡ Zero-Shot</div>
+<div style="font-size: 0.85rem; color: #888;">Direct task, no examples</div>
+</div>
+<div class="strategy-card" data-strategy="few-shot">
+<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🎯 Few-Shot</div>
+<div style="font-size: 0.85rem; color: #888;">Learn from examples</div>
+</div>
+<div class="strategy-card active" data-strategy="chain-of-thought">
+<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🔗 Chain-of-Thought</div>
+<div style="font-size: 0.85rem; color: #888;">Step-by-step reasoning</div>
+</div>
+<div class="strategy-card" data-strategy="tree-of-thought">
+<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🌳 Tree-of-Thought</div>
+<div style="font-size: 0.85rem; color: #888;">Explore multiple paths</div>
+</div>
+<div class="strategy-card" data-strategy="react">
+<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🔄 ReAct</div>
+<div style="font-size: 0.85rem; color: #888;">Reason + Act cycles</div>
+</div>
+</div>
+</div>
+
+<div class="form-group">
+<label class="form-label">⚙️ Token Optimization</label>
+<div style="background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+<span style="color: #ccc;">Estimated Tokens:</span>
+<span id="token-estimate" style="color: #22c55e; font-weight: 600;">~0</span>
+</div>
+<div style="display: flex; gap: 10px; margin-bottom: 10px;">
+<button class="token-opt-btn active" data-level="concise">Concise</button>
+<button class="token-opt-btn" data-level="balanced">Balanced</button>
+<button class="token-opt-btn" data-level="detailed">Detailed</button>
+</div>
+<div style="color: #888; font-size: 0.85rem;">
+<span id="model-recommendation">💡 Recommended: Claude Sonnet 4</span>
+</div>
+</div>
+</div>
+
+<div class="form-group">
+<label class="form-label" id="output-lang-label">Output Language</label>
 <div class="lang-toggle">
-<button class="lang-option active" onclick="setOutputLanguage('hi')" id="output-hi">हिंदी</button>
-<button class="lang-option" onclick="setOutputLanguage('en')" id="output-en">English</button>
+<button class="lang-option active" data-lang="hi">हिंदी</button>
+<button class="lang-option" data-lang="en">English</button>
+<button class="lang-option" data-lang="hinglish">Hinglish</button>
 </div>
 </div>
+
 <div class="form-group">
-<label class="form-label" id="tone-label" for="tone-select">कैसी भाषा चाहिए?</label>
+<label class="form-label" id="tone-label">Tone</label>
 <select id="tone-select" class="form-select">
-<option value="Professional">Professional (व्यावसायिक)</option>
-<option value="Casual">Casual (आम बोलचाल की)</option>
-<option value="Friendly">Friendly (दोस्ताना)</option>
-<option value="Informative">Informative (जानकारीपूर्ण)</option>
-<option value="Creative">Creative (रचनात्मक)</option>
-<option value="Technical">Technical (तकनीकी)</option>
+<option value="Friendly">Friendly</option>
+<option value="Professional">Professional</option>
+<option value="Casual">Casual</option>
+<option value="Creative">Creative</option>
+<option value="Technical">Technical</option>
 </select>
 </div>
-<button class="generate-btn" onclick="generatePrompt()" id="generate-btn">Perfect Prompt बनाएं</button>
-<div class="output-section" id="output-section" style="display: none;">
+
+<div class="form-group">
+<label class="form-label">🎚️ Advanced Controls</label>
+<div style="background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333;">
+<div style="margin-bottom: 15px;">
+<label style="color: #ccc; font-size: 0.9rem; display: block; margin-bottom: 5px;">
+Temperature: <span id="temp-value">0.7</span>
+</label>
+<input type="range" id="temperature-slider" min="0" max="1" step="0.1" value="0.7">
+</div>
+<div>
+<label style="color: #ccc; font-size: 0.9rem; display: block; margin-bottom: 5px;">
+Max Tokens: <span id="max-tokens">2048</span>
+</label>
+<input type="range" id="max-tokens-slider" min="256" max="4096" step="256" value="2048">
+</div>
+</div>
+</div>
+
+<button id="generate-btn" class="generate-btn">Generate Smart Prompt</button>
+
+<div class="output-section">
 <div class="output-container">
-<div class="output-text" id="generated-prompt"></div>
-<button class="copy-btn" onclick="copyPrompt()" id="copy-btn">Copy</button>
+<div class="output-text" id="output-text">Your AI-optimized prompt will appear here...</div>
+<button class="copy-btn" id="copy-btn">Copy</button>
 </div>
+
 <div class="recommendation">
-<h3 id="rec-title">सबसे अच्छा AI Tool</h3>
+<h3 id="rec-title">Recommended AI Tools</h3>
 <div class="ai-tools-grid">
-<div class="ai-tool primary" id="primary-tool">
-<span class="tool-category" id="tool-category">RECOMMENDED</span>
-<span id="primary-tool-name">ChatGPT</span>
+<div class="ai-tool primary" id="best-tool">
+<span class="tool-category">Best Match</span>
+<span id="best-tool-name">ChatGPT-4</span>
+</div>
+<div class="ai-tool">
+<span class="tool-category">Alternative</span>
+<span id="alt-tool-1">Claude 2</span>
+</div>
+<div class="ai-tool">
+<span class="tool-category">Alternative</span>
+<span id="alt-tool-2">Bard</span>
 </div>
 </div>
-<div class="tool-description" id="tool-description"></div>
-<div class="alternative-tools">
-<h4 id="alternatives-title">अन्य विकल्प:</h4>
-<div class="ai-tools-grid" id="alternative-tools-grid">
-</div>
+<div class="tool-description" id="tool-description">
+ChatGPT-4 is recommended for this prompt due to its advanced reasoning capabilities and broad knowledge base.
 </div>
 </div>
 </div>
 </section>
-<!-- Footer -->
+
+<section class="saved-prompts-section">
+<div class="saved-header">
+<h2 class="section-title" id="saved-title">Saved Prompts</h2>
+<input type="text" class="search-box" id="prompt-search" placeholder="Search saved prompts...">
+</div>
+<div class="saved-list" id="saved-prompts">
+<p style="color: #888; text-align: center; padding: 20px;">No saved prompts yet. Generate your first prompt!</p>
+</div>
+</section>
+
+<section class="prompt-analysis">
+<h2 class="section-title">Prompt Engineering Analysis</h2>
+<div class="analysis-grid">
+<div class="analysis-card">
+<h3>🎯 Prompt Effectiveness Score</h3>
+<div class="score-meter">
+<div class="score-bar" id="effectiveness-score"></div>
+<div class="score-labels">
+<span>Clarity</span>
+<span>Context</span>
+<span>Constraints</span>
+</div>
+</div>
+</div>
+
+<div class="analysis-card">
+<h3>🧠 Cognitive Framework</h3>
+<div class="cognitive-chart" id="cognitive-chart">
+<span>Framework will appear after generation</span>
+</div>
+</div>
+
+<div class="analysis-card">
+<h3>🔄 Prompt Evolution</h3>
+<div class="evolution-steps" id="evolution-steps">
+<div class="evolution-step">Generate a prompt to see evolution steps</div>
+</div>
+</div>
+
+<div class="analysis-card">
+<h3>🎨 Semantic Heatmap</h3>
+<div class="heatmap" id="semantic-heatmap">
+Heatmap will render after generation
+</div>
+</div>
+</div>
+
+<div class="prompt-metrics">
+<div class="metric-card">
+<h4>Semantic Density</h4>
+<div class="metric-value" id="semantic-density">0.0</div>
+</div>
+<div class="metric-card">
+<h4>Context Richness</h4>
+<div class="metric-value" id="context-richness">0.0</div>
+</div>
+<div class="metric-card">
+<h4>Instruction Clarity</h4>
+<div class="metric-value" id="instruction-clarity">0.0</div>
+</div>
+<div class="metric-card">
+<h4>Constraint Balance</h4>
+<div class="metric-value" id="constraint-balance">0.0</div>
+</div>
+</div>
+</section>
+
+<section class="future-scope">
+<h2 id="future-title">Future Updates</h2>
+<div class="future-grid">
+<div class="future-card">
+<h3>🎯 Personalization</h3>
+<p>Custom templates and user preferences</p>
+</div>
+<div class="future-card">
+<h3>🤖 AI Integration</h3>
+<p>Direct integration with popular AI models</p>
+</div>
+<div class="future-card">
+<h3>📱 Mobile App</h3>
+<p>Native mobile experience coming soon</p>
+</div>
+</div>
+</section>
+
 <footer class="footer">
-<div class="creator-credit">Created with 💡 by <span class="creator-name-footer">Ambuj Kumar Tripathi</span> | Bringing AI closer to people</div>
-<div id="footer-text">Built with vanilla HTML, CSS & JavaScript | Client-side processing | Zero data collection</div>
+<div class="creator-credit">
+Created with ❤️ by <span class="creator-name-footer">Ambuj Kumar Tripathi</span>
+</div>
+<div>© 2025 All rights reserved</div>
 </footer>
 </div>
 
 <script>
-let currentLanguage = 'hi';
-let outputLanguage = 'hi';
-let currentTextIndex = 0;
-
-const typewriterTexts = {
-    hi: ["AI & Full Stack Developer | Innovation Enthusiast", "Creative Problem Solver | Tech Explorer", "Building Future with Code | AI Enthusiast"],
-    en: ["AI & Full Stack Developer | Innovation Enthusiast", "Creative Problem Solver | Tech Explorer", "Building Future with Code | AI Enthusiast"]
-};
-
-function startTypewriter() {
-    const element = document.getElementById('creator-designation');
-    if (!element) return;
-    
-    const texts = typewriterTexts[currentLanguage];
-    let currentText = texts[currentTextIndex];
-    let currentChar = 0;
-    let isDeleting = false;
-    let isWaitingToDelete = false;
-    let wordDeleteIndex = 0;
-    let words = [];
-
-    element.textContent = '';
-
-    function type() {
-        if (!isDeleting && !isWaitingToDelete) {
-            element.textContent = currentText.slice(0, currentChar++);
-            
-            if (currentChar > currentText.length) {
-                isWaitingToDelete = true;
-                setTimeout(() => {
-                    words = currentText.split(' ');
-                    wordDeleteIndex = words.length;
-                    isWaitingToDelete = false;
-                    isDeleting = true;
-                }, 2000);
-                return;
-            }
-        } else if (isDeleting) {
-            if (wordDeleteIndex > 0) {
-                wordDeleteIndex--;
-                element.textContent = words.slice(0, wordDeleteIndex).join(' ');
-                
-                if (wordDeleteIndex === 0) {
-                    currentTextIndex = (currentTextIndex + 1) % texts.length;
-                    currentText = texts[currentTextIndex];
-                    currentChar = 0;
-                    isDeleting = false;
-                    
-                    setTimeout(() => {
-                        type();
-                    }, 500);
-                    return;
-                }
-            }
-        }
-        
-        let speed = isDeleting ? 200 : 50;
-        setTimeout(type, speed);
-    }
-
-    setTimeout(type, 500);
-}
-
-const content = {
-    en: {
-        heroTitle: "Daily Problems, Smart AI Solutions",
-        heroDescription: "Just type your message, get instant AI-powered solutions. This tool is created to help you solve your daily problems easily with AI assistance. We provide you with perfect prompts and suggest the right AI tool as well.",
-        missionTitle: "Our Mission",
-        missionDescription: "This tool is built to make AI accessible for everyone. Our purpose is simple: to help people solve their everyday problems using AI technology. We provide smart prompts and recommend the best AI tools based on your specific needs.",
-        builderTitle: "Smart Problem Solver",
-        topicLabel: "What problem do you need AI help with?",
-        topicPlaceholder: "e.g., Write a heartfelt birthday wish for Mom, or I need job interview tips, or help with presentation ideas...",
-        outputLangLabel: "Which language do you want the prompt in?",
-        toneLabel: "What kind of response do you want?",
-        generateBtn: "Generate Smart Solution",
-        copyBtn: "Copy",
-        recTitle: "Best AI Tool for You",
-        alternativesTitle: "Other Options:",
-        qrText: "Scan to explore my ChatBot",
-        portfolioLink: "View Portfolio",
-        footerText: "Built with vanilla HTML, CSS & JavaScript | Client-side processing | Zero data collection"
-    },
-    hi: {
-        heroTitle: "हर रोज़ की मुश्किलें, अब आसान।",
-        heroDescription: "Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें। हम आपको perfect prompts देते हैं और सही AI tool भी suggest करते हैं।",
-        missionTitle: "हमारा मिशन",
-        missionDescription: "यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं। हमारा उद्देश्य simple है: गैर-तकनीकी users को अपनी daily life में AI का confidently उपयोग करने में मदद करना। हम effective prompts बनाने के लिए एक simple framework प्रदान करते हैं और सही AI tool भी suggest करते हैं।",
-        builderTitle: "Smart Prompt Builder",
-        topicLabel: "आप किस problem के लिए AI की help चाहते हैं?",
-        topicPlaceholder: "जैसे: Maa ke liye birthday wish likhna hai jo dil se nikle, ya job interview के लिए tips चाहिए...",
-        outputLangLabel: "आपको prompt किस भाषा में चाहिए?",
-        toneLabel: "कैसी भाषा चाहिए?",
-        generateBtn: "Perfect Prompt बनाएं",
-        copyBtn: "Copy",
-        recTitle: "सबसे अच्छा AI Tool",
-        alternativesTitle: "अन्य विकल्प:",
-        qrText: "मेरा ChatBot देखने के लिए स्कैन करें",
-        portfolioLink: "Portfolio देखें",
-        footerText: "Built with vanilla HTML, CSS & JavaScript | Client-side processing | Zero data collection"
-    }
-};
-
-// Enhanced AI Tools Database with multiple options for each category
-const aiToolsDatabase = {
-    creative: {
-        hi: {
-            primary: { name: "ChatGPT", description: "Creative writing, storytelling और content creation के लिए बेस्ट। Natural language में बेहतरीन results देता है और imagination के साथ काम करता है।" },
-            alternatives: [
-                { name: "Claude", description: "Long-form creative content और detailed stories के लिए excellent" },
-                { name: "Gemini", description: "Multilingual creative content और poetry के लिए अच्छा" },
-                { name: "DeepSeek", description: "Creative problem solving और innovative ideas के लिए" }
-            ]
-        },
-        en: {
-            primary: { name: "ChatGPT", description: "Best for creative writing, storytelling and content creation. Provides excellent results in natural language and works great with imagination." },
-            alternatives: [
-                { name: "Claude", description: "Excellent for long-form creative content and detailed stories" },
-                { name: "Gemini", description: "Good for multilingual creative content and poetry" },
-                { name: "DeepSeek", description: "Great for creative problem solving and innovative ideas" }
-            ]
-        }
-    },
-    professional: {
-        hi: {
-            primary: { name: "Claude", description: "Professional documents, business communication और formal writing के लिए perfect। Structure और clarity में expert है।" },
-            alternatives: [
-                { name: "ChatGPT", description: "Business emails और presentations के लिए versatile" },
-                { name: "Gemini", description: "Professional analysis और reports के लिए अच्छा" },
-                { name: "DeepSeek", description: "Complex business strategies के लिए deep insights" }
-            ]
-        },
-        en: {
-            primary: { name: "Claude", description: "Perfect for professional documents, business communication and formal writing. Expert in structure and clarity." },
-            alternatives: [
-                { name: "ChatGPT", description: "Versatile for business emails and presentations" },
-                { name: "Gemini", description: "Good for professional analysis and reports" },
-                { name: "DeepSeek", description: "Deep insights for complex business strategies" }
-            ]
-        }
-    },
-    technical: {
-        hi: {
-            primary: { name: "DeepSeek", description: "Coding, programming और technical problems के लिए बेहद powerful। Complex algorithms और debugging में master है।" },
-            alternatives: [
-                { name: "Claude", description: "Clean code और best practices के लिए excellent" },
-                { name: "ChatGPT", description: "Code explanation और learning के लिए अच्छा" },
-                { name: "Gemini", description: "Multiple programming languages में support" }
-            ]
-        },
-        en: {
-            primary: { name: "DeepSeek", description: "Extremely powerful for coding, programming and technical problems. Master in complex algorithms and debugging." },
-            alternatives: [
-                { name: "Claude", description: "Excellent for clean code and best practices" },
-                { name: "ChatGPT", description: "Good for code explanation and learning" },
-                { name: "Gemini", description: "Support for multiple programming languages" }
-            ]
-        }
-    },
-    research: {
-        hi: {
-            primary: { name: "Perplexity", description: "Research, data analysis और current information के लिए सबसे powerful। Real-time updates और accurate sources के साथ detailed insights देता है।" },
-            alternatives: [
-                { name: "Claude", description: "Deep research और analytical thinking के लिए" },
-                { name: "Gemini", description: "Academic research और fact-checking के लिए" },
-                { name: "ChatGPT", description: "General research और information gathering के लिए" }
-            ]
-        },
-        en: {
-            primary: { name: "Perplexity", description: "Most powerful for research, data analysis and current information. Provides detailed insights with real-time updates and accurate sources." },
-            alternatives: [
-                { name: "Claude", description: "For deep research and analytical thinking" },
-                { name: "Gemini", description: "For academic research and fact-checking" },
-                { name: "ChatGPT", description: "For general research and information gathering" }
-            ]
-        }
-    },
-    social: {
-        hi: {
-            primary: { name: "Grok", description: "Social media content, trending topics और witty responses के लिए perfect। Modern language और internet culture को समझता है।" },
-            alternatives: [
-                { name: "ChatGPT", description: "Engaging social content और captions के लिए" },
-                { name: "Claude", description: "Professional social media posts के लिए" },
-                { name: "Gemini", description: "Multi-platform social content के लिए" }
-            ]
-        },
-        en: {
-            primary: { name: "Grok", description: "Perfect for social media content, trending topics and witty responses. Understands modern language and internet culture." },
-            alternatives: [
-                { name: "ChatGPT", description: "For engaging social content and captions" },
-                { name: "Claude", description: "For professional social media posts" },
-                { name: "Gemini", description: "For multi-platform social content" }
-            ]
-        }
-    },
-    analysis: {
-        hi: {
-            primary: { name: "Claude", description: "Complex data analysis, detailed reports और strategic thinking के लिए excellent। Deep insights और structured analysis प्रदान करता है।" },
-            alternatives: [
-                { name: "Perplexity", description: "Current data और market analysis के लिए" },
-                { name: "DeepSeek", description: "Technical और scientific analysis के लिए" },
-                { name: "Gemini", description: "Visual data interpretation के लिए" }
-            ]
-        },
-        en: {
-            primary: { name: "Claude", description: "Excellent for complex data analysis, detailed reports and strategic thinking. Provides deep insights and structured analysis." },
-            alternatives: [
-                { name: "Perplexity", description: "For current data and market analysis" },
-                { name: "DeepSeek", description: "For technical and scientific analysis" },
-                { name: "Gemini", description: "For visual data interpretation" }
-            ]
-        }
-    },
-    learning: {
-        hi: {
-            primary: { name: "ChatGPT", description: "Learning, education और skill development के लिए बेस्ट। Step-by-step explanations और interactive learning में expert है।" },
-            alternatives: [
-                { name: "Claude", description: "Detailed tutorials और structured learning के लिए" },
-                { name: "Perplexity", description: "Latest learning resources के साथ updated knowledge के लिए" },
-                { name: "Gemini", description: "Visual learning और examples के साथ" }
-            ]
-        },
-        en: {
-            primary: { name: "ChatGPT", description: "Best for learning, education and skill development. Expert in step-by-step explanations and interactive learning." },
-            alternatives: [
-                { name: "Claude", description: "For detailed tutorials and structured learning" },
-                { name: "Perplexity", description: "For updated knowledge with latest learning resources" },
-                { name: "Gemini", description: "For visual learning with examples" }
-            ]
-        }
-    },
-    general: {
-        hi: {
-            primary: { name: "ChatGPT", description: "General problems और daily life के सवालों के लिए सबसे versatile। हर तरह के काम में helpful और user-friendly है।" },
-            alternatives: [
-                { name: "Claude", description: "Detailed और thoughtful responses के लिए" },
-                { name: "Gemini", description: "Quick answers और multi-modal tasks के लिए" },
-                { name: "Perplexity", description: "Current information के साथ general queries के लिए" }
-            ]
-        },
-        en: {
-            primary: { name: "ChatGPT", description: "Most versatile for general problems and daily life questions. Helpful and user-friendly in all kinds of tasks." },
-            alternatives: [
-                { name: "Claude", description: "For detailed and thoughtful responses" },
-                { name: "Gemini", description: "For quick answers and multi-modal tasks" },
-                { name: "Perplexity", description: "For general queries with current information" }
-            ]
-        }
-    }
-};
-
-function switchLanguage(lang) {
-    currentLanguage = lang;
-    
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(lang + '-btn').classList.add('active');
-    
-    const langContent = content[lang];
-    document.getElementById('hero-title').textContent = langContent.heroTitle;
-    document.getElementById('hero-description').textContent = langContent.heroDescription;
-    document.getElementById('mission-title').textContent = langContent.missionTitle;
-    document.getElementById('mission-description').textContent = langContent.missionDescription;
-    document.getElementById('builder-title').textContent = langContent.builderTitle;
-    document.getElementById('topic-label').textContent = langContent.topicLabel;
-    document.getElementById('topic-input').placeholder = langContent.topicPlaceholder;
-    document.getElementById('output-lang-label').textContent = langContent.outputLangLabel;
-    document.getElementById('tone-label').textContent = langContent.toneLabel;
-    document.getElementById('generate-btn').textContent = langContent.generateBtn;
-    document.getElementById('alternatives-title').textContent = langContent.alternativesTitle;
-    document.getElementById('qr-text').textContent = langContent.qrText;
-    document.getElementById('portfolio-link').textContent = langContent.portfolioLink;
-    document.getElementById('footer-text').textContent = langContent.footerText;
-    
-    // Reset and restart typewriter
-    typewriterRunning = false;
-    currentTextIndex = 0;
-    startTypewriter();
-}
-
-function setOutputLanguage(lang) {
-    outputLanguage = lang;
-    document.querySelectorAll('.lang-option').forEach(btn => btn.classList.remove('active'));
-    document.getElementById('output-' + lang).classList.add('active');
-}
-
-function detectCategory(topic) {
-    const topicLower = topic.toLowerCase();
-    
-    // Technical/Coding keywords - DeepSeek best
-    const technicalKeywords = ['code', 'coding', 'program', 'programming', 'develop', 'developer', 'software', 'algorithm', 'debug', 'javascript', 'python', 'java', 'css', 'html', 'react', 'nodejs', 'database', 'api', 'framework', 'library', 'github', 'git', 'terminal', 'command', 'function', 'variable', 'array', 'object', 'class', 'method', 'syntax', 'error', 'bug', 'compiler', 'interpreter', 'कोड', 'प्रोग्राम', 'सॉफ्टवेयर', 'डेवलप', 'एल्गोरिदम', 'डिबग', 'फंक्शन', 'वेरिएबल', 'एरर', 'बग'];
-    
-    // Research keywords - Perplexity best
-    const researchKeywords = ['research', 'study', 'analysis', 'analyze', 'data', 'statistics', 'survey', 'information', 'facts', 'current', 'latest', 'news', 'trends', 'market', 'compare', 'comparison', 'investigate', 'explore', 'findings', 'report', 'scientific', 'academic', 'paper', 'journal', 'publication', 'evidence', 'proof', 'verify', 'confirm', 'अनुसंधान', 'विश्लेषण', 'जानकारी', 'तथ्य', 'समसामयिक', 'ताजा', 'समाचार', 'ट्रेंड', 'बाजार', 'तुलना', 'जांच', 'रिपोर्ट', 'वैज्ञानिक', 'शैक्षणिक', 'सबूत', 'पुष्टि'];
-    
-    // Professional keywords - Claude best
-    const professionalKeywords = ['business', 'professional', 'corporate', 'company', 'office', 'formal', 'presentation', 'meeting', 'proposal', 'strategy', 'management', 'leadership', 'project', 'planning', 'budget', 'finance', 'marketing', 'sales', 'client', 'customer', 'service', 'quality', 'process', 'workflow', 'policy', 'procedure', 'documentation', 'contract', 'agreement', 'negotiation', 'व्यावसायिक', 'कॉर्पोरेट', 'कंपनी', 'कार्यालय', 'औपचारिक', 'प्रस्तुति', 'बैठक', 'प्रस्ताव', 'रणनीति', 'प्रबंधन', 'नेतृत्व', 'परियोजना', 'योजना', 'बजट', 'वित्त', 'विपणन', 'बिक्री', 'ग्राहक', 'सेवा', 'गुणवत्ता', 'प्रक्रिया', 'नीति', 'प्रलेखन', 'अनुबंध', 'समझौता'];
-    
-    // Creative keywords - ChatGPT best
-    const creativeKeywords = ['write', 'writing', 'story', 'stories', 'creative', 'poem', 'poetry', 'content', 'blog', 'article', 'script', 'dialogue', 'character', 'plot', 'narrative', 'fiction', 'novel', 'short story', 'essay', 'letter', 'email', 'message', 'caption', 'slogan', 'tagline', 'headline', 'title', 'description', 'review', 'summary', 'outline', 'draft', 'edit', 'proofread', 'लिख', 'लेखन', 'कहानी', 'कविता', 'रचनात्मक', 'सामग्री', 'ब्लॉग', 'लेख', 'स्क्रिप्ट', 'संवाद', 'पात्र', 'कथानक', 'कथा', 'कल्पना', 'उपन्यास', 'छोटी कहानी', 'निबंध', 'पत्र', 'ईमेल', 'संदेश', 'कैप्शन', 'नारा', 'शीर्षक', 'विवरण', 'समीक्षा', 'सारांश', 'रूपरेखा', 'मसौदा'];
-    
-    // Social Media keywords - Grok best
-    const socialKeywords = ['social', 'instagram', 'facebook', 'twitter', 'linkedin', 'youtube', 'tiktok', 'snapchat', 'whatsapp', 'post', 'posts', 'caption', 'captions', 'hashtag', 'hashtags', 'viral', 'trending', 'influencer', 'followers', 'likes', 'shares', 'comments', 'engagement', 'content creator', 'vlog', 'reel', 'story', 'stories', 'live', 'stream', 'community', 'audience', 'brand', 'promotion', 'campaign', 'सोशल', 'इंस्टाग्राम', 'फेसबुक', 'ट्विटर', 'लिंक्डइन', 'यूट्यूब', 'टिकटॉक', 'पोस्ट', 'कैप्शन', 'हैशटैग', 'वायरल', 'ट्रेंडिंग', 'फॉलोअर्स', 'लाइक्स', 'शेयर', 'कमेंट्स', 'रील', 'स्टोरी', 'लाइव', 'स्ट्रीम', 'समुदाय', 'ऑडियंस', 'ब्रांड', 'प्रमोशन', 'अभियान'];
-    
-    // Learning/Education keywords - ChatGPT best for step-by-step
-    const learningKeywords = ['learn', 'learning', 'study', 'studying', 'education', 'educational', 'tutorial', 'course', 'lesson', 'teach', 'teaching', 'explain', 'explanation', 'understand', 'understanding', 'concept', 'theory', 'practice', 'exercise', 'homework', 'assignment', 'exam', 'test', 'quiz', 'skill', 'skills', 'knowledge', 'training', 'workshop', 'seminar', 'class', 'classroom', 'student', 'teacher', 'instructor', 'guide', 'guideline', 'सीख', 'सीखना', 'अध्ययन', 'शिक्षा', 'ट्यूटोरियल', 'पाठ्यक्रम', 'पाठ', 'सिखाना', 'समझाना', 'समझना', 'अवधारणा', 'सिद्धांत', 'अभ्यास', 'गृहकार्य', 'असाइनमेंट', 'परीक्षा', 'टेस्ट', 'क्विज', 'कौशल', 'ज्ञान', 'प्रशिक्षण', 'कार्यशाला', 'सेमिनार', 'कक्षा', 'छात्र', 'शिक्षक', 'प्रशिक्षक', 'गाइड', 'दिशानिर्देश'];
-    
-    // Analysis keywords - Claude best for detailed analysis
-    const analysisKeywords = ['analysis', 'analyze', 'analytical', 'evaluate', 'evaluation', 'assessment', 'review', 'examine', 'investigation', 'breakdown', 'detailed', 'thorough', 'comprehensive', 'deep dive', 'insights', 'interpretation', 'conclusion', 'findings', 'results', 'outcome', 'performance', 'metrics', 'measurement', 'comparison', 'contrast', 'pros and cons', 'advantages', 'disadvantages', 'benefits', 'drawbacks', 'विश्लेषण', 'मूल्यांकन', 'समीक्षा', 'जांच', 'जांच-परख', 'विस्तृत', 'गहन', 'व्यापक', 'अंतर्दृष्टि', 'निष्कर्ष', 'खोज', 'परिणाम', 'प्रदर्शन', 'मेट्रिक्स', 'माप', 'तुलना', 'विपरीत', 'फायदे', 'नुकसान', 'लाभ', 'हानि'];
-
-    // Check each category with multiple keyword matches for better accuracy
-    let technicalScore = technicalKeywords.filter(keyword => topicLower.includes(keyword)).length;
-    let researchScore = researchKeywords.filter(keyword => topicLower.includes(keyword)).length;
-    let professionalScore = professionalKeywords.filter(keyword => topicLower.includes(keyword)).length;
-    let creativeScore = creativeKeywords.filter(keyword => topicLower.includes(keyword)).length;
-    let socialScore = socialKeywords.filter(keyword => topicLower.includes(keyword)).length;
-    let learningScore = learningKeywords.filter(keyword => topicLower.includes(keyword)).length;
-    let analysisScore = analysisKeywords.filter(keyword => topicLower.includes(keyword)).length;
-
-    // Find the category with highest score
-    const scores = [
-        { category: 'technical', score: technicalScore },
-        { category: 'research', score: researchScore },
-        { category: 'professional', score: professionalScore },
-        { category: 'creative', score: creativeScore },
-        { category: 'social', score: socialScore },
-        { category: 'learning', score: learningScore },
-        { category: 'analysis', score: analysisScore }
-    ];
-
-    // Sort by score descending
-    scores.sort((a, b) => b.score - a.score);
-    
-    // If highest score is 0 or tie, return general
-    if (scores[0].score === 0 || scores[0].score === scores[1].score) {
-        return 'general';
-    }
-    
-    return scores[0].category;
-}
-
-function generatePrompt() {
-    const topic = document.getElementById('topic-input').value.trim();
-    const tone = document.getElementById('tone-select').value;
-
-    if (!topic) {
-        alert(currentLanguage === 'hi' ? 'कृपया अपनी problem बताएं।' : 'Please describe your problem.');
-        return;
-    }
-
-    const category = detectCategory(topic);
-    
-    let prompt = '';
-    if (outputLanguage === 'hi') {
-        prompt = `मुझे ${topic} के बारे में मदद चाहिए। कृपया ${tone.toLowerCase()} भाषा में विस्तार से बताएं। मुझे step-by-step guidance दें और practical examples भी शामिल करें।`;
-    } else {
-        prompt = `I need help with ${topic}. Please provide detailed assistance in a ${tone.toLowerCase()} manner. Give me step-by-step guidance and include practical examples.`;
-    }
-
-    document.getElementById('generated-prompt').textContent = prompt;
-    document.getElementById('output-section').style.display = 'block';
-
-    // Get AI tool recommendations
-    const tools = aiToolsDatabase[category][currentLanguage];
-    
-    // Set primary tool
-    document.getElementById('primary-tool-name').textContent = tools.primary.name;
-    document.getElementById('tool-description').textContent = tools.primary.description;
-    
-    // Set alternative tools
-    const alternativesGrid = document.getElementById('alternative-tools-grid');
-    alternativesGrid.innerHTML = '';
-    
-    tools.alternatives.forEach(tool => {
-        const toolElement = document.createElement('div');
-        toolElement.className = 'ai-tool';
-        toolElement.innerHTML = `
-            <span class="tool-category">ALTERNATIVE</span>
-            ${tool.name}
-        `;
-        toolElement.title = tool.description;
-        alternativesGrid.appendChild(toolElement);
-    });
-
-    document.getElementById('output-section').classList.add('fade-in');
-}
-
-function copyPrompt() {
-    const prompt = document.getElementById('generated-prompt').textContent;
-    navigator.clipboard.writeText(prompt).then(() => {
-        const copyBtn = document.getElementById('copy-btn');
-        const originalText = copyBtn.textContent;
-        copyBtn.textContent = 'Copied!';
-        copyBtn.style.background = '#4CAF50';
-        setTimeout(() => {
-            copyBtn.textContent = originalText;
-            copyBtn.style.background = '#333';
-        }, 2000);
-    });
-}
+// ============================================
+// SINGLE CLEAN JAVASCRIPT - NO DUPLICATES
+// ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    startTypewriter();
-    switchLanguage('hi');
+    
+    // ========== STATE VARIABLES ==========
+    let currentUILanguage = 'hi';
+    let currentOutputLanguage = 'hi';
+    let currentStrategy = 'chain-of-thought';
+    let promptCounter = 0;
+    
+    // ========== TRANSLATIONS ==========
+    const translations = {
+        hi: {
+            designations: ["AI Prompt Engineer", "LLM विशेषज्ञ", "प्रॉम्प्ट आर्किटेक्ट"],
+            hero: {
+                title: "हर रोज़ की मुश्किलें, अब आसान।",
+                description: "Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें।"
+            },
+            labels: {
+                topic: "आप किस problem के लिए AI की help चाहते हैं?",
+                qrText: "मेरा ChatBot देखने के लिए स्कैन करें",
+                mission: "हमारा मिशन",
+                missionText: "यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं।",
+                portfolio: "Portfolio देखें",
+                generate: "Smart Prompt बनाएं",
+                outputLang: "Output Language",
+                tone: "Tone",
+                builder: "Smart Prompt Builder",
+                saved: "Saved Prompts",
+                recTitle: "Recommended AI Tools"
+            }
+        },
+        en: {
+            designations: ["AI Prompt Engineer", "LLM Specialist", "Prompt Architect"],
+            hero: {
+                title: "Making Daily Challenges Easier.",
+                description: "Just type your message, get instant AI-powered solutions. This tool is designed to help you solve your daily problems easily with AI."
+            },
+            labels: {
+                topic: "What problem do you need AI help with?",
+                qrText: "Scan to see my ChatBot",
+                mission: "Our Mission",
+                missionText: "This tool is designed for those who find AI technology complex.",
+                portfolio: "View Portfolio",
+                generate: "Generate Smart Prompt",
+                outputLang: "Output Language",
+                tone: "Tone",
+                builder: "Smart Prompt Builder",
+                saved: "Saved Prompts",
+                recTitle: "Recommended AI Tools"
+            }
+        }
+    };
+
+    // ========== PROMPT TEMPLATES ==========
+    const promptTemplates = {
+        hi: {
+            'zero-shot': (input, tone) => {
+                return `कार्य: ${input}\n\nकृपया एक सीधा और स्पष्ट समाधान प्रदान करें। Tone: ${tone}`;
+            },
+            'chain-of-thought': (input, tone) => {
+                return `समस्या: ${input}\n\nचलिए इसे step-by-step solve करते हैं:\n\n1. पहले समस्या को समझते हैं\n2. मुख्य components identify करते हैं\n3. Solution approach तैयार करते हैं\n4. Implementation plan बनाते हैं\n5. Final verification करते हैं\n\nTone: ${tone}`;
+            },
+            'few-shot': (input, tone) => {
+                return `Similar examples:\n\nExample 1: [Related case]\nSolution: [How it was solved]\n\nExample 2: [Another case]\nSolution: [Another approach]\n\nअब आपका case: ${input}\n\nSolution approach:\nTone: ${tone}`;
+            },
+            'tree-of-thought': (input, tone) => {
+                return `समस्या: ${input}\n\nविभिन्न approaches explore करते हैं:\n\nApproach 1 (Direct): [Straightforward method]\nApproach 2 (Creative): [Innovative solution]\nApproach 3 (Comprehensive): [Complete approach]\n\nBest solution का चयन:\nTone: ${tone}`;
+            },
+            'react': (input, tone) => {
+                return `Task: ${input}\n\nThought: इस समस्या को कैसे approach करें?\nAction: पहला कदम - requirement analysis\nObservation: Key insights मिलीं\n\nThought: इन insights के based पर plan बनाते हैं\nAction: Solution framework तैयार करते हैं\nResult: Implementation ready\n\nTone: ${tone}`;
+            }
+        },
+        en: {
+            'zero-shot': (input, tone) => {
+                return `Task: ${input}\n\nPlease provide a direct and clear solution. Tone: ${tone}`;
+            },
+            'chain-of-thought': (input, tone) => {
+                return `Problem: ${input}\n\nLet's solve this step-by-step:\n\n1. First, understand the problem\n2. Identify key components\n3. Develop solution approach\n4. Create implementation plan\n5. Final verification\n\nTone: ${tone}`;
+            },
+            'few-shot': (input, tone) => {
+                return `Similar examples:\n\nExample 1: [Related case]\nSolution: [How it was solved]\n\nExample 2: [Another case]\nSolution: [Another approach]\n\nNow your case: ${input}\n\nSolution approach:\nTone: ${tone}`;
+            },
+            'tree-of-thought': (input, tone) => {
+                return `Problem: ${input}\n\nExploring different approaches:\n\nApproach 1 (Direct): [Straightforward method]\nApproach 2 (Creative): [Innovative solution]\nApproach 3 (Comprehensive): [Complete approach]\n\nSelecting best solution:\nTone: ${tone}`;
+            },
+            'react': (input, tone) => {
+                return `Task: ${input}\n\nThought: How should we approach this problem?\nAction: First step - requirement analysis\nObservation: Key insights gathered\n\nThought: Based on these insights, let's plan\nAction: Prepare solution framework\nResult: Ready for implementation\n\nTone: ${tone}`;
+            }
+        },
+        hinglish: {
+            'zero-shot': (input, tone) => {
+                return `Task: ${input}\n\nEk direct aur clear solution provide karo. Tone: ${tone}`;
+            },
+            'chain-of-thought': (input, tone) => {
+                return `Problem: ${input}\n\nChalo isse step-by-step solve karte hain:\n\n1. Pehle problem ko samajhte hain\n2. Key components identify karte hain\n3. Solution approach banate hain\n4. Implementation plan tayar karte hain\n5. Final verification karte hain\n\nTone: ${tone}`;
+            },
+            'few-shot': (input, tone) => {
+                return `Similar examples:\n\nExample 1: [Related case]\nSolution: [Kaise solve hua]\n\nExample 2: [Another case]\nSolution: [Dusra approach]\n\nAb tumhara case: ${input}\n\nSolution approach:\nTone: ${tone}`;
+            },
+            'tree-of-thought': (input, tone) => {
+                return `Problem: ${input}\n\nDifferent approaches explore karte hain:\n\nApproach 1 (Direct): [Seedha method]\nApproach 2 (Creative): [Naya solution]\nApproach 3 (Comprehensive): [Poora approach]\n\nBest solution select karte hain:\nTone: ${tone}`;
+            },
+            'react': (input, tone) => {
+                return `Task: ${input}\n\nThought: Isse kaise approach karein?\nAction: Pehla step - requirement analysis\nObservation: Key insights mile\n\nThought: In insights ke basis par plan banate hain\nAction: Solution framework ready karte hain\nResult: Implementation ke liye ready\n\nTone: ${tone}`;
+            }
+        }
+    };
+
+    // ========== AI TOOL RECOMMENDATIONS ==========
+    const toolRecommendations = {
+        code: { best: 'ChatGPT-4', alt1: 'Claude 2', alt2: 'GitHub Copilot', desc: 'ChatGPT-4 excels at code generation, debugging, and explaining complex algorithms.' },
+        creative: { best: 'Claude 2', alt1: 'ChatGPT-4', alt2: 'Bard', desc: 'Claude 2 is excellent for creative writing, storytelling, and long-form content.' },
+        analysis: { best: 'ChatGPT-4', alt1: 'Claude 2', alt2: 'Perplexity', desc: 'ChatGPT-4 provides deep analytical capabilities with structured reasoning.' },
+        research: { best: 'Perplexity', alt1: 'Bard', alt2: 'ChatGPT-4', desc: 'Perplexity specializes in research with real-time web search and citations.' },
+        default: { best: 'ChatGPT-4', alt1: 'Claude 2', alt2: 'Bard', desc: 'ChatGPT-4 is versatile for general tasks with strong reasoning.' }
+    };
+
+    // ========== UTILITY FUNCTIONS ==========
+    function estimateTokens(text) {
+        return Math.ceil(text.length / 4);
+    }
+
+    function detectPromptCategory(input) {
+        const lowerInput = input.toLowerCase();
+        if (lowerInput.match(/code|program|function|debug|algorithm|script/)) return 'code';
+        if (lowerInput.match(/write|story|creative|poem|article|blog/)) return 'creative';
+        if (lowerInput.match(/analyze|compare|evaluate|assess/)) return 'analysis';
+        if (lowerInput.match(/research|find|search|information/)) return 'research';
+        return 'default';
+    }
+
+    function updateToolRecommendations(input) {
+        const category = detectPromptCategory(input);
+        const rec = toolRecommendations[category];
+        
+        document.getElementById('best-tool-name').textContent = rec.best;
+        document.getElementById('alt-tool-1').textContent = rec.alt1;
+        document.getElementById('alt-tool-2').textContent = rec.alt2;
+        document.getElementById('tool-description').textContent = rec.desc;
+    }
+
+    function calculateMetrics(prompt) {
+        const words = prompt.split(' ');
+        const uniqueWords = new Set(words.map(w => w.toLowerCase()));
+        
+        const semanticDensity = ((uniqueWords.size / words.length) * 100).toFixed(1);
+        const contextRichness = (Math.min(words.length / 50, 1) * 100).toFixed(1);
+        const instructionClarity = (prompt.match(/:|step|first|then|finally/gi)?.length || 0) * 10;
+        const constraintBalance = (prompt.match(/must|should|tone|format/gi)?.length || 0) * 15;
+        
+        return {
+            semanticDensity: Math.min(semanticDensity, 100),
+            contextRichness: Math.min(contextRichness, 100),
+            instructionClarity: Math.min(instructionClarity, 100),
+            constraintBalance: Math.min(constraintBalance, 100)
+        };
+    }
+
+    function updateAnalysis(prompt, strategy) {
+        const metrics = calculateMetrics(prompt);
+        
+        // Update metric values
+        document.getElementById('semantic-density').textContent = metrics.semanticDensity;
+        document.getElementById('context-richness').textContent = metrics.contextRichness;
+        document.getElementById('instruction-clarity').textContent = metrics.instructionClarity;
+        document.getElementById('constraint-balance').textContent = metrics.constraintBalance;
+        
+        // Update effectiveness score bar
+        const avgScore = (parseFloat(metrics.semanticDensity) + parseFloat(metrics.contextRichness) + 
+                         parseFloat(metrics.instructionClarity) + parseFloat(metrics.constraintBalance)) / 4;
+        document.getElementById('effectiveness-score').style.width = `${avgScore}%`;
+        
+        // Update cognitive chart
+        const strategyNames = {
+            'zero-shot': 'Linear Thinking',
+            'chain-of-thought': 'Sequential Processing',
+            'few-shot': 'Pattern Recognition',
+            'tree-of-thought': 'Divergent Thinking',
+            'react': 'Cyclical Reasoning'
+        };
+        document.getElementById('cognitive-chart').innerHTML = `
+            <svg width="100%" height="100%" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="70" fill="none" stroke="#e50914" stroke-width="2"/>
+                <circle cx="100" cy="100" r="50" fill="none" stroke="#ffa500" stroke-width="2"/>
+                <circle cx="100" cy="100" r="30" fill="none" stroke="#22c55e" stroke-width="2"/>
+                <text x="100" y="105" text-anchor="middle" fill="#fff" font-size="12">${strategyNames[strategy]}</text>
+            </svg>
+        `;
+        
+        // Update evolution steps
+        document.getElementById('evolution-steps').innerHTML = `
+            <div class="evolution-step"><strong>Phase 1:</strong> Input analyzed using ${strategy} approach</div>
+            <div class="evolution-step"><strong>Phase 2:</strong> Structure formation with ${metrics.semanticDensity}% semantic density</div>
+            <div class="evolution-step"><strong>Phase 3:</strong> Context enhancement (${metrics.contextRichness}% richness)</div>
+            <div class="evolution-step"><strong>Phase 4:</strong> Final optimization complete</div>
+        `;
+        
+        // Update heatmap
+        const words = prompt.split(' ').slice(0, 30);
+        document.getElementById('semantic-heatmap').innerHTML = words.map(word => {
+            const intensity = Math.min(word.length / 10, 0.8);
+            return `<span style="padding: 2px 4px; margin: 2px; background: rgba(229, 9, 20, ${intensity}); border-radius: 3px; font-size: 0.75rem;">${word}</span>`;
+        }).join(' ');
+    }
+
+    function updateUILanguage(lang) {
+        const t = translations[lang];
+        document.getElementById('hero-title').textContent = t.hero.title;
+        document.getElementById('hero-description').textContent = t.hero.description;
+        document.getElementById('topic-label').textContent = t.labels.topic;
+        document.getElementById('qr-text').textContent = t.labels.qrText;
+        document.getElementById('mission-title').textContent = t.labels.mission;
+        document.getElementById('mission-description').textContent = t.labels.missionText;
+        document.getElementById('portfolio-link').textContent = t.labels.portfolio;
+        document.getElementById('generate-btn').textContent = t.labels.generate;
+        document.getElementById('output-lang-label').textContent = t.labels.outputLang;
+        document.getElementById('tone-label').textContent = t.labels.tone;
+        document.getElementById('builder-title').textContent = t.labels.builder;
+        document.getElementById('saved-title').textContent = t.labels.saved;
+        document.getElementById('rec-title').textContent = t.labels.recTitle;
+    }
+
+    // ========== DESIGNATION ROTATION ==========
+    let designationIndex = 0;
+    setInterval(() => {
+        const designationEl = document.getElementById('creator-designation');
+        designationEl.style.opacity = '0';
+        setTimeout(() => {
+            designationEl.textContent = translations[currentUILanguage].designations[designationIndex];
+            designationEl.style.opacity = '1';
+            designationIndex = (designationIndex + 1) % translations[currentUILanguage].designations.length;
+        }, 500);
+    }, 3000);
+
+    // ========== EVENT LISTENERS ==========
+    
+    // UI Language Switch
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentUILanguage = btn.dataset.lang;
+            updateUILanguage(currentUILanguage);
+        });
+    });
+
+    // Output Language Switch
+    document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentOutputLanguage = btn.dataset.lang;
+        });
+    });
+
+    // Strategy Selection
+    document.querySelectorAll('.strategy-card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.strategy-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            currentStrategy = card.dataset.strategy;
+        });
+    });
+
+    // Token Optimization
+    document.querySelectorAll('.token-opt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.token-opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    // Temperature Slider
+    document.getElementById('temperature-slider').addEventListener('input', (e) => {
+        document.getElementById('temp-value').textContent = e.target.value;
+    });
+
+    // Max Tokens Slider
+    document.getElementById('max-tokens-slider').addEventListener('input', (e) => {
+        document.getElementById('max-tokens').textContent = e.target.value;
+    });
+
+    // Input Token Estimation
+    document.getElementById('topic-input').addEventListener('input', (e) => {
+        const tokens = estimateTokens(e.target.value);
+        document.getElementById('token-estimate').textContent = `~${tokens}`;
+        
+        if (tokens < 500) {
+            document.getElementById('model-recommendation').textContent = '💡 Recommended: GPT-3.5 Turbo';
+        } else if (tokens < 1500) {
+            document.getElementById('model-recommendation').textContent = '💡 Recommended: Claude Sonnet 4';
+        } else {
+            document.getElementById('model-recommendation').textContent = '💡 Recommended: GPT-4';
+        }
+    });
+
+    // GENERATE BUTTON - MAIN FUNCTION
+    document.getElementById('generate-btn').addEventListener('click', () => {
+        const input = document.getElementById('topic-input').value.trim();
+        
+        if (!input) {
+            alert('Please enter your problem or topic first!');
+            return;
+        }
+
+        const tone = document.getElementById('tone-select').value;
+        const template = promptTemplates[currentOutputLanguage][currentStrategy];
+        const generatedPrompt = template(input, tone);
+        
+        // Update output
+        document.getElementById('output-text').textContent = generatedPrompt;
+        
+        // Update token estimate
+        const tokens = estimateTokens(generatedPrompt);
+        document.getElementById('token-estimate').textContent = `~${tokens}`;
+        
+        // Update tool recommendations
+        updateToolRecommendations(input);
+        
+        // Update analysis
+        updateAnalysis(generatedPrompt, currentStrategy);
+        
+        // Update counter
+        promptCounter++;
+        document.getElementById('stat-prompts').textContent = promptCounter;
+    });
+
+    // Copy Button
+    document.getElementById('copy-btn').addEventListener('click', () => {
+        const text = document.getElementById('output-text').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById('copy-btn');
+            btn.textContent = 'Copied!';
+            btn.style.background = '#22c55e';
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.style.background = '#333';
+            }, 2000);
+        });
+    });
+
+    // Initialize
+    updateUILanguage('hi');
+    console.log('✅ Ambuj Prompt Builder Initialized Successfully!');
 });
 </script>
 </body>
