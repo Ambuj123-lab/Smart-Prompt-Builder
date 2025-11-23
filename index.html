@@ -1,1315 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Demystified - By Ambuj Kumar Tripathi</title>
-<style>
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-body {
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-background: #0a0a0a;
-color: #ffffff;
-line-height: 1.6;
-min-height: 100vh;
-}
-.container {
-max-width: 1200px;
-margin: 0 auto;
-padding: 20px;
-}
-.header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 60px;
-padding: 20px 0;
-border-bottom: 1px solid #333;
-}
-.logo {
-font-size: 1.6rem;
-font-weight: 800;
-background: linear-gradient(135deg, #e50914, #ff6b6b, #ffa500);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-}
-.language-selector {
-display: flex;
-gap: 15px;
-background: #1a1a1a;
-padding: 8px 16px;
-border-radius: 25px;
-border: 1px solid #333;
-}
-.lang-btn {
-background: none;
-border: none;
-color: #888;
-font-size: 0.9rem;
-cursor: pointer;
-padding: 5px 10px;
-border-radius: 15px;
-transition: all 0.3s ease;
-}
-.lang-btn.active {
-color: #e50914;
-background: rgba(229, 9, 20, 0.1);
-}
-.lang-btn:hover {
-color: #fff;
-}
-.hero {
-text-align: center;
-margin-bottom: 80px;
-}
-.hero h1 {
-font-size: clamp(2rem, 5vw, 3.5rem);
-font-weight: 800;
-margin-bottom: 20px;
-background: linear-gradient(135deg, #ffffff, #e50914, #ffa500, #ffffff);
-background-size: 200% 200%;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-animation: gradientShift 3s ease-in-out infinite;
-}
-@keyframes gradientShift {
-0%, 100% { background-position: 0% 50%; }
-50% { background-position: 100% 50%; }
-}
-.hero p {
-font-size: clamp(1rem, 3vw, 1.2rem);
-color: #cccccc;
-max-width: 800px;
-margin: 0 auto;
-line-height: 1.8;
-}
-.creator-section {
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 40px;
-margin-bottom: 80px;
-padding: 40px;
-background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-border-radius: 20px;
-border: 1px solid #333;
-}
-.creator-info {
-text-align: center;
-}
-.creator-photo {
-width: 150px;
-height: 150px;
-border-radius: 15px;
-border: 3px solid #e50914;
-margin-bottom: 15px;
-transition: all 0.3s ease;
-box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
-}
-.creator-photo:hover {
-transform: scale(1.05) rotate(2deg);
-box-shadow: 0 10px 25px rgba(229, 9, 20, 0.5);
-}
-.creator-name {
-font-size: 1.5rem;
-font-weight: 700;
-color: #e50914;
-margin-bottom: 5px;
-}
-.creator-designation {
-font-size: 1rem;
-color: #ffa500;
-margin-bottom: 15px;
-font-style: italic;
-font-family: 'Courier New', monospace;
-font-weight: 900;
-text-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
-min-height: 30px;
-display: flex;
-align-items: center;
-justify-content: center;
-transition: opacity 0.5s ease;
-}
-.creator-links {
-display: flex;
-gap: 15px;
-justify-content: center;
-}
-.creator-link {
-background: linear-gradient(135deg, #e50914, #ff4757);
-color: white;
-text-decoration: none;
-padding: 8px 16px;
-border-radius: 20px;
-font-weight: 600;
-transition: all 0.3s ease;
-}
-.creator-link:hover {
-transform: translateY(-2px);
-box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
-}
-.qr-section {
-text-align: center;
-}
-.qr-code {
-width: 120px;
-height: 120px;
-border-radius: 10px;
-border: 2px solid #e50914;
-margin-bottom: 10px;
-}
-.qr-text {
-color: #ffa500;
-font-size: 0.9rem;
-font-weight: 600;
-}
-.mission {
-background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-border-radius: 20px;
-padding: 40px;
-margin-bottom: 60px;
-border: 1px solid #333;
-text-align: center;
-}
-.mission h2 {
-font-size: 1.8rem;
-color: #e50914;
-margin-bottom: 20px;
-font-weight: 700;
-}
-.mission p {
-font-size: 1.1rem;
-color: #cccccc;
-line-height: 1.8;
-max-width: 800px;
-margin: 0 auto;
-}
-.stats-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 20px;
-margin-bottom: 60px;
-}
-.stat-card {
-background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-padding: 25px;
-border-radius: 15px;
-border: 1px solid #333;
-text-align: center;
-transition: all 0.3s ease;
-}
-.stat-card:hover {
-transform: translateY(-5px);
-border-color: #e50914;
-box-shadow: 0 10px 30px rgba(229, 9, 20, 0.2);
-}
-.stat-number {
-font-size: 2.5rem;
-font-weight: 800;
-background: linear-gradient(135deg, #e50914, #ffa500);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-margin-bottom: 10px;
-}
-.stat-label {
-color: #888;
-font-size: 0.9rem;
-text-transform: uppercase;
-letter-spacing: 1px;
-}
-.prompt-builder {
-background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-border-radius: 20px;
-padding: 40px;
-margin-bottom: 60px;
-border: 1px solid #333;
-box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-.section-title {
-font-size: 1.8rem;
-font-weight: 700;
-margin-bottom: 30px;
-text-align: center;
-color: #e50914;
-}
-.form-group {
-margin-bottom: 25px;
-}
-.form-label {
-display: block;
-font-weight: 600;
-margin-bottom: 8px;
-color: #ffffff;
-font-size: 1rem;
-}
-.form-input {
-width: 100%;
-padding: 15px 20px;
-background: #0a0a0a;
-border: 2px solid #333;
-border-radius: 12px;
-color: #ffffff;
-font-size: 1rem;
-transition: all 0.3s ease;
-min-height: 100px;
-resize: vertical;
-font-family: inherit;
-}
-.form-input:focus {
-outline: none;
-border-color: #e50914;
-box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
-transform: translateY(-2px);
-}
-.form-select {
-width: 100%;
-padding: 15px 20px;
-background: #0a0a0a;
-border: 2px solid #333;
-border-radius: 12px;
-color: #ffffff;
-font-size: 1rem;
-cursor: pointer;
-transition: all 0.3s ease;
-}
-.form-select:focus {
-outline: none;
-border-color: #e50914;
-}
-.generate-btn {
-width: 100%;
-padding: 18px;
-background: linear-gradient(135deg, #e50914, #ff4757);
-border: none;
-border-radius: 12px;
-color: white;
-font-size: 1.1rem;
-font-weight: 600;
-cursor: pointer;
-transition: all 0.3s ease;
-margin-bottom: 30px;
-text-transform: uppercase;
-letter-spacing: 0.5px;
-}
-.generate-btn:hover {
-transform: translateY(-3px);
-box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4);
-}
-.generate-btn:active {
-transform: translateY(-1px);
-}
-.output-section {
-margin-top: 30px;
-}
-.output-container {
-background: #0a0a0a;
-border: 2px solid #333;
-border-radius: 12px;
-padding: 20px;
-margin-bottom: 15px;
-position: relative;
-}
-.output-text {
-color: #cccccc;
-font-size: 1rem;
-line-height: 1.6;
-min-height: 60px;
-white-space: pre-wrap;
-word-wrap: break-word;
-}
-.copy-btn {
-position: absolute;
-top: 15px;
-right: 15px;
-background: #333;
-border: none;
-color: #fff;
-padding: 8px 12px;
-border-radius: 8px;
-cursor: pointer;
-font-size: 0.8rem;
-transition: all 0.3s ease;
-}
-.copy-btn:hover {
-background: #22c55e;
-}
-.recommendation {
-background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
-border-radius: 12px;
-padding: 20px;
-text-align: center;
-border: 1px solid #444;
-}
-.recommendation h3 {
-color: #e50914;
-margin-bottom: 15px;
-font-size: 1.2rem;
-}
-.ai-tools-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 15px;
-margin-bottom: 15px;
-}
-.ai-tool {
-background: linear-gradient(135deg, #4a90e2, #357abd);
-color: white;
-padding: 12px 16px;
-border-radius: 12px;
-font-weight: 600;
-font-size: 0.9rem;
-transition: all 0.3s ease;
-cursor: pointer;
-}
-.ai-tool:hover {
-transform: translateY(-2px);
-box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
-}
-.ai-tool.primary {
-background: linear-gradient(135deg, #e50914, #ff4757);
-font-size: 1rem;
-padding: 15px 20px;
-}
-.tool-category {
-font-size: 0.7rem;
-opacity: 0.8;
-display: block;
-margin-bottom: 5px;
-text-transform: uppercase;
-letter-spacing: 0.5px;
-}
-.tool-description {
-margin-top: 15px;
-color: #cccccc;
-font-size: 0.9rem;
-line-height: 1.5;
-text-align: left;
-background: rgba(0,0,0,0.3);
-padding: 15px;
-border-radius: 10px;
-border-left: 4px solid #e50914;
-}
-.lang-toggle {
-display: flex;
-gap: 10px;
-justify-content: center;
-margin-bottom: 15px;
-flex-wrap: wrap;
-}
-.lang-option {
-background: #333;
-border: none;
-color: #fff;
-padding: 8px 16px;
-border-radius: 20px;
-cursor: pointer;
-transition: all 0.3s ease;
-font-size: 0.9rem;
-}
-.lang-option.active {
-background: #e50914;
-transform: scale(1.05);
-}
-.lang-option:hover {
-background: #444;
-}
-.lang-option.active:hover {
-background: #e50914;
-}
-.strategy-card {
-background: #1a1a1a;
-padding: 12px;
-border-radius: 10px;
-border: 2px solid #333;
-cursor: pointer;
-transition: all 0.3s ease;
-}
-.strategy-card:hover {
-border-color: #e50914;
-transform: translateY(-2px);
-}
-.strategy-card.active {
-border-color: #e50914;
-background: rgba(229, 9, 20, 0.1);
-}
-.token-opt-btn {
-flex: 1;
-background: #2a2a2a;
-border: 1px solid #333;
-color: #ccc;
-padding: 8px 12px;
-border-radius: 8px;
-cursor: pointer;
-transition: all 0.3s ease;
-font-size: 0.85rem;
-}
-.token-opt-btn:hover {
-border-color: #e50914;
-}
-.token-opt-btn.active {
-background: #e50914;
-color: #fff;
-border-color: #e50914;
-}
-input[type="range"] {
--webkit-appearance: none;
-appearance: none;
-background: #2a2a2a;
-outline: none;
-border-radius: 5px;
-height: 6px;
-width: 100%;
-}
-input[type="range"]::-webkit-slider-thumb {
--webkit-appearance: none;
-appearance: none;
-width: 18px;
-height: 18px;
-background: #e50914;
-cursor: pointer;
-border-radius: 50%;
-}
-input[type="range"]::-moz-range-thumb {
-width: 18px;
-height: 18px;
-background: #e50914;
-cursor: pointer;
-border-radius: 50%;
-border: none;
-}
-.saved-prompts-section {
-background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-border-radius: 20px;
-padding: 40px;
-margin-bottom: 60px;
-border: 1px solid #333;
-}
-.saved-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 25px;
-flex-wrap: wrap;
-gap: 15px;
-}
-.search-box {
-flex: 1;
-min-width: 250px;
-padding: 12px 20px;
-background: #0a0a0a;
-border: 2px solid #333;
-border-radius: 25px;
-color: #fff;
-font-size: 0.9rem;
-transition: all 0.3s ease;
-}
-.search-box:focus {
-outline: none;
-border-color: #e50914;
-}
-.prompt-analysis {
-background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-border-radius: 20px;
-padding: 40px;
-margin-bottom: 60px;
-border: 1px solid #333;
-}
-.analysis-grid {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 20px;
-margin-bottom: 30px;
-}
-.analysis-card {
-background: rgba(0, 0, 0, 0.2);
-border-radius: 15px;
-padding: 20px;
-border: 1px solid #333;
-}
-.analysis-card h3 {
-color: #e50914;
-margin-bottom: 15px;
-font-size: 1.2rem;
-}
-.score-meter {
-height: 30px;
-background: rgba(0, 0, 0, 0.3);
-border-radius: 15px;
-overflow: hidden;
-position: relative;
-}
-.score-bar {
-height: 100%;
-background: linear-gradient(90deg, #e50914, #ffa500);
-width: 0%;
-transition: width 1s ease-in-out;
-}
-.score-labels {
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-height: 100%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 0 15px;
-color: white;
-font-size: 0.8rem;
-}
-.cognitive-chart {
-height: 200px;
-display: flex;
-justify-content: center;
-align-items: center;
-color: #ccc;
-font-size: 0.9rem;
-}
-.evolution-steps {
-display: flex;
-flex-direction: column;
-gap: 10px;
-}
-.evolution-step {
-background: rgba(229, 9, 20, 0.1);
-padding: 10px;
-border-radius: 8px;
-border-left: 3px solid #e50914;
-font-size: 0.9rem;
-color: #ccc;
-}
-.heatmap {
-height: 200px;
-background: rgba(0, 0, 0, 0.2);
-border-radius: 10px;
-overflow: hidden;
-padding: 15px;
-display: flex;
-align-items: center;
-justify-content: center;
-color: #888;
-font-size: 0.85rem;
-}
-.prompt-metrics {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 15px;
-margin-top: 20px;
-}
-.metric-card {
-background: rgba(0, 0, 0, 0.2);
-border-radius: 10px;
-padding: 15px;
-text-align: center;
-}
-.metric-card h4 {
-color: #ffa500;
-font-size: 0.9rem;
-margin-bottom: 10px;
-}
-.metric-value {
-font-size: 1.5rem;
-font-weight: 700;
-background: linear-gradient(135deg, #e50914, #ffa500);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
-.future-scope {
-background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-border-radius: 20px;
-padding: 40px;
-margin-bottom: 60px;
-border: 2px solid #ffa500;
-}
-.future-scope h2 {
-color: #ffa500;
-margin-bottom: 25px;
-font-size: 1.8rem;
-text-align: center;
-}
-.future-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-gap: 20px;
-}
-.future-card {
-background: rgba(255, 165, 0, 0.1);
-padding: 20px;
-border-radius: 12px;
-border: 1px solid rgba(255, 165, 0, 0.3);
-transition: all 0.3s ease;
-}
-.future-card:hover {
-transform: translateY(-5px);
-border-color: #ffa500;
-box-shadow: 0 10px 30px rgba(255, 165, 0, 0.2);
-}
-.future-card h3 {
-color: #ffa500;
-font-size: 1.1rem;
-margin-bottom: 10px;
-}
-.future-card p {
-color: #ccc;
-font-size: 0.9rem;
-line-height: 1.5;
-}
-.footer {
-text-align: center;
-padding: 40px 0;
-color: #666;
-border-top: 1px solid #333;
-}
-.creator-credit {
-font-size: 0.9rem;
-margin-bottom: 10px;
-}
-.creator-name-footer {
-color: #e50914;
-font-weight: 600;
-}
-@media (max-width: 768px) {
-.header {
-flex-direction: column;
-gap: 20px;
-}
-.creator-section {
-flex-direction: column;
-gap: 30px;
-padding: 25px;
-}
-.analysis-grid {
-grid-template-columns: 1fr;
-}
-.prompt-metrics {
-grid-template-columns: repeat(2, 1fr);
-}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GROK Prompt Laboratory - Access Restricted</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Animations -->
+    <style>
+        @keyframes scan {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(20);
+                opacity: 0;
+            }
+        }
+
+        .animate-scan {
+            animation: scan 8s linear infinite;
+        }
+
+        .animate-shimmer {
+            animation: shimmer 3s linear infinite;
+        }
+
+        .animate-ripple {
+            animation: ripple 2s ease-out forwards;
+        }
+
+        .animate-spin-slow {
+            animation: spin 8s linear infinite;
+        }
+
+        .animate-spin-reverse {
+            animation: spin 6s linear infinite reverse;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <!-- Link to external CSS files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login-advert.css">
 </head>
-<body>
-<div class="container">
-<header class="header">
-<div class="logo">Ambuj's Prompt Playground</div>
-<div class="language-selector">
-<button class="lang-btn active" data-lang="hi">हिंदी</button>
-<button class="lang-btn" data-lang="en">English</button>
-</div>
-</header>
 
-<section class="hero">
-<h1 id="hero-title">हर रोज़ की मुश्किलें, अब आसान।</h1>
-<p id="hero-description">Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें।</p>
-</section>
+<body class="bg-black text-white font-sans antialiased">
 
-<div class="stats-grid">
-<div class="stat-card">
-<div class="stat-number">25+</div>
-<div class="stat-label">AI Categories</div>
-</div>
-<div class="stat-card">
-<div class="stat-number" id="stat-prompts">0</div>
-<div class="stat-label">Prompts Generated</div>
-</div>
-<div class="stat-card">
-<div class="stat-number" id="stat-saved">0</div>
-<div class="stat-label">Saved Prompts</div>
-</div>
-<div class="stat-card">
-<div class="stat-number">50+</div>
-<div class="stat-label">AI Tools Database</div>
-</div>
-</div>
-
-<section class="creator-section">
-<div class="creator-info">
-<img src="https://i.postimg.cc/GmctbT9t/IMG-20250901-215704.jpg" alt="Ambuj Kumar Tripathi" class="creator-photo">
-<div class="creator-name">Ambuj Kumar Tripathi</div>
-<div class="creator-designation" id="creator-designation">AI Prompt Engineer</div>
-<div class="creator-links">
-<a href="https://ambuj123-lab.github.io/Ambuj_AI_Portfolio/" class="creator-link" target="_blank" id="portfolio-link">Portfolio देखें</a>
-</div>
-</div>
-<div class="qr-section">
-<img src="https://i.postimg.cc/YCpZrYgv/qr-code-3.png" alt="QR Code" class="qr-code">
-<div class="qr-text" id="qr-text">मेरा ChatBot देखने के लिए स्कैन करें</div>
-</div>
-</section>
-
-<section class="mission">
-<h2 id="mission-title">हमारा मिशन</h2>
-<p id="mission-description">यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं। हमारा उद्देश्य simple है: गैर-तकनीकी users को अपनी daily life में AI का confidently उपयोग करने में मदद करना।</p>
-</section>
-
-<section class="prompt-builder">
-<h2 class="section-title" id="builder-title">Smart Prompt Builder</h2>
-
-<div class="form-group">
-<label class="form-label" id="topic-label">आप किस problem के लिए AI की help चाहते हैं?</label>
-<textarea id="topic-input" class="form-input" placeholder="जैसे: make a calculator app, design modern logo, write blog on AI..."></textarea>
-</div>
-
-<div class="form-group">
-<label class="form-label">🧠 Prompting Strategy</label>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
-<div class="strategy-card" data-strategy="zero-shot">
-<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">⚡ Zero-Shot</div>
-<div style="font-size: 0.85rem; color: #888;">Direct task, no examples</div>
-</div>
-<div class="strategy-card" data-strategy="few-shot">
-<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🎯 Few-Shot</div>
-<div style="font-size: 0.85rem; color: #888;">Learn from examples</div>
-</div>
-<div class="strategy-card active" data-strategy="chain-of-thought">
-<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🔗 Chain-of-Thought</div>
-<div style="font-size: 0.85rem; color: #888;">Step-by-step reasoning</div>
-</div>
-<div class="strategy-card" data-strategy="tree-of-thought">
-<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🌳 Tree-of-Thought</div>
-<div style="font-size: 0.85rem; color: #888;">Explore multiple paths</div>
-</div>
-<div class="strategy-card" data-strategy="react">
-<div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🔄 ReAct</div>
-<div style="font-size: 0.85rem; color: #888;">Reason + Act cycles</div>
-</div>
-</div>
-</div>
-
-<div class="form-group">
-<label class="form-label">⚙️ Token Optimization</label>
-<div style="background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333;">
-<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-<span style="color: #ccc;">Estimated Tokens:</span>
-<span id="token-estimate" style="color: #22c55e; font-weight: 600;">~0</span>
-</div>
-<div style="display: flex; gap: 10px; margin-bottom: 10px;">
-<button class="token-opt-btn active" data-level="concise">Concise</button>
-<button class="token-opt-btn" data-level="balanced">Balanced</button>
-<button class="token-opt-btn" data-level="detailed">Detailed</button>
-</div>
-<div style="color: #888; font-size: 0.85rem;">
-<span id="model-recommendation">💡 Recommended: Claude Sonnet 4</span>
-</div>
-</div>
-</div>
-
-<div class="form-group">
-<label class="form-label" id="output-lang-label">Output Language</label>
-<div class="lang-toggle">
-<button class="lang-option active" data-lang="hi">हिंदी</button>
-<button class="lang-option" data-lang="en">English</button>
-<button class="lang-option" data-lang="hinglish">Hinglish</button>
-</div>
-</div>
-
-<div class="form-group">
-<label class="form-label" id="tone-label">Tone</label>
-<select id="tone-select" class="form-select">
-<option value="Friendly">Friendly</option>
-<option value="Professional">Professional</option>
-<option value="Casual">Casual</option>
-<option value="Creative">Creative</option>
-<option value="Technical">Technical</option>
-</select>
-</div>
-
-<div class="form-group">
-<label class="form-label">🎚️ Advanced Controls</label>
-<div style="background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333;">
-<div style="margin-bottom: 15px;">
-<label style="color: #ccc; font-size: 0.9rem; display: block; margin-bottom: 5px;">
-Temperature: <span id="temp-value">0.7</span>
-</label>
-<input type="range" id="temperature-slider" min="0" max="1" step="0.1" value="0.7">
-</div>
-<div>
-<label style="color: #ccc; font-size: 0.9rem; display: block; margin-bottom: 5px;">
-Max Tokens: <span id="max-tokens">2048</span>
-</label>
-<input type="range" id="max-tokens-slider" min="256" max="4096" step="256" value="2048">
-</div>
-</div>
-</div>
-
-<button id="generate-btn" class="generate-btn">Generate Smart Prompt</button>
-
-<div class="output-section">
-<div class="output-container">
-<div class="output-text" id="output-text">Your AI-optimized prompt will appear here...</div>
-<button class="copy-btn" id="copy-btn">Copy</button>
-</div>
-
-<div class="recommendation">
-<h3 id="rec-title">Recommended AI Tools</h3>
-<div class="ai-tools-grid">
-<div class="ai-tool primary" id="best-tool">
-<span class="tool-category">Best Match</span>
-<span id="best-tool-name">ChatGPT-4</span>
-</div>
-<div class="ai-tool">
-<span class="tool-category">Alternative</span>
-<span id="alt-tool-1">Claude 2</span>
-</div>
-<div class="ai-tool">
-<span class="tool-category">Alternative</span>
-<span id="alt-tool-2">Bard</span>
-</div>
-</div>
-<div class="tool-description" id="tool-description">
-ChatGPT-4 is recommended for this prompt due to its advanced reasoning capabilities and broad knowledge base.
-</div>
-</div>
-</div>
-</section>
-
-<section class="saved-prompts-section">
-<div class="saved-header">
-<h2 class="section-title" id="saved-title">Saved Prompts</h2>
-<input type="text" class="search-box" id="prompt-search" placeholder="Search saved prompts...">
-</div>
-<div class="saved-list" id="saved-prompts">
-<p style="color: #888; text-align: center; padding: 20px;">No saved prompts yet. Generate your first prompt!</p>
-</div>
-</section>
-
-<section class="prompt-analysis">
-<h2 class="section-title">Prompt Engineering Analysis</h2>
-<div class="analysis-grid">
-<div class="analysis-card">
-<h3>🎯 Prompt Effectiveness Score</h3>
-<div class="score-meter">
-<div class="score-bar" id="effectiveness-score"></div>
-<div class="score-labels">
-<span>Clarity</span>
-<span>Context</span>
-<span>Constraints</span>
-</div>
-</div>
-</div>
-
-<div class="analysis-card">
-<h3>🧠 Cognitive Framework</h3>
-<div class="cognitive-chart" id="cognitive-chart">
-<span>Framework will appear after generation</span>
-</div>
-</div>
-
-<div class="analysis-card">
-<h3>🔄 Prompt Evolution</h3>
-<div class="evolution-steps" id="evolution-steps">
-<div class="evolution-step">Generate a prompt to see evolution steps</div>
-</div>
-</div>
-
-<div class="analysis-card">
-<h3>🎨 Semantic Heatmap</h3>
-<div class="heatmap" id="semantic-heatmap">
-Heatmap will render after generation
-</div>
-</div>
-</div>
-
-<div class="prompt-metrics">
-<div class="metric-card">
-<h4>Semantic Density</h4>
-<div class="metric-value" id="semantic-density">0.0</div>
-</div>
-<div class="metric-card">
-<h4>Context Richness</h4>
-<div class="metric-value" id="context-richness">0.0</div>
-</div>
-<div class="metric-card">
-<h4>Instruction Clarity</h4>
-<div class="metric-value" id="instruction-clarity">0.0</div>
-</div>
-<div class="metric-card">
-<h4>Constraint Balance</h4>
-<div class="metric-value" id="constraint-balance">0.0</div>
-</div>
-</div>
-</section>
-
-<section class="future-scope">
-<h2 id="future-title">Future Updates</h2>
-<div class="future-grid">
-<div class="future-card">
-<h3>🎯 Personalization</h3>
-<p>Custom templates and user preferences</p>
-</div>
-<div class="future-card">
-<h3>🤖 AI Integration</h3>
-<p>Direct integration with popular AI models</p>
-</div>
-<div class="future-card">
-<h3>📱 Mobile App</h3>
-<p>Native mobile experience coming soon</p>
-</div>
-</div>
-</section>
-
-<footer class="footer">
-<div class="creator-credit">
-Created with ❤️ by <span class="creator-name-footer">Ambuj Kumar Tripathi</span>
-</div>
-<div>© 2025 All rights reserved</div>
-</footer>
-</div>
-
-<script>
-// ============================================
-// SINGLE CLEAN JAVASCRIPT - NO DUPLICATES
-// ============================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // ========== STATE VARIABLES ==========
-    let currentUILanguage = 'hi';
-    let currentOutputLanguage = 'hi';
-    let currentStrategy = 'chain-of-thought';
-    let promptCounter = 0;
-    
-    // ========== TRANSLATIONS ==========
-    const translations = {
-        hi: {
-            designations: ["AI Prompt Engineer", "LLM विशेषज्ञ", "प्रॉम्प्ट आर्किटेक्ट"],
-            hero: {
-                title: "हर रोज़ की मुश्किलें, अब आसान।",
-                description: "Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें।"
-            },
-            labels: {
-                topic: "आप किस problem के लिए AI की help चाहते हैं?",
-                qrText: "मेरा ChatBot देखने के लिए स्कैन करें",
-                mission: "हमारा मिशन",
-                missionText: "यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं।",
-                portfolio: "Portfolio देखें",
-                generate: "Smart Prompt बनाएं",
-                outputLang: "Output Language",
-                tone: "Tone",
-                builder: "Smart Prompt Builder",
-                saved: "Saved Prompts",
-                recTitle: "Recommended AI Tools"
-            }
-        },
-        en: {
-            designations: ["AI Prompt Engineer", "LLM Specialist", "Prompt Architect"],
-            hero: {
-                title: "Making Daily Challenges Easier.",
-                description: "Just type your message, get instant AI-powered solutions. This tool is designed to help you solve your daily problems easily with AI."
-            },
-            labels: {
-                topic: "What problem do you need AI help with?",
-                qrText: "Scan to see my ChatBot",
-                mission: "Our Mission",
-                missionText: "This tool is designed for those who find AI technology complex.",
-                portfolio: "View Portfolio",
-                generate: "Generate Smart Prompt",
-                outputLang: "Output Language",
-                tone: "Tone",
-                builder: "Smart Prompt Builder",
-                saved: "Saved Prompts",
-                recTitle: "Recommended AI Tools"
-            }
-        }
-    };
-
-    // ========== PROMPT TEMPLATES ==========
-    const promptTemplates = {
-        hi: {
-            'zero-shot': (input, tone) => {
-                return `कार्य: ${input}\n\nकृपया एक सीधा और स्पष्ट समाधान प्रदान करें। Tone: ${tone}`;
-            },
-            'chain-of-thought': (input, tone) => {
-                return `समस्या: ${input}\n\nचलिए इसे step-by-step solve करते हैं:\n\n1. पहले समस्या को समझते हैं\n2. मुख्य components identify करते हैं\n3. Solution approach तैयार करते हैं\n4. Implementation plan बनाते हैं\n5. Final verification करते हैं\n\nTone: ${tone}`;
-            },
-            'few-shot': (input, tone) => {
-                return `Similar examples:\n\nExample 1: [Related case]\nSolution: [How it was solved]\n\nExample 2: [Another case]\nSolution: [Another approach]\n\nअब आपका case: ${input}\n\nSolution approach:\nTone: ${tone}`;
-            },
-            'tree-of-thought': (input, tone) => {
-                return `समस्या: ${input}\n\nविभिन्न approaches explore करते हैं:\n\nApproach 1 (Direct): [Straightforward method]\nApproach 2 (Creative): [Innovative solution]\nApproach 3 (Comprehensive): [Complete approach]\n\nBest solution का चयन:\nTone: ${tone}`;
-            },
-            'react': (input, tone) => {
-                return `Task: ${input}\n\nThought: इस समस्या को कैसे approach करें?\nAction: पहला कदम - requirement analysis\nObservation: Key insights मिलीं\n\nThought: इन insights के based पर plan बनाते हैं\nAction: Solution framework तैयार करते हैं\nResult: Implementation ready\n\nTone: ${tone}`;
-            }
-        },
-        en: {
-            'zero-shot': (input, tone) => {
-                return `Task: ${input}\n\nPlease provide a direct and clear solution. Tone: ${tone}`;
-            },
-            'chain-of-thought': (input, tone) => {
-                return `Problem: ${input}\n\nLet's solve this step-by-step:\n\n1. First, understand the problem\n2. Identify key components\n3. Develop solution approach\n4. Create implementation plan\n5. Final verification\n\nTone: ${tone}`;
-            },
-            'few-shot': (input, tone) => {
-                return `Similar examples:\n\nExample 1: [Related case]\nSolution: [How it was solved]\n\nExample 2: [Another case]\nSolution: [Another approach]\n\nNow your case: ${input}\n\nSolution approach:\nTone: ${tone}`;
-            },
-            'tree-of-thought': (input, tone) => {
-                return `Problem: ${input}\n\nExploring different approaches:\n\nApproach 1 (Direct): [Straightforward method]\nApproach 2 (Creative): [Innovative solution]\nApproach 3 (Comprehensive): [Complete approach]\n\nSelecting best solution:\nTone: ${tone}`;
-            },
-            'react': (input, tone) => {
-                return `Task: ${input}\n\nThought: How should we approach this problem?\nAction: First step - requirement analysis\nObservation: Key insights gathered\n\nThought: Based on these insights, let's plan\nAction: Prepare solution framework\nResult: Ready for implementation\n\nTone: ${tone}`;
-            }
-        },
-        hinglish: {
-            'zero-shot': (input, tone) => {
-                return `Task: ${input}\n\nEk direct aur clear solution provide karo. Tone: ${tone}`;
-            },
-            'chain-of-thought': (input, tone) => {
-                return `Problem: ${input}\n\nChalo isse step-by-step solve karte hain:\n\n1. Pehle problem ko samajhte hain\n2. Key components identify karte hain\n3. Solution approach banate hain\n4. Implementation plan tayar karte hain\n5. Final verification karte hain\n\nTone: ${tone}`;
-            },
-            'few-shot': (input, tone) => {
-                return `Similar examples:\n\nExample 1: [Related case]\nSolution: [Kaise solve hua]\n\nExample 2: [Another case]\nSolution: [Dusra approach]\n\nAb tumhara case: ${input}\n\nSolution approach:\nTone: ${tone}`;
-            },
-            'tree-of-thought': (input, tone) => {
-                return `Problem: ${input}\n\nDifferent approaches explore karte hain:\n\nApproach 1 (Direct): [Seedha method]\nApproach 2 (Creative): [Naya solution]\nApproach 3 (Comprehensive): [Poora approach]\n\nBest solution select karte hain:\nTone: ${tone}`;
-            },
-            'react': (input, tone) => {
-                return `Task: ${input}\n\nThought: Isse kaise approach karein?\nAction: Pehla step - requirement analysis\nObservation: Key insights mile\n\nThought: In insights ke basis par plan banate hain\nAction: Solution framework ready karte hain\nResult: Implementation ke liye ready\n\nTone: ${tone}`;
-            }
-        }
-    };
-
-    // ========== AI TOOL RECOMMENDATIONS ==========
-    const toolRecommendations = {
-        code: { best: 'ChatGPT-4', alt1: 'Claude 2', alt2: 'GitHub Copilot', desc: 'ChatGPT-4 excels at code generation, debugging, and explaining complex algorithms.' },
-        creative: { best: 'Claude 2', alt1: 'ChatGPT-4', alt2: 'Bard', desc: 'Claude 2 is excellent for creative writing, storytelling, and long-form content.' },
-        analysis: { best: 'ChatGPT-4', alt1: 'Claude 2', alt2: 'Perplexity', desc: 'ChatGPT-4 provides deep analytical capabilities with structured reasoning.' },
-        research: { best: 'Perplexity', alt1: 'Bard', alt2: 'ChatGPT-4', desc: 'Perplexity specializes in research with real-time web search and citations.' },
-        default: { best: 'ChatGPT-4', alt1: 'Claude 2', alt2: 'Bard', desc: 'ChatGPT-4 is versatile for general tasks with strong reasoning.' }
-    };
-
-    // ========== UTILITY FUNCTIONS ==========
-    function estimateTokens(text) {
-        return Math.ceil(text.length / 4);
-    }
-
-    function detectPromptCategory(input) {
-        const lowerInput = input.toLowerCase();
-        if (lowerInput.match(/code|program|function|debug|algorithm|script/)) return 'code';
-        if (lowerInput.match(/write|story|creative|poem|article|blog/)) return 'creative';
-        if (lowerInput.match(/analyze|compare|evaluate|assess/)) return 'analysis';
-        if (lowerInput.match(/research|find|search|information/)) return 'research';
-        return 'default';
-    }
-
-    function updateToolRecommendations(input) {
-        const category = detectPromptCategory(input);
-        const rec = toolRecommendations[category];
-        
-        document.getElementById('best-tool-name').textContent = rec.best;
-        document.getElementById('alt-tool-1').textContent = rec.alt1;
-        document.getElementById('alt-tool-2').textContent = rec.alt2;
-        document.getElementById('tool-description').textContent = rec.desc;
-    }
-
-    function calculateMetrics(prompt) {
-        const words = prompt.split(' ');
-        const uniqueWords = new Set(words.map(w => w.toLowerCase()));
-        
-        const semanticDensity = ((uniqueWords.size / words.length) * 100).toFixed(1);
-        const contextRichness = (Math.min(words.length / 50, 1) * 100).toFixed(1);
-        const instructionClarity = (prompt.match(/:|step|first|then|finally/gi)?.length || 0) * 10;
-        const constraintBalance = (prompt.match(/must|should|tone|format/gi)?.length || 0) * 15;
-        
-        return {
-            semanticDensity: Math.min(semanticDensity, 100),
-            contextRichness: Math.min(contextRichness, 100),
-            instructionClarity: Math.min(instructionClarity, 100),
-            constraintBalance: Math.min(constraintBalance, 100)
-        };
-    }
-
-    function updateAnalysis(prompt, strategy) {
-        const metrics = calculateMetrics(prompt);
-        
-        // Update metric values
-        document.getElementById('semantic-density').textContent = metrics.semanticDensity;
-        document.getElementById('context-richness').textContent = metrics.contextRichness;
-        document.getElementById('instruction-clarity').textContent = metrics.instructionClarity;
-        document.getElementById('constraint-balance').textContent = metrics.constraintBalance;
-        
-        // Update effectiveness score bar
-        const avgScore = (parseFloat(metrics.semanticDensity) + parseFloat(metrics.contextRichness) + 
-                         parseFloat(metrics.instructionClarity) + parseFloat(metrics.constraintBalance)) / 4;
-        document.getElementById('effectiveness-score').style.width = `${avgScore}%`;
-        
-        // Update cognitive chart
-        const strategyNames = {
-            'zero-shot': 'Linear Thinking',
-            'chain-of-thought': 'Sequential Processing',
-            'few-shot': 'Pattern Recognition',
-            'tree-of-thought': 'Divergent Thinking',
-            'react': 'Cyclical Reasoning'
-        };
-        document.getElementById('cognitive-chart').innerHTML = `
-            <svg width="100%" height="100%" viewBox="0 0 200 200">
-                <circle cx="100" cy="100" r="70" fill="none" stroke="#e50914" stroke-width="2"/>
-                <circle cx="100" cy="100" r="50" fill="none" stroke="#ffa500" stroke-width="2"/>
-                <circle cx="100" cy="100" r="30" fill="none" stroke="#22c55e" stroke-width="2"/>
-                <text x="100" y="105" text-anchor="middle" fill="#fff" font-size="12">${strategyNames[strategy]}</text>
+    <!-- ========== LOGIN OVERLAY ========== -->
+    <div id="login-overlay" class="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
+        <!-- Neural network background -->
+        <div class="absolute inset-0 pointer-events-none">
+            <svg class="w-full h-full opacity-10">
+                <defs>
+                    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                        <circle cx="30" cy="30" r="1" fill="#ef4444" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
             </svg>
-        `;
-        
-        // Update evolution steps
-        document.getElementById('evolution-steps').innerHTML = `
-            <div class="evolution-step"><strong>Phase 1:</strong> Input analyzed using ${strategy} approach</div>
-            <div class="evolution-step"><strong>Phase 2:</strong> Structure formation with ${metrics.semanticDensity}% semantic density</div>
-            <div class="evolution-step"><strong>Phase 3:</strong> Context enhancement (${metrics.contextRichness}% richness)</div>
-            <div class="evolution-step"><strong>Phase 4:</strong> Final optimization complete</div>
-        `;
-        
-        // Update heatmap
-        const words = prompt.split(' ').slice(0, 30);
-        document.getElementById('semantic-heatmap').innerHTML = words.map(word => {
-            const intensity = Math.min(word.length / 10, 0.8);
-            return `<span style="padding: 2px 4px; margin: 2px; background: rgba(229, 9, 20, ${intensity}); border-radius: 3px; font-size: 0.75rem;">${word}</span>`;
-        }).join(' ');
-    }
+        </div>
 
-    function updateUILanguage(lang) {
-        const t = translations[lang];
-        document.getElementById('hero-title').textContent = t.hero.title;
-        document.getElementById('hero-description').textContent = t.hero.description;
-        document.getElementById('topic-label').textContent = t.labels.topic;
-        document.getElementById('qr-text').textContent = t.labels.qrText;
-        document.getElementById('mission-title').textContent = t.labels.mission;
-        document.getElementById('mission-description').textContent = t.labels.missionText;
-        document.getElementById('portfolio-link').textContent = t.labels.portfolio;
-        document.getElementById('generate-btn').textContent = t.labels.generate;
-        document.getElementById('output-lang-label').textContent = t.labels.outputLang;
-        document.getElementById('tone-label').textContent = t.labels.tone;
-        document.getElementById('builder-title').textContent = t.labels.builder;
-        document.getElementById('saved-title').textContent = t.labels.saved;
-        document.getElementById('rec-title').textContent = t.labels.recTitle;
-    }
+        <!-- Dynamic gradient orb following mouse -->
+        <div id="mouse-orb"
+            class="absolute w-[800px] h-[800px] rounded-full blur-[120px] opacity-30 transition-all duration-700 ease-out pointer-events-none"
+            style="background: radial-gradient(circle, rgba(239, 68, 68, 0.6) 0%, rgba(249, 115, 22, 0.3) 50%, transparent 70%); transform: translate(-50%, -50%); left: 50%; top: 50%;">
+        </div>
 
-    // ========== DESIGNATION ROTATION ==========
-    let designationIndex = 0;
-    setInterval(() => {
-        const designationEl = document.getElementById('creator-designation');
-        designationEl.style.opacity = '0';
-        setTimeout(() => {
-            designationEl.textContent = translations[currentUILanguage].designations[designationIndex];
-            designationEl.style.opacity = '1';
-            designationIndex = (designationIndex + 1) % translations[currentUILanguage].designations.length;
-        }, 500);
-    }, 3000);
+        <!-- Scanline effect -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="w-full h-1 bg-gradient-to-r from-transparent via-red-500/20 to-transparent animate-scan"></div>
+        </div>
 
-    // ========== EVENT LISTENERS ==========
-    
-    // UI Language Switch
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentUILanguage = btn.dataset.lang;
-            updateUILanguage(currentUILanguage);
+        <!-- Main content -->
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-5 gap-12 items-center">
+
+                <!-- Left: Hero section - 3 columns -->
+                <div class="lg:col-span-3 space-y-12 opacity-0 translate-y-10 transition-all duration-1000"
+                    id="hero-section">
+                    <!-- Main title with glitch effect -->
+                    <div class="relative">
+                        <h1 class="text-[5rem] leading-none font-black relative">
+                            <span class="absolute inset-0 text-red-600 opacity-70 blur-sm"
+                                style="transform: translate(-2px, -2px)">GROK</span>
+                            <span class="absolute inset-0 text-orange-600 opacity-70 blur-sm"
+                                style="transform: translate(2px, 2px)">GROK</span>
+                            <span
+                                class="relative bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">GROK</span>
+                        </h1>
+                        <div class="flex items-center gap-4 mt-4">
+                            <div class="h-1 w-24 bg-gradient-to-r from-red-600 to-orange-600"></div>
+                            <p class="text-gray-400 text-xl tracking-[0.3em] uppercase">Prompt Laboratory</p>
+                        </div>
+                    </div>
+
+                    <!-- Tech specs -->
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="relative group cursor-pointer">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-red-600/20 to-orange-600/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500">
+                            </div>
+                            <div
+                                class="relative bg-black/40 border border-red-900/30 rounded-2xl p-6 backdrop-blur-xl hover:border-red-600/50 transition-all duration-500 group-hover:scale-105">
+                                <i data-lucide="cpu" class="w-8 h-8 mb-4 text-red-500"></i>
+                                <div
+                                    class="text-4xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-br from-red-500 to-orange-500">
+                                    v4.1</div>
+                                <div class="text-gray-500 text-sm tracking-wide uppercase">Beta Engine</div>
+                            </div>
+                        </div>
+                        <div class="relative group cursor-pointer">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-red-600/20 to-orange-600/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500">
+                            </div>
+                            <div
+                                class="relative bg-black/40 border border-red-900/30 rounded-2xl p-6 backdrop-blur-xl hover:border-red-600/50 transition-all duration-500 group-hover:scale-105">
+                                <i data-lucide="layers" class="w-8 h-8 mb-4 text-orange-500"></i>
+                                <div
+                                    class="text-4xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-br from-orange-500 to-yellow-500">
+                                    5+</div>
+                                <div class="text-gray-500 text-sm tracking-wide uppercase">Strategies</div>
+                            </div>
+                        </div>
+                        <div class="relative group cursor-pointer">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-red-600/20 to-orange-600/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500">
+                            </div>
+                            <div
+                                class="relative bg-black/40 border border-red-900/30 rounded-2xl p-6 backdrop-blur-xl hover:border-red-600/50 transition-all duration-500 group-hover:scale-105">
+                                <i data-lucide="terminal" class="w-8 h-8 mb-4 text-yellow-500"></i>
+                                <div
+                                    class="text-4xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-br from-yellow-500 to-red-500">
+                                    ∞</div>
+                                <div class="text-gray-500 text-sm tracking-wide uppercase">Queries</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tagline -->
+                    <div class="relative pl-6 border-l-2 border-red-600">
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                            Advanced prompt engineering framework powered by <span
+                                class="text-red-500 font-bold">Grok-Beta 4.1</span> through OpenRouter's free tier.
+                        </p>
+                        <p class="text-gray-500 mt-2 text-sm">
+                            Zero-Shot → Few-Shot → Chain-of-Thought → Tree-of-Thought → ReAct
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right: Futuristic login - 2 columns -->
+                <div class="lg:col-span-2 opacity-0 translate-y-10 transition-all duration-1000 delay-500"
+                    id="login-section">
+                    <div class="relative" id="login-card-container">
+                        <div id="ripple-container" class="absolute inset-0 pointer-events-none"></div>
+                        <div
+                            class="absolute -inset-4 bg-gradient-to-r from-red-600 via-orange-600 to-red-600 opacity-20 blur-2xl animate-pulse">
+                        </div>
+                        <div
+                            class="relative bg-gradient-to-br from-gray-950 via-black to-gray-950 border-2 border-red-900/30 rounded-3xl overflow-hidden">
+                            <div
+                                class="h-2 bg-gradient-to-r from-red-600 via-orange-500 to-red-600 relative overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer">
+                                </div>
+                            </div>
+                            <div class="p-10">
+                                <div class="text-center mb-10">
+                                    <div class="relative inline-block mb-6">
+                                        <div class="absolute inset-0 animate-spin-slow">
+                                            <div
+                                                class="w-32 h-32 border-2 border-red-600/30 border-t-red-600 rounded-full">
+                                            </div>
+                                        </div>
+                                        <div class="absolute inset-2 animate-spin-reverse">
+                                            <div
+                                                class="w-28 h-28 border-2 border-orange-600/30 border-b-orange-600 rounded-full">
+                                            </div>
+                                        </div>
+                                        <div class="relative w-32 h-32 flex items-center justify-center">
+                                            <div
+                                                class="absolute inset-6 bg-gradient-to-br from-red-600 to-orange-600 rounded-2xl shadow-2xl shadow-red-600/50">
+                                            </div>
+                                            <div class="relative z-10">
+                                                <div class="text-4xl font-black text-white mb-1">AKT</div>
+                                                <div class="text-[10px] text-red-200 tracking-widest">ENGINEER</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-2xl font-bold text-white mb-2 tracking-wide">ACCESS RESTRICTED</h2>
+                                    <div
+                                        class="inline-flex items-center gap-2 bg-red-950/30 border border-red-900/50 rounded-full px-4 py-1">
+                                        <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                                        <span class="text-red-400 text-xs tracking-wider">AUTHORIZATION REQUIRED</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-6 mb-8">
+                                    <div class="relative group">
+                                        <div
+                                            class="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-500">
+                                        </div>
+                                        <div
+                                            class="relative flex items-center bg-black/50 border-2 border-red-900/50 focus-within:border-red-600 rounded-2xl overflow-hidden transition-all duration-300">
+                                            <div class="pl-5 pr-3"><i data-lucide="lock"
+                                                    class="text-red-500 w-5 h-5"></i></div>
+                                            <input type="password" id="login-password" placeholder="ENTER ACCESS KEY"
+                                                class="flex-1 bg-transparent py-5 pr-5 text-white placeholder-gray-600 outline-none tracking-wider text-sm font-mono" />
+                                            <div id="progress-bar"
+                                                class="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-red-600 to-orange-600 transition-all duration-500"
+                                                style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <button id="login-btn" class="w-full relative group overflow-hidden cursor-pointer">
+                                        <div
+                                            class="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-red-600 rounded-2xl blur group-hover:blur-md transition-all duration-500">
+                                        </div>
+                                        <div
+                                            class="relative bg-gradient-to-r from-red-600 via-orange-500 to-red-600 py-5 rounded-2xl font-black text-white text-lg tracking-wider flex items-center justify-center gap-3 transform group-hover:scale-[1.02] transition-transform duration-300">
+                                            <i data-lucide="zap"
+                                                class="w-6 h-6 transition-all duration-300 group-hover:rotate-12 group-hover:scale-110"></i>
+                                            INITIALIZE LABORATORY
+                                            <i data-lucide="code-2"
+                                                class="w-6 h-6 transition-all duration-300 group-hover:-rotate-12 group-hover:scale-110"></i>
+                                        </div>
+                                    </button>
+                                    <p id="login-message"
+                                        class="text-red-500 text-center font-mono text-sm min-h-[20px]"></p>
+                                </div>
+                                <div class="border-t border-red-900/30 pt-6">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="w-12 h-12 bg-gradient-to-br from-red-600 to-orange-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-red-600/30">
+                                                AK</div>
+                                            <div>
+                                                <div class="text-white font-bold text-sm">Ambuj Kumar Tripathi</div>
+                                                <div class="text-red-500 text-xs font-medium">Lead AI Engineer</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <div
+                                                class="w-8 h-8 border border-red-900/50 rounded-lg flex items-center justify-center hover:border-red-600 hover:bg-red-600/10 transition-all cursor-pointer">
+                                                <i data-lucide="code-2"
+                                                    class="w-4 h-4 text-gray-400 hover:text-red-500"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h-px bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MAIN CONTENT (Hidden by default) ========== -->
+    <div id="main-content" style="display: none;">
+        <div class="container">
+            <header class="header">
+                <div class="logo">Ambuj's Prompt Playground</div>
+                <div class="language-selector">
+                    <button class="lang-btn active" data-lang="hi">हिंदी</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
+            </header>
+
+            <section class="hero">
+                <h1 id="hero-title">हर रोज़ की मुश्किलें, अब आसान।</h1>
+                <p id="hero-description">Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया
+                    गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें।</p>
+            </section>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">AI Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="stat-prompts">0</div>
+                    <div class="stat-label">Prompts Generated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="stat-saved">0</div>
+                    <div class="stat-label">Saved Prompts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">AI Tools Database</div>
+                </div>
+            </div>
+
+            <section class="creator-section">
+                <!-- Left Column: DP & QR Code (120px each) -->
+                <div class="creator-left">
+                    <img src="https://i.postimg.cc/GmctbT9t/IMG-20250901-215704.jpg" alt="Ambuj Kumar Tripathi"
+                        class="creator-photo">
+                    <div class="qr-container">
+                        <img src="https://i.postimg.cc/YCpZrYgv/qr-code-3.png" alt="QR Code" class="qr-code">
+                    </div>
+                </div>
+
+                <!-- Center Column: Creator Info -->
+                <div class="creator-center">
+                    <div class="creator-name">Ambuj Kumar Tripathi</div>
+                    <div class="creator-designation" id="creator-designation">AI Prompt Engineer</div>
+                    <div class="creator-links">
+                        <a href="https://ambuj123-lab.github.io/Ambuj_AI_Portfolio/" class="creator-link"
+                            target="_blank" id="portfolio-link">View Portfolio</a>
+                    </div>
+                    <div class="qr-text-center" id="qr-text">Scan to see my ChatBot</div>
+                </div>
+
+                <!-- Right Column: Certificate -->
+                <div class="creator-right">
+                    <img src="images/certificate.png" class="certificate-img"
+                        alt="Blackbird Software Engineering Certificate">
+                </div>
+            </section>
+
+            <section class="mission">
+                <h2 id="mission-title">हमारा मिशन</h2>
+                <p id="mission-description">यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं।
+                    हमारा उद्देश्य simple है: गैर-तकनीकी users को अपनी daily life में AI का confidently उपयोग करने में
+                    मदद करना।</p>
+            </section>
+
+            <section class="prompt-builder">
+                <h2 class="section-title" id="builder-title">Smart Prompt Builder</h2>
+
+                <div class="form-group">
+                    <label class="form-label" id="topic-label">आप किस problem के लिए AI की help चाहते हैं?</label>
+                    <textarea id="topic-input" class="form-input"
+                        placeholder="जैसे: make a calculator app, design modern logo, write blog on AI..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🧠 Prompting Strategy</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                        <div class="strategy-card" data-strategy="zero-shot">
+                            <div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">⚡ Zero-Shot</div>
+                            <div style="font-size: 0.85rem; color: #888;">Direct task, no examples</div>
+                        </div>
+                        <div class="strategy-card" data-strategy="few-shot">
+                            <div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🎯 Few-Shot</div>
+                            <div style="font-size: 0.85rem; color: #888;">Learn from examples</div>
+                        </div>
+                        <div class="strategy-card active" data-strategy="chain-of-thought">
+                            <div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🔗 Chain-of-Thought</div>
+                            <div style="font-size: 0.85rem; color: #888;">Step-by-step reasoning</div>
+                        </div>
+                        <div class="strategy-card" data-strategy="tree-of-thought">
+                            <div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🌳 Tree-of-Thought</div>
+                            <div style="font-size: 0.85rem; color: #888;">Explore multiple paths</div>
+                        </div>
+                        <div class="strategy-card" data-strategy="react">
+                            <div style="font-weight: 600; color: #e50914; margin-bottom: 5px;">🔄 ReAct</div>
+                            <div style="font-size: 0.85rem; color: #888;">Reason + Act cycles</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">⚙️ Token Optimization</label>
+                    <div style="background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: #ccc;">Estimated Tokens:</span>
+                            <span id="token-estimate" style="color: #22c55e; font-weight: 600;">~0</span>
+                        </div>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <button class="token-opt-btn active" data-level="concise">Concise</button>
+                            <button class="token-opt-btn" data-level="balanced">Balanced</button>
+                            <button class="token-opt-btn" data-level="detailed">Detailed</button>
+                        </div>
+                        <div style="color: #888; font-size: 0.85rem;">
+                            <span id="model-recommendation">💡 Recommended: Claude Sonnet 4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" id="output-lang-label">Output Language</label>
+                    <div class="lang-toggle">
+                        <button class="lang-option active" data-lang="hi">हिंदी</button>
+                        <button class="lang-option" data-lang="en">English</button>
+                        <button class="lang-option" data-lang="hinglish">Hinglish</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" id="tone-label">Tone</label>
+                    <select id="tone-select" class="form-select">
+                        <option value="Friendly">Friendly</option>
+                        <option value="Professional">Professional</option>
+                        <option value="Casual">Casual</option>
+                        <option value="Creative">Creative</option>
+                        <option value="Technical">Technical</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🎚️ Advanced Controls</label>
+                    <div style="background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="color: #ccc; font-size: 0.9rem; display: block; margin-bottom: 5px;">
+                                Temperature: <span id="temp-value">0.7</span>
+                            </label>
+                            <input type="range" id="temperature-slider" min="0" max="1" step="0.1" value="0.7">
+                        </div>
+                        <div>
+                            <label style="color: #ccc; font-size: 0.9rem; display: block; margin-bottom: 5px;">
+                                Max Tokens: <span id="max-tokens">2048</span>
+                            </label>
+                            <input type="range" id="max-tokens-slider" min="256" max="4096" step="256" value="2048">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="generate-btn" class="generate-btn">Generate Smart Prompt</button>
+
+                <div class="output-section">
+                    <div class="output-container">
+                        <div class="output-text" id="output-text">Your AI-optimized prompt will appear here...</div>
+                        <button class="copy-btn" id="copy-btn">Copy</button>
+                    </div>
+
+                    <div class="recommendation">
+                        <h3 id="rec-title">Recommended AI Tools</h3>
+                        <div class="ai-tools-grid">
+                            <div class="ai-tool primary" id="best-tool">
+                                <span class="tool-category">Best Match</span>
+                                <span id="best-tool-name">ChatGPT-4</span>
+                            </div>
+                            <div class="ai-tool">
+                                <span class="tool-category">Alternative</span>
+                                <span id="alt-tool-1">Claude 2</span>
+                            </div>
+                            <div class="ai-tool">
+                                <span class="tool-category">Alternative</span>
+                                <span id="alt-tool-2">Bard</span>
+                            </div>
+                        </div>
+                        <div class="tool-description" id="tool-description">
+                            ChatGPT-4 is recommended for this prompt due to its advanced reasoning capabilities and
+                            broad knowledge base.
+                            <div class="score-meter">
+                                <div class="score-bar" id="effectiveness-score"></div>
+                                <div class="score-labels">
+                                    <span>Clarity</span>
+                                    <span>Context</span>
+                                    <span>Constraints</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analysis-card">
+                            <h3>🧠 Cognitive Framework</h3>
+                            <div class="cognitive-chart" id="cognitive-chart">
+                                <span>Framework will appear after generation</span>
+                            </div>
+                        </div>
+
+                        <div class="analysis-card">
+                            <h3>🔄 Prompt Evolution</h3>
+                            <div class="evolution-steps" id="evolution-steps">
+                                <div class="evolution-step">Generate a prompt to see evolution steps</div>
+                            </div>
+                        </div>
+
+                        <div class="analysis-card">
+                            <h3>🎨 Semantic Heatmap</h3>
+                            <div class="heatmap" id="semantic-heatmap">
+                                Heatmap will render after generation
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prompt-metrics">
+                        <div class="metric-card">
+                            <h4>Semantic Density</h4>
+                            <div class="metric-value" id="semantic-density">0.0</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Context Richness</h4>
+                            <div class="metric-value" id="context-richness">0.0</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Instruction Clarity</h4>
+                            <div class="metric-value" id="instruction-clarity">0.0</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Constraint Balance</h4>
+                            <div class="metric-value" id="constraint-balance">0.0</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="future-scope">
+                <h2 id="future-title">Future Updates</h2>
+                <div class="future-grid">
+                    <div class="future-card">
+                        <h3>🎯 Personalization</h3>
+                        <p>Custom templates and user preferences</p>
+                    </div>
+                    <div class="future-card">
+                        <h3>🤖 AI Integration</h3>
+                        <p>Direct integration with popular AI models</p>
+                    </div>
+                    <div class="future-card">
+                        <h3>📱 Mobile App</h3>
+                        <p>Native mobile experience coming soon</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="creator-credit">
+                    Created with ❤️ by <span class="creator-name-footer">Ambuj Kumar Tripathi</span>
+                </div>
+                <div>© 2025 All rights reserved</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Fade in animations on load
+        window.addEventListener('load', () => {
+            const hero = document.getElementById('hero-section');
+            const login = document.getElementById('login-section');
+            if (hero) hero.classList.remove('opacity-0', 'translate-y-10');
+            if (login) login.classList.remove('opacity-0', 'translate-y-10');
         });
-    });
 
-    // Output Language Switch
-    document.querySelectorAll('.lang-option').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentOutputLanguage = btn.dataset.lang;
+        // Mouse tracking for gradient orb
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            const orb = document.getElementById('mouse-orb');
+            if (orb) {
+                orb.style.left = `${x}%`;
+                orb.style.top = `${y}%`;
+            }
         });
-    });
 
-    // Strategy Selection
-    document.querySelectorAll('.strategy-card').forEach(card => {
-        card.addEventListener('click', () => {
-            document.querySelectorAll('.strategy-card').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            currentStrategy = card.dataset.strategy;
-        });
-    });
-
-    // Token Optimization
-    document.querySelectorAll('.token-opt-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.token-opt-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        });
-    });
-
-    // Temperature Slider
-    document.getElementById('temperature-slider').addEventListener('input', (e) => {
-        document.getElementById('temp-value').textContent = e.target.value;
-    });
-
-    // Max Tokens Slider
-    document.getElementById('max-tokens-slider').addEventListener('input', (e) => {
-        document.getElementById('max-tokens').textContent = e.target.value;
-    });
-
-    // Input Token Estimation
-    document.getElementById('topic-input').addEventListener('input', (e) => {
-        const tokens = estimateTokens(e.target.value);
-        document.getElementById('token-estimate').textContent = `~${tokens}`;
-        
-        if (tokens < 500) {
-            document.getElementById('model-recommendation').textContent = '💡 Recommended: GPT-3.5 Turbo';
-        } else if (tokens < 1500) {
-            document.getElementById('model-recommendation').textContent = '💡 Recommended: Claude Sonnet 4';
-        } else {
-            document.getElementById('model-recommendation').textContent = '💡 Recommended: GPT-4';
+        // Progress bar on password input
+        const passInput = document.getElementById('login-password');
+        if (passInput) {
+            passInput.addEventListener('input', (e) => {
+                const progress = Math.min((e.target.value.length / 20) * 100, 100);
+                const bar = document.getElementById('progress-bar');
+                if (bar) bar.style.width = `${progress}%`;
+            });
         }
-    });
 
-    // GENERATE BUTTON - MAIN FUNCTION
-    document.getElementById('generate-btn').addEventListener('click', () => {
-        const input = document.getElementById('topic-input').value.trim();
-        
-        if (!input) {
-            alert('Please enter your problem or topic first!');
-            return;
+        // Ripple effect on card click
+        const cardContainer = document.getElementById('login-card-container');
+        if (cardContainer) {
+            cardContainer.addEventListener('click', (e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const ripple = document.createElement('div');
+                ripple.className = 'absolute pointer-events-none';
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+                ripple.innerHTML = '<div class="absolute inset-0 border-2 border-red-500 rounded-full animate-ripple"></div>';
+
+                const container = document.getElementById('ripple-container');
+                if (container) container.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 2000);
+            });
         }
-
-        const tone = document.getElementById('tone-select').value;
-        const template = promptTemplates[currentOutputLanguage][currentStrategy];
-        const generatedPrompt = template(input, tone);
-        
-        // Update output
-        document.getElementById('output-text').textContent = generatedPrompt;
-        
-        // Update token estimate
-        const tokens = estimateTokens(generatedPrompt);
-        document.getElementById('token-estimate').textContent = `~${tokens}`;
-        
-        // Update tool recommendations
-        updateToolRecommendations(input);
-        
-        // Update analysis
-        updateAnalysis(generatedPrompt, currentStrategy);
-        
-        // Update counter
-        promptCounter++;
-        document.getElementById('stat-prompts').textContent = promptCounter;
-    });
-
-    // Copy Button
-    document.getElementById('copy-btn').addEventListener('click', () => {
-        const text = document.getElementById('output-text').textContent;
-        navigator.clipboard.writeText(text).then(() => {
-            const btn = document.getElementById('copy-btn');
-            btn.textContent = 'Copied!';
-            btn.style.background = '#22c55e';
-            setTimeout(() => {
-                btn.textContent = 'Copy';
-                btn.style.background = '#333';
-            }, 2000);
-        });
-    });
-
-    // Initialize
-    updateUILanguage('hi');
-    console.log('✅ Ambuj Prompt Builder Initialized Successfully!');
-});
-</script>
+    </script>
 </body>
+
 </html>

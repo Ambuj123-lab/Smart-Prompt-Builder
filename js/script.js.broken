@@ -1,0 +1,565 @@
+// ============================================
+// FLASK BACKEND VERSION - COMPLETE
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ========== AUTHENTICATION ==========
+    function checkAuth() {
+        const overlay = document.getElementById('login-overlay');
+        const mainContent = document.getElementById('main-content');
+
+        const title = document.getElementById('login-title');
+        const desc = document.getElementById('login-desc');
+        const btn = document.getElementById('login-btn');
+        const input = document.getElementById('login-password');
+        const msg = document.getElementById('login-message');
+
+        // Simple Hash Function
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = (hash << 5) - hash + char;
+                hash = hash & hash;
+            }
+            return hash.toString();
+        }
+
+        // Check if already logged in this session
+        if (sessionStorage.getItem('is_logged_in') === 'true') {
+            if (overlay) overlay.style.display = 'none';
+            if (mainContent) mainContent.style.display = 'block';
+            return;
+        }
+
+        // Setup Login UI
+        title.textContent = "🔐 Protected Access";
+        desc.textContent = "Enter password to unlock the Prompt Builder";
+        btn.textContent = "Unlock";
+
+        const verifyPassword = async () => {
+            const pass = input.value.trim();
+            const hash = simpleHash(pass);
+
+            try {
+                const response = await fetch('/api/verify-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ hash: hash })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    sessionStorage.setItem('is_logged_in', 'true');
+                    if (overlay) overlay.style.display = 'none';
+                    if (mainContent) mainContent.style.display = 'block';
+                    msg.textContent = "";
+                } else {
+                    throw new Error('Incorrect password');
+                }
+            } catch (error) {
+                msg.textContent = "❌ Incorrect password";
+                input.value = '';
+                input.focus();
+                // Shake animation
+                input.style.animation = "shake 0.5s";
+                setTimeout(() => input.style.animation = "", 500);
+            }
+        };
+
+        btn.onclick = verifyPassword;
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyPassword();
+        });
+    }
+
+    designations: ["AI Prompt Engineer", "LLM विशेषज्ञ", "प्रॉम्प्ट आर्किटेक्ट"],
+        hero: {
+        title: "हर रोज़ की मुश्किलें, अब आसान।",
+            description: "Just type your message, get instant AI-powered solutions. यह टूल इसलिए बनाया गया है ताकि आप अपनी daily problems को AI की मदद से आसानी से solve कर सकें।"
+    },
+    labels: {
+        topic: "आप किस problem के लिए AI की help चाहते हैं?",
+            qrText: "मेरा ChatBot देखने के लिए स्कैन करें",
+                mission: "हमारा मिशन",
+                    missionText: "यह टूल उन लोगों के लिए बनाया गया है जो AI technology को जटिल मानते हैं।",
+                        portfolio: "Portfolio देखें",
+                            generate: "Smart Prompt बनाएं",
+                                outputLang: "Output Language",
+                                    tone: "Tone",
+                                        builder: "Smart Prompt Builder",
+                                            saved: "Saved Prompts",
+                                                recTitle: "Recommended AI Tools"
+    }
+},
+    en: {
+    designations: ["AI Prompt Engineer", "LLM Specialist", "Prompt Architect"],
+    hero: {
+        title: "Making Daily Challenges Easier.",
+        description: "Just type your message, get instant AI-powered solutions. This tool is designed to help you solve your daily problems easily with AI."
+    },
+    labels: {
+        topic: "What problem do you need AI help with?",
+        qrText: "Scan to see my ChatBot",
+        mission: "Our Mission",
+        missionText: "This tool is designed for those who find AI technology complex.",
+        portfolio: "View Portfolio",
+        generate: "Generate Smart Prompt",
+        outputLang: "Output Language",
+        tone: "Tone",
+        builder: "Smart Prompt Builder",
+        saved: "Saved Prompts",
+        recTitle: "Recommended AI Tools"
+    }
+}
+    };
+
+const promptTemplates = {
+    hi: {
+        'zero-shot': (input, tone) => {
+            return `कार्य: ${input}\n\nकृपया एक सीधा और स्पष्ट समाधान प्रदान करें। Tone: ${tone}`;
+        },
+        'chain-of-thought': (input, tone) => {
+            return `समस्या: ${input}\n\nचलिए इसे step-by-step solve करते हैं:\n\n1. पहले समस्या को समझते हैं\n2. मुख्य components identify करते हैं\n3. Solution approach तैयार करते हैं\n4. Implementation plan बनाते हैं\n5. Final verification करते हैं\n\nTone: ${tone}`;
+        },
+        'few-shot': (input, tone) => {
+            return `Similar examples:\n\nExample 1: [Related case]\nSolution: [How it was solved]\n\nExample 2: [Another case]\nSolution: [Another approach]\n\nअब आपका case: ${input}\n\nSolution approach:\nTone: ${tone}`;
+        },
+        'tree-of-thought': (input, tone) => {
+            return `समस्या: ${input}\n\nविभिन्न approaches explore करते हैं:\n\nApproach 1 (Direct): [Straightforward method]\nApproach 2 (Creative): [Innovative solution]\nApproach 3 (Comprehensive): [Complete approach]\n\nBest solution का चयन:\nTone: ${tone}`;
+        },
+        'react': (input, tone) => {
+            return `Task: ${input}\n\nThought: इस समस्या को कैसे approach करें?\nAction: पहला कदम - requirement analysis\nObservation: Key insights मिलीं\n\nThought: इन insights के based पर plan बनाते हैं\nAction: Solution framework तैयार करते हैं\nResult: Implementation ready\n\nTone: ${tone}`;
+        }
+    },
+    en: {
+        'zero-shot': (input, tone) => {
+            return `Task: ${input}\n\nPlease provide a direct and clear solution. Tone: ${tone}`;
+        },
+        'chain-of-thought': (input, tone) => {
+            return `Problem: ${input}\n\nLet's solve this step-by-step:\n\n1. First, understand the problem\n2. Identify key components\n3. Develop solution approach\n4. Create implementation plan\n5. Final verification\n\nTone: ${tone}`;
+        },
+        'few-shot': (input, tone) => {
+            return `Similar examples:\n\nExample 1: [Related case]\nSolution: [How it was solved]\n\nExample 2: [Another case]\nSolution: [Another approach]\n\nNow your case: ${input}\n\nSolution approach:\nTone: ${tone}`;
+        },
+        'tree-of-thought': (input, tone) => {
+            return `Problem: ${input}\n\nExploring different approaches:\n\nApproach 1 (Direct): [Straightforward method]\nApproach 2 (Creative): [Innovative solution]\nApproach 3 (Comprehensive): [Complete approach]\n\nSelecting best solution:\nTone: ${tone}`;
+        },
+        'react': (input, tone) => {
+            return `Task: ${input}\n\nThought: How should we approach this problem?\nAction: First step - requirement analysis\nObservation: Key insights gathered\n\nThought: Based on these insights, let's plan\nAction: Prepare solution framework\nResult: Ready for implementation\n\nTone: ${tone}`;
+        }
+    },
+    hinglish: {
+        'zero-shot': (input, tone) => {
+            return `Task: ${input}\n\nEk direct aur clear solution provide karo. Tone: ${tone}`;
+        },
+        'chain-of-thought': (input, tone) => {
+            return `Problem: ${input}\n\nChalo isse step-by-step solve karte hain:\n\n1. Pehle problem ko samajhte hain\n2. Key components identify karte hain\n3. Solution approach banate hain\n4. Implementation plan tayar karte hain\n5. Final verification karte hain\n\nTone: ${tone}`;
+        },
+        'few-shot': (input, tone) => {
+            return `Similar examples:\n\nExample 1: [Related case]\nSolution: [Kaise solve hua]\n\nExample 2: [Another case]\nSolution: [Dusra approach]\n\nAb tumhara case: ${input}\n\nSolution approach:\nTone: ${tone}`;
+        },
+        'tree-of-thought': (input, tone) => {
+            return `Problem: ${input}\n\nDifferent approaches explore karte hain:\n\nApproach 1 (Direct): [Seedha method]\nApproach 2 (Creative): [Naya solution]\nApproach 3 (Comprehensive): [Poora approach]\n\nBest solution select karte hain:\nTone: ${tone}`;
+        },
+        'react': (input, tone) => {
+            return `Task: ${input}\n\nThought: Isse kaise approach karein?\nAction: Pehla step - requirement analysis\nObservation: Key insights mile\n\nThought: In insights ke basis par plan banate hain\nAction: Solution framework ready karte hain\nResult: Implementation ke liye ready\n\nTone: ${tone}`;
+        }
+    }
+};
+
+// ========== AI TOOL RECOMMENDATIONS ==========
+const toolRecommendations = {
+    code: { best: 'ChatGPT-4', alt1: 'Claude 2', alt2: 'GitHub Copilot', desc: 'ChatGPT-4 excels at code generation, debugging, and explaining complex algorithms.' },
+    creative: { best: 'Claude 2', alt1: 'ChatGPT-4', alt2: 'Bard', desc: 'Claude 2 is excellent for creative writing, storytelling, and long-form content.' },
+    analysis: { best: 'ChatGPT-4', alt1: 'Claude 2', alt2: 'Perplexity', desc: 'ChatGPT-4 provides deep analytical capabilities with structured reasoning.' },
+    research: { best: 'Perplexity', alt1: 'Bard', alt2: 'ChatGPT-4', desc: 'Perplexity specializes in research with real-time web search and citations.' },
+    default: { best: 'ChatGPT-4', alt1: 'Claude 2', alt2: 'Bard', desc: 'ChatGPT-4 is versatile for general tasks with strong reasoning.' }
+};
+
+// ========== UTILITY FUNCTIONS ==========
+function estimateTokens(text) {
+    return Math.ceil(text.length / 4);
+}
+
+function detectPromptCategory(input) {
+    const lowerInput = input.toLowerCase();
+    if (lowerInput.match(/code|program|function|debug|algorithm|script/)) return 'code';
+    if (lowerInput.match(/write|story|creative|poem|article|blog/)) return 'creative';
+    if (lowerInput.match(/analyze|compare|evaluate|assess/)) return 'analysis';
+    if (lowerInput.match(/research|find|search|information/)) return 'research';
+    return 'default';
+}
+
+function updateToolRecommendations(input) {
+    const category = detectPromptCategory(input);
+    const rec = toolRecommendations[category];
+
+    const bestTool = document.getElementById('best-tool-name');
+    if (bestTool) bestTool.textContent = rec.best;
+
+    const alt1 = document.getElementById('alt-tool-1');
+    if (alt1) alt1.textContent = rec.alt1;
+
+    const alt2 = document.getElementById('alt-tool-2');
+    if (alt2) alt2.textContent = rec.alt2;
+
+    const desc = document.getElementById('tool-description');
+    if (desc) desc.textContent = rec.desc;
+}
+
+function calculateMetrics(prompt) {
+    const words = prompt.split(' ');
+    const uniqueWords = new Set(words.map(w => w.toLowerCase()));
+
+    const semanticDensity = ((uniqueWords.size / words.length) * 100).toFixed(1);
+    const contextRichness = (Math.min(words.length / 50, 1) * 100).toFixed(1);
+    const instructionClarity = (prompt.match(/:|step|first|then|finally/gi)?.length || 0) * 10;
+    const constraintBalance = (prompt.match(/must|should|tone|format/gi)?.length || 0) * 15;
+
+    return {
+        semanticDensity: Math.min(semanticDensity, 100),
+        contextRichness: Math.min(contextRichness, 100),
+        instructionClarity: Math.min(instructionClarity, 100),
+        constraintBalance: Math.min(constraintBalance, 100)
+    };
+}
+
+function updateAnalysis(prompt, strategy) {
+    const metrics = calculateMetrics(prompt);
+
+    // Update metric values
+    const semDens = document.getElementById('semantic-density');
+    if (semDens) semDens.textContent = metrics.semanticDensity;
+
+    const ctxRich = document.getElementById('context-richness');
+    if (ctxRich) ctxRich.textContent = metrics.contextRichness;
+
+    const instrClar = document.getElementById('instruction-clarity');
+    if (instrClar) instrClar.textContent = metrics.instructionClarity;
+
+    const constrBal = document.getElementById('constraint-balance');
+    if (constrBal) constrBal.textContent = metrics.constraintBalance;
+
+    // Update effectiveness score bar
+    const avgScore = (parseFloat(metrics.semanticDensity) + parseFloat(metrics.contextRichness) +
+        parseFloat(metrics.instructionClarity) + parseFloat(metrics.constraintBalance)) / 4;
+
+    const effScore = document.getElementById('effectiveness-score');
+    if (effScore) effScore.style.width = `${avgScore}%`;
+
+    // Update cognitive chart
+    const strategyNames = {
+        'zero-shot': 'Linear Thinking',
+        'chain-of-thought': 'Sequential Processing',
+        'few-shot': 'Pattern Recognition',
+        'tree-of-thought': 'Divergent Thinking',
+        'react': 'Cyclical Reasoning'
+    };
+
+    const cogChart = document.getElementById('cognitive-chart');
+    if (cogChart) {
+        cogChart.innerHTML = `
+                <svg width="100%" height="100%" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="70" fill="none" stroke="#e50914" stroke-width="2"/>
+                    <circle cx="100" cy="100" r="50" fill="none" stroke="#ffa500" stroke-width="2"/>
+                    <circle cx="100" cy="100" r="30" fill="none" stroke="#22c55e" stroke-width="2"/>
+                    <text x="100" y="105" text-anchor="middle" fill="#fff" font-size="12">${strategyNames[strategy]}</text>
+                </svg>
+            `;
+    }
+
+    // Update evolution steps
+    const evoSteps = document.getElementById('evolution-steps');
+    if (evoSteps) {
+        evoSteps.innerHTML = `
+                <div class="evolution-step"><strong>Phase 1:</strong> Input analyzed using ${strategy} approach</div>
+                <div class="evolution-step"><strong>Phase 2:</strong> Structure formation with ${metrics.semanticDensity}% semantic density</div>
+                <div class="evolution-step"><strong>Phase 3:</strong> Context enhancement (${metrics.contextRichness}% richness)</div>
+                <div class="evolution-step"><strong>Phase 4:</strong> Final optimization complete</div>
+            `;
+    }
+
+    // Update heatmap with FIXED LAYOUT
+    const heatMap = document.getElementById('semantic-heatmap');
+    if (heatMap) {
+        const words = prompt.split(' ').slice(0, 30);
+        const heatmapHTML = words.map(word => {
+            const intensity = Math.min(word.length / 10, 0.8);
+            return `<span class="heatmap-word" style="background: rgba(229, 9, 20, ${intensity});">${word}</span>`;
+        }).join('');
+        heatMap.innerHTML = heatmapHTML;
+    }
+}
+
+function updateUILanguage(lang) {
+    const t = translations[lang];
+
+    const heroTitle = document.getElementById('hero-title');
+    if (heroTitle) heroTitle.textContent = t.hero.title;
+
+    const heroDesc = document.getElementById('hero-desc'); // Fixed ID
+    if (heroDesc) heroDesc.textContent = t.hero.description;
+    else {
+        const heroDescOld = document.getElementById('hero-description');
+        if (heroDescOld) heroDescOld.textContent = t.hero.description;
+    }
+
+    const topicLabel = document.getElementById('topic-label');
+    if (topicLabel) topicLabel.textContent = t.labels.topic;
+
+    const qrText = document.getElementById('qr-text');
+    if (qrText) qrText.textContent = t.labels.qrText;
+
+    const missionTitle = document.getElementById('mission-title');
+    if (missionTitle) missionTitle.textContent = t.labels.mission;
+
+    const missionDesc = document.getElementById('mission-description');
+    if (missionDesc) missionDesc.textContent = t.labels.missionText;
+
+    const portfolioLink = document.getElementById('portfolio-link');
+    if (portfolioLink) portfolioLink.textContent = t.labels.portfolio;
+
+    const genBtn = document.getElementById('generate-btn');
+    if (genBtn) {
+        // Only update text if span doesn't exist, or update span
+        const btnText = document.getElementById('generate-btn-text');
+        if (btnText) btnText.textContent = t.labels.generate;
+        else genBtn.textContent = t.labels.generate;
+    }
+
+    const outLangLabel = document.getElementById('output-lang-label');
+    if (outLangLabel) outLangLabel.textContent = t.labels.outputLang;
+
+    const toneLabel = document.getElementById('tone-label');
+    if (toneLabel) toneLabel.textContent = t.labels.tone;
+
+    const builderTitle = document.getElementById('builder-title');
+    if (builderTitle) builderTitle.textContent = t.labels.builder;
+
+    const savedTitle = document.getElementById('saved-title');
+    if (savedTitle) savedTitle.textContent = t.labels.saved;
+
+    const recTitle = document.getElementById('rec-title');
+    if (recTitle) recTitle.textContent = t.labels.recTitle;
+}
+
+// ========== FLASK BACKEND API CALL ==========
+async function callBackendAPI(input, strategy, tone, outputLang) {
+    const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            input: input,
+            strategy: strategy,
+            tone: tone,
+            outputLang: outputLang
+        })
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+        return { success: true, prompt: data.prompt };
+    } else {
+        // API failed or returned fallback signal
+        return { success: false, fallback: true, error: data.error };
+    }
+}
+
+// ========== DESIGNATION ROTATION ==========
+let designationIndex = 0;
+const designationEl = document.getElementById('creator-designation');
+if (designationEl) {
+    setInterval(() => {
+        designationEl.style.opacity = '0';
+        setTimeout(() => {
+            designationEl.textContent = translations[currentUILanguage].designations[designationIndex];
+            designationEl.style.opacity = '1';
+            designationIndex = (designationIndex + 1) % translations[currentUILanguage].designations.length;
+        }, 500);
+    }, 3000);
+}
+
+// ========== EVENT LISTENERS ==========
+
+// UI Language Switch
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentUILanguage = btn.dataset.lang;
+        updateUILanguage(currentUILanguage);
+    });
+});
+
+// Output Language Switch
+const outputLangSelect = document.getElementById('output-lang');
+if (outputLangSelect) {
+    outputLangSelect.addEventListener('change', (e) => {
+        currentOutputLanguage = e.target.value;
+    });
+}
+
+// Strategy Selection
+document.querySelectorAll('.strategy-card').forEach(card => {
+    card.addEventListener('click', () => {
+        document.querySelectorAll('.strategy-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        currentStrategy = card.dataset.strategy;
+    });
+});
+
+// Tone Selection
+const toneSelect = document.getElementById('tone-select');
+// No specific event listener needed as we read value on generate
+
+// Temperature Slider
+const tempSlider = document.getElementById('temp-slider');
+if (tempSlider) {
+    tempSlider.addEventListener('input', (e) => {
+        const valDisplay = document.getElementById('temp-value');
+        if (valDisplay) valDisplay.textContent = e.target.value;
+    });
+}
+
+// Max Tokens Slider
+const tokenSlider = document.getElementById('token-slider');
+if (tokenSlider) {
+    tokenSlider.addEventListener('input', (e) => {
+        const valDisplay = document.getElementById('token-value');
+        if (valDisplay) valDisplay.textContent = e.target.value;
+    });
+}
+
+// Input Token Estimation
+const topicInput = document.getElementById('topic-input');
+if (topicInput) {
+    topicInput.addEventListener('input', (e) => {
+        // Simple token estimation (approx 4 chars per token)
+        // const tokens = Math.ceil(e.target.value.length / 4);
+        // Not displaying this currently in new UI
+    });
+}
+
+// GENERATE BUTTON - MAIN FUNCTION (FLASK BACKEND VERSION)
+document.getElementById('generate-btn').addEventListener('click', async () => {
+    const input = document.getElementById('topic-input').value.trim();
+
+    if (!input) {
+        alert('Please enter your problem or topic first!');
+        return;
+    }
+
+    const tone = document.getElementById('tone-select').value;
+    const btn = document.getElementById('generate-btn');
+    const originalText = btn.textContent;
+
+    try {
+        btn.textContent = '⚡ Generating with Grok AI...';
+        btn.disabled = true;
+
+        // Call Flask backend
+        const result = await callBackendAPI(input, currentStrategy, tone, currentOutputLanguage);
+
+        let generatedPrompt;
+
+        if (result.success) {
+            // API success
+            generatedPrompt = result.prompt;
+
+            // Update actual token usage from API
+            if (result.tokens_used) {
+                const actualTokens = result.tokens_used.total_tokens;
+                totalTokensUsed += actualTokens;
+
+                const tokEst = document.getElementById('token-estimate');
+                if (tokEst) tokEst.textContent = `${actualTokens}`;
+
+                // Update cumulative tokens in stats
+                const statTokens = document.getElementById('stat-tokens');
+                if (statTokens) statTokens.textContent = `~${totalTokensUsed}`;
+            }
+        } else {
+            // Fallback to templates
+            console.log('Using template fallback:', result.error);
+            const template = promptTemplates[currentOutputLanguage][currentStrategy];
+            generatedPrompt = template(input, tone);
+
+            // Estimate tokens for template
+            const tokens = estimateTokens(generatedPrompt);
+            const tokEst = document.getElementById('token-estimate');
+            if (tokEst) tokEst.textContent = `~${tokens}`;
+        }
+
+        const outText = document.getElementById('output-text');
+        if (outText) outText.textContent = generatedPrompt;
+
+        // Show output section
+        const outputSection = document.getElementById('output-section');
+        if (outputSection) outputSection.style.display = 'block';
+
+        // Update tool recommendations
+        updateToolRecommendations(input);
+
+        // Update analysis
+        updateAnalysis(generatedPrompt, currentStrategy);
+
+        // Update counter
+        promptCounter++;
+        const statPrompts = document.getElementById('stat-prompts');
+        if (statPrompts) statPrompts.textContent = promptCounter;
+
+        // Store current prompt for saving
+        window.currentGeneratedPrompt = {
+            input: input,
+            prompt: generatedPrompt,
+            strategy: currentStrategy,
+            tone: tone,
+            timestamp: new Date().toISOString()
+        };
+
+    } catch (error) {
+        console.error('Error:', error);
+        // Fallback to template on any error
+        const template = promptTemplates[currentOutputLanguage][currentStrategy];
+        const generatedPrompt = template(input, tone);
+
+        const outText = document.getElementById('output-text');
+        if (outText) outText.textContent = generatedPrompt;
+
+        // Show output section
+        const outputSection = document.getElementById('output-section');
+        if (outputSection) outputSection.style.display = 'block';
+
+        updateAnalysis(generatedPrompt, currentStrategy);
+    } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }
+});
+
+// Copy Button
+document.getElementById('copy-btn').addEventListener('click', () => {
+    const text = document.getElementById('output-text').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = 'Copied!';
+        btn.style.background = '#22c55e';
+        setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.style.background = '#333';
+        }, 2000);
+    });
+});
+
+// Initialize
+updateUILanguage('hi');
+console.log('✅ Ambuj Prompt Builder (Flask Backend) Initialized!');
+});
