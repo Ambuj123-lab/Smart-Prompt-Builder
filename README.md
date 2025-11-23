@@ -92,7 +92,7 @@ Powered by **Grok-Beta 4.1** (via OpenRouter), this tool transforms vague ideas 
     Create a `.env` file in the root directory:
     ```env
     OPENROUTER_API_KEY=your_api_key_here
-    PASSWORD=SmartAmbujBot
+    PASSWORD=your_secure_password
     ```
 
 5.  **Run Locally**
@@ -112,12 +112,15 @@ Ambuj-Prompt-Nexus/
 │   └── login-advert.css    # Login overlay & animation styles
 ├── js/
 │   └── script.js           # Frontend logic & API handling
-├── images/                 # Static assets (Certificate, QR, etc.)
-├── app.py                  # Flask backend entry point
+├── images/                 # Static assets
+├── app.py                  # Flask backend (Grok API Integration)
 ├── requirements.txt        # Python dependencies
 ├── render.yaml             # Render deployment config
 └── index.html              # Main application entry
 ```
+
+### 🤖 AI Model Integration
+This project explicitly uses the **Grok-Beta 4.1** model via OpenRouter API for generating high-quality prompts. The integration is handled securely in `app.py`.
 
 ---
 
