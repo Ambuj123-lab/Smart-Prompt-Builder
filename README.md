@@ -1,95 +1,136 @@
-# Smart Prompt Builder - Deployment Guide
+# 🚀 PromptNexus by Ambuj
 
-## 🔐 Password
-**Default Password:** `AmbujAI`
+<div align="center">
 
-## 📁 Project Structure
+[![Deployment Status](https://img.shields.io/badge/Deployment-Live-success?style=for-the-badge&logo=render&logoColor=white)](https://ambuj-prompt-nexus.onrender.com/)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-3.0.0-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0+-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Grok AI](https://img.shields.io/badge/Powered_by-Grok_Beta_4.1-FF0000?style=for-the-badge&logo=openai&logoColor=white)](https://x.ai/)
+
+**The Ultimate AI Prompt Engineering Laboratory**
+
+[View Live Demo](https://ambuj-prompt-nexus.onrender.com/) · [Report Bug](https://github.com/ambuj123-lab) · [Request Feature](https://github.com/ambuj123-lab)
+
+</div>
+
+---
+
+## 📖 Overview
+
+**PromptNexus** is a state-of-the-art **AI Prompt Engineering Platform** designed to bridge the gap between human intent and Artificial Intelligence. Built with a "Security-First" architecture and a futuristic UI, it empowers users to generate high-precision prompts using advanced cognitive strategies like **Chain-of-Thought (CoT)**, **Tree-of-Thought (ToT)**, and **ReAct**.
+
+Powered by **Grok-Beta 4.1** (via OpenRouter), this tool transforms vague ideas into production-ready LLM instructions, optimized for token usage and clarity.
+
+## ✨ Key Features
+
+### 🧠 Advanced Cognitive Strategies
+- **Zero-Shot:** Direct, concise task execution.
+- **Few-Shot:** Pattern-based learning with examples.
+- **Chain-of-Thought:** Step-by-step logical reasoning.
+- **Tree-of-Thought:** Exploratory multi-path problem solving.
+- **ReAct:** Dynamic Reason + Act loops.
+
+### 🛡️ Enterprise-Grade Architecture
+- **Secure Login Overlay:** Futuristic, animation-rich authentication system.
+- **Token Governance:** Backend-locked token limits and temperature controls to prevent abuse.
+- **API Guardrails:** Robust error handling and fallback mechanisms.
+
+### 🎨 Next-Gen UI/UX
+- **Glassmorphism Design:** Premium, dark-themed aesthetic.
+- **Interactive Elements:** Mouse-tracking gradients, ripple effects, and glitch animations.
+- **Responsive:** Fully optimized for all device sizes.
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+*   **Core:** HTML5, Vanilla JavaScript (ES6+)
+*   **Styling:** Tailwind CSS (CDN), Custom CSS Animations
+*   **Icons:** Lucide Icons
+*   **Visualization:** Dynamic DOM manipulation for real-time metrics
+
+### Backend
+*   **Framework:** Flask (Python)
+*   **Server:** Gunicorn (Production WSGI)
+*   **API Integration:** OpenRouter (Grok-Beta 4.1)
+*   **Security:** Environment-based key management (`python-dotenv`)
+
+### Deployment
+*   **Platform:** Render
+*   **Version Control:** Git & GitHub
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+*   Python 3.10+
+*   Git
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/yourusername/Ambuj-Prompt-Nexus.git
+    cd Ambuj-Prompt-Nexus
+    ```
+
+2.  **Create a virtual environment**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
+
+3.  **Install dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Configure Environment**
+    Create a `.env` file in the root directory:
+    ```env
+    OPENROUTER_API_KEY=your_api_key_here
+    PASSWORD=SmartAmbujBot
+    ```
+
+5.  **Run Locally**
+    ```bash
+    python app.py
+    ```
+    Visit `http://localhost:5000` in your browser.
+
+---
+
+## 📂 Project Structure
+
 ```
-smart-prompt-builder/
-├── index.html          # Main HTML file
+Ambuj-Prompt-Nexus/
 ├── css/
-│   └── style.css      # All styles
-└── js/
-    └── script.js      # All JavaScript (includes authentication)
+│   ├── style.css           # Core application styles
+│   └── login-advert.css    # Login overlay & animation styles
+├── js/
+│   └── script.js           # Frontend logic & API handling
+├── images/                 # Static assets (Certificate, QR, etc.)
+├── app.py                  # Flask backend entry point
+├── requirements.txt        # Python dependencies
+├── render.yaml             # Render deployment config
+└── index.html              # Main application entry
 ```
 
-## 🚀 Deployment on Render (or any static host)
+---
 
-### Important: NO .env FILE NEEDED!
+## 👨‍💻 Creator
 
-This is a **static website** (HTML + CSS + JavaScript). It runs entirely in the browser.
+**Ambuj Kumar Tripathi**
+*   *Lead AI Engineer & Full Stack Developer*
+*   [Portfolio](https://ambuj123-lab.github.io/Ambuj_AI_Portfolio/)
+*   [GitHub](https://github.com/ambuj123-lab)
 
-**Why no .env file?**
-- `.env` files are for **server-side** applications (Node.js, Python, etc.)
-- This app has **no server** - it's just HTML/CSS/JS files
-- Everything runs in the user's browser
+---
 
-### How Security Works:
-
-1. **Password:**
-   - Stored as a **hash** in `js/script.js` (line ~17)
-   - Hash: `772869139` = Password: `AmbujAI`
-   - To change password:
-     - Open `js/script.js`
-     - Find `const CORRECT_HASH = "772869139";`
-     - Calculate new hash using the `simpleHash()` function
-     - Replace the hash value
-
-2. **API Key:**
-   - **NOT stored in code**
-   - Users enter their own OpenRouter API key
-   - Saved in browser's `localStorage`
-   - This is called "Bring Your Own Key" (BYOK) model
-
-### Deployment Steps (Render):
-
-1. Push code to GitHub
-2. Go to Render.com → New Static Site
-3. Connect your GitHub repo
-4. **Build Command:** Leave empty (no build needed)
-5. **Publish Directory:** `./` (root directory)
-6. Deploy!
-
-### Deployment Steps (Other Platforms):
-
-**Netlify:**
-- Drag and drop the entire folder
-- Done!
-
-**GitHub Pages:**
-```bash
-git add .
-git commit -m "Deploy"
-git push origin main
-```
-- Go to Settings → Pages → Select branch → Save
-
-**Vercel:**
-- Import GitHub repo
-- Framework Preset: Other
-- Deploy!
-
-## 🔑 Changing the Password
-
-1. Open `js/script.js`
-2. Find the `simpleHash` function (around line 19)
-3. Use browser console to calculate new hash:
-```javascript
-function simpleHash(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-        hash = hash & hash;
-    }
-    return hash.toString();
-}
-console.log(simpleHash("YourNewPassword"));
-```
-4. Replace `CORRECT_HASH` value with the new hash
-
-## ⚠️ Security Note
-
-This is **client-side authentication** - it prevents casual access but is NOT military-grade security. For production apps with sensitive data, use proper backend authentication.
-
-For a public tool like this, it's perfectly fine! 👍
+<div align="center">
+    <p>Made with ❤️ and ☕ by Ambuj</p>
+    <p>© 2025 PromptNexus. All rights reserved.</p>
+</div>
