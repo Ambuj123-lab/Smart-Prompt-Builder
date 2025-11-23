@@ -20,7 +20,7 @@
 
 **PromptNexus** is a state-of-the-art **AI Prompt Engineering Platform** designed to bridge the gap between human intent and Artificial Intelligence. Built with a "Security-First" architecture and a futuristic UI, it empowers users to generate high-precision prompts using advanced cognitive strategies like **Chain-of-Thought (CoT)**, **Tree-of-Thought (ToT)**, and **ReAct**.
 
-Powered by **Grok-Beta 4.1** (via OpenRouter), this tool transforms vague ideas into production-ready LLM instructions, optimized for token usage and clarity.
+Powered by **Grok-Beta 4.1** , this tool transforms vague ideas into production-ready LLM instructions, optimized for token usage and clarity.
 
 ## ✨ Key Features
 
